@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta charset='UTF-8'>
+    <head>
+    <title>Prioritazation Submission Form</title>
+    </head>
+    <link rel='stylesheet' href='./css/styles.css'>
+  </head>
+  <body>
+    <header>
+      <nav>
+
+      </nav>
+    </header>
+    <div class="main-container">
+      <h1 id="test"></h1>
+      <div class="form-container">
+        <form id="contactForm">
+          <div class="form-group">
+            <label for="dropdown1">Choose from Set 1:</label>
+        <select id="dropdown1" class="scoreDropdown">
+            <option value="0">Select an option</option>
+        </select>
+
+        <label for="dropdown2">Choose from Set 2:</label>
+        <select id="dropdown2" class="scoreDropdown">
+            <option value="0">Select an option</option>
+        </select>
+
+        <label for="dropdown3">Choose from Set 3:</label>
+        <select id="dropdown3" class="scoreDropdown">
+            <option value="0">Select an option</option>
+        </select>
+          </div>
+            <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required><br><br>
+          </div>
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required><br><br>
+          </div>
+          <div class="form-group">
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" required></textarea><br><br>
+          </div>
+          <button type="button" onclick="sendToPowerAutomate()">Submit</button>
+          <p>Total Score: <span id="score">0</span></p>
+        </form>
+       
+      </div>
+</div>
+    <script type="text/javascript" src='./javascript/export.js'></script>
+    <script type="text/javascript" src='./javascript/main.js'></script>
+
+</body>
+</html>
