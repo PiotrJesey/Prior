@@ -1,6 +1,6 @@
  // import  options from './options.js';
 
-//let newLocal = document.getElementById('test').innerText = "Form";
+let newLocal = document.getElementById('test').innerText = "Form";
 
 
 window.onload = function () {
