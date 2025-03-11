@@ -2,6 +2,9 @@
 
 let newLocal = document.getElementById('test').innerText = "Form";
 
+let today = new Date().toISOString().split('T')[0];
+        // Set the input field value to today's date
+        document.getElementById('date').value = today;
 
 window.onload = function () {
     if (!sessionStorage.getItem("alertShown")) {
@@ -11,9 +14,9 @@ window.onload = function () {
 };
 const dropdownData = {
     dropdown1: [
-        { option: "Apple", score: 5 },
-        { option: "Banana", score: 3 },
-        { option: "Cherry", score: 7 }
+        { option: "Defined start and end", score: 5 },
+        { option: "Defined start and end (dates yet to be confirmed)", score: 3 },
+        { option: "No defined start or end", score: 7 }
     ],
     dropdown2: [
         { option: "Car", score: 10 },
@@ -30,12 +33,11 @@ const dropdownData = {
 // Get HTML elements
 const selectElement = document.getElementById("dropdown");
 const scoreDisplay = document.getElementById("score");
+const scoreTypeDisplay = document.getElementById("scoreType");
 let totalScore = 0;
-let q1 = 0;
-// Function to update the score display
-function updateScoreDisplay() {
-    scoreDisplay.textContent = q1;
-}
+let scoreType = "";
+
+
 //Function to populate a dropdown
         function populateDropdown(dropdownId, options) {
             const dropdown = document.getElementById(dropdownId);
@@ -54,6 +56,7 @@ function updateScoreDisplay() {
 
 // Update score when an option is selected
 function updateScore() {
+    scoreType="";
     totalScore = 0; // Reset total score
     document.querySelectorAll(".scoreDropdown").forEach(dropdown => {
         let selectedScore = parseInt(dropdown.value);
@@ -61,13 +64,19 @@ function updateScore() {
             totalScore += selectedScore;
         }
     });
-    scoreDisplay.textContent = totalScore; // Update displayed score
+    scoreDisplay.textContent = totalScore;
+    if(totalScore>1){
+        scoreType = "test"
+    } 
+    scoreTypeDisplay.textContent = scoreType;// Update displayed score
 }
 
 // Add event listeners to all dropdowns
 document.querySelectorAll(".scoreDropdown").forEach(dropdown => {
     dropdown.addEventListener("change", updateScore);
 });
+
+
 
         const img = document.createElement('img');
     
