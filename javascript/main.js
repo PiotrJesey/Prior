@@ -58,9 +58,13 @@ const dropdownData = {
 const dropdownItems = Object.keys(dropdownData).length;
 const selectElement = document.getElementById("dropdown");
 const scoreDisplay = document.getElementById("score");
+const scoreSizingDisplay = document.getElementById("sizing-score");
 const scoreTypeDisplay = document.getElementById("scoreType");
+const scoreSizingTypeDisplay = document.getElementById("scoreSizingType");
 let totalScore = 0;
+let totalSizingScore = 0;
 let scoreType = "";
+let scoreSizingType ="";
 
 
 //Function to populate a dropdown
@@ -106,7 +110,26 @@ document.querySelectorAll(".scoreDropdown").forEach(dropdown => {
 });
 
 
+function updateSizingScore() {
+    scoreType="";
+    totalScore = 0; // Reset total score
+    document.querySelectorAll(".scoreSizingDropdown").forEach(dropdown => {
+        let selectedScore = parseInt(dropdown.value);
+        if (!isNaN(selectedScore)) {
+            totalSizingScore += selectedScore;
+        }
+    });
+    scoreSizingDisplay.textContent = totalSizingScore;
+    if(totalSizingScore>1){
+        scoreSizingType = "test"
+    } 
+    scorescoreSizingTypeDisplay.textContent = scoreSizingType;// Update displayed score
+}
 
+// Add event listeners to all dropdowns
+document.querySelectorAll(".scoreSizingDropdown").forEach(dropdown => {
+    dropdown.addEventListener("change", updateSizingScore);
+});
        
 
        
