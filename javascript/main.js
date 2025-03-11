@@ -19,11 +19,26 @@ const dropdownData = {
         { option: "No defined start or end", score: 7 }
     ],
     dropdown2: [
-        { option: "Car", score: 10 },
-        { option: "Bike", score: 6 },
-        { option: "Bus", score: 8 }
+        { option: "Contains numerous related projects or programme delivery", score: 10 },
+        { option: "Made up of numerouse related deliverables and/or tasks", score: 6 },
+        { option: "Various unrelated or ungrouped deliverables", score: 8 }
     ],
     dropdown3: [
+        { option: "Requires Programme Manager", score: 2 },
+        { option: "Requires Project Manager", score: 4 },
+        { option: "Reports to Line Manager", score: 1 }
+    ],
+    dropdown4: [
+        { option: "Requires Sponsoring SRO across multiple related projects", score: 2 },
+        { option: "Requires Sponsoring SRO", score: 4 },
+        { option: "No dedicated Sponsorship required", score: 1 }
+    ],
+    dropdown5: [
+        { option: "Red", score: 2 },
+        { option: "Blue", score: 4 },
+        { option: "Green", score: 1 }
+    ],
+    dropdown6: [
         { option: "Red", score: 2 },
         { option: "Blue", score: 4 },
         { option: "Green", score: 1 }
@@ -53,6 +68,9 @@ let scoreType = "";
         populateDropdown("dropdown1", dropdownData.dropdown1);
         populateDropdown("dropdown2", dropdownData.dropdown2);
         populateDropdown("dropdown3", dropdownData.dropdown3);
+        populateDropdown("dropdown4", dropdownData.dropdown4);
+        populateDropdown("dropdown5", dropdownData.dropdown5);
+        populateDropdown("dropdown6", dropdownData.dropdown6);
 
 // Update score when an option is selected
 function updateScore() {

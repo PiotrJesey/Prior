@@ -18,18 +18,70 @@
       <div class="form-container">
         <form id="contactForm">
           <div class="form-group">
-            <label for="dropdown1">Choose from Set 1:</label>
+              <h2>Project Information</h2>
+              <label for="initiative-name">Initiative Name</label>
+              <input type="text" id="initiative-name" required>
+              <label for="completed-by">Completed by</label>
+              <input type="text" id="completed-by" required>
+              <label for="date">Date of completition</label>
+              <input type="date" id="date">
+            </div>
+            <div class="form-group">
+              <h2>Questionnarie</h2>
+              <h4>Timing</h4>
+            <label for="dropdown1">Does the initiative have a definied start and end date?</label>
         <select id="dropdown1" class="scoreDropdown">
             <option value="0">Select an option</option>
         </select>
+        
+        <table>
+          <tr>
+              <th>Programme</th>
+              <th>Project</th>
+              <th>BAU</th>
+          </tr>
+          <tr>
+              <td>Defined</td>
+              <td>Defined</td>
+              <td>Not Defined</td>
+          </tr>
+          
+      </table>
+      <h4>Scope</h4>
+      
 
-        <label for="dropdown2">Choose from Set 2:</label>
+        <label for="dropdown2">What best describes the scope of the initiative?</label>
         <select id="dropdown2" class="scoreDropdown">
             <option value="0">Select an option</option>
         </select>
-
-        <label for="dropdown3">Choose from Set 3:</label>
+        <table>
+          <tr>
+              <th>Programme</th>
+              <th>Project</th>
+              <th>BAU</th>
+          </tr>
+          <tr>
+              <td>Numerous related projects</td>
+              <td>Numerous related projects</td>
+              <td>Unrelated tasks</td>
+          </tr>
+          
+      </table>
+      <h4>Oversight and Control</h4>
+        <label for="dropdown3">Does the initiative require a dedicated manager?</label>
         <select id="dropdown3" class="scoreDropdown">
+            <option value="0">Select an option</option>
+        </select>
+        <label for="dropdown4">Does the initiative require a sponsor?</label>
+        <select id="dropdown4" class="scoreDropdown">
+            <option value="0">Select an option</option>
+        </select>
+        <label for="dropdown5">Does the initiative require dedicated oversight and control?:</label>
+        <select id="dropdown5" class="scoreDropdown">
+            <option value="0">Select an option</option>
+        </select>
+        <label for="dropdown6">Choose from Set 3:</label>
+        <select id="dropdown6" class="scoreDropdown">
             <option value="0">Select an option</option>
         </select>
           </div>
@@ -47,6 +99,7 @@
           </div>
           <button type="button" onclick="sendToPowerAutomate()">Submit</button>
           <p>Total Score: <span id="score">0</span></p>
+          <p>Score Type: <span id="scoreType"></span></p>
         </form>
        
       </div>
