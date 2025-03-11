@@ -1,6 +1,6 @@
  // import  options from './options.js';
 
-let newLocal = document.getElementById('test').innerText = "Form";
+let newLocal = document.getElementById('test').innerText = "Complete the questionnaire below to indicate if your initiative is a Project, Programme or Business a usual (BAU).  For Projects & Programme, then continue to the Project Sizing tab. ";
 
 let today = new Date().toISOString().split('T')[0];
         // Set the input field value to today's date
@@ -34,11 +34,21 @@ const dropdownData = {
         { option: "No dedicated Sponsorship required", score: 1 }
     ],
     dropdown5: [
-        { option: "Red", score: 2 },
-        { option: "Blue", score: 4 },
-        { option: "Green", score: 1 }
+        { option: "Requires oversight and control", score: 2 },
+        { option: "No dedicated oversight, controlled via functional or departmental operational process", score: 4 }
+        
     ],
     dropdown6: [
+        { option: "Carries risk and requires dedicated management of risks and issues", score: 2 },
+        { option: "No specific risks", score: 4 }
+       
+    ],
+    dropdown7: [
+        { option: "Benefits of underlying projects support the overarching programme objective", score: 2 },
+        { option: "Defined benefits associated with the delivery of the scope set out", score: 4 },
+        { option: "No defined benefits", score: 1 }
+    ],
+    dropdown8: [
         { option: "Red", score: 2 },
         { option: "Blue", score: 4 },
         { option: "Green", score: 1 }
@@ -71,6 +81,8 @@ let scoreType = "";
         populateDropdown("dropdown4", dropdownData.dropdown4);
         populateDropdown("dropdown5", dropdownData.dropdown5);
         populateDropdown("dropdown6", dropdownData.dropdown6);
+        populateDropdown("dropdown7", dropdownData.dropdown7);
+        populateDropdown("dropdown8", dropdownData.dropdown8);
 
 // Update score when an option is selected
 function updateScore() {

@@ -73,6 +73,7 @@ body {
     
   }
   label {
+    width: 90%;
     text-align: left;
     display: block;
     font-weight: bold;
