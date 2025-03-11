@@ -95,9 +95,15 @@ document.querySelectorAll(".scoreDropdown").forEach(dropdown => {
 });
 
 
+function addLogo(){
+        let img = document.createElement('img');
+        img.src = "./img/HCJ_logo";
+        img.alt = "HCJ logo";
+        img.width = 150;
+        document.getElementById("logo").appendChild(img);
 
-        const img = document.createElement('img');
-    
+}
+document.getElementById("logo").src = "./img/HCJ_logo.png";
         // Set the image source
         img.src = 'https://via.placeholder.com/150'; // Replace with your image URL
     

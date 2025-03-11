@@ -17,18 +17,27 @@
      
   /* Styles for tablets and larger screens */
   @media screen and (min-width: 601px)  {
-    body {
-      font-size: 14px; /* Adjust font size for medium screens */
-   
-
-
+  body {
+    font-size: 14px; /* Adjust font size for medium screens */
     font-family: 'Roboto', sans-serif;
+  }
+.header{
+  width: 90%;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  
+  
+}
+#logo {
+  width: 200px;
+  height: auto;
 }
 h1 {
     font-size: 20px;
 }
 body {
-    background-color:bisque;
+    background-color:rgb(245, 245, 245);
 }
 .main-container {
     display: grid;
@@ -37,8 +46,8 @@ body {
     grid-template-columns: auto;
     gap: 10px;
     max-width: 80%;
-    margin: 40px auto;
-    padding: 40px;
+    margin: 20px auto;
+    padding: 20px;
     background: #fff;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
