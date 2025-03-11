@@ -1,7 +1,7 @@
  // import  options from './options.js';
 
 let newLocal = document.getElementById('test').innerText = "Complete the questionnaire below to indicate if your initiative is a Project, Programme or Business a usual (BAU).  For Projects & Programme, then continue to the Project Sizing tab. ";
-
+let logo = document.getElementById("logo").src = "./img/HCJ_logo-01.png";
 let today = new Date().toISOString().split('T')[0];
         // Set the input field value to today's date
         document.getElementById('date').value = today;
@@ -55,7 +55,7 @@ const dropdownData = {
     ]
 };
 
-// Get HTML elements
+const dropdownItems = Object.keys(dropdownData).length;
 const selectElement = document.getElementById("dropdown");
 const scoreDisplay = document.getElementById("score");
 const scoreTypeDisplay = document.getElementById("scoreType");
@@ -73,16 +73,15 @@ let scoreType = "";
                 dropdown.appendChild(optionElement);
             });
         }
-
+        function populateDropdownTags() {
+            for (let i = 1; i <= dropdownItems; i++) {
+                let item = "dropdown" + i;  // Construct the part name (dropdown0, dropdown1, ...)
+                populateDropdown(item, dropdownData[item]);  // Access the correct dropdown data
+            }
+        }
+        
         // Populate each dropdown with its specific options
-        populateDropdown("dropdown1", dropdownData.dropdown1);
-        populateDropdown("dropdown2", dropdownData.dropdown2);
-        populateDropdown("dropdown3", dropdownData.dropdown3);
-        populateDropdown("dropdown4", dropdownData.dropdown4);
-        populateDropdown("dropdown5", dropdownData.dropdown5);
-        populateDropdown("dropdown6", dropdownData.dropdown6);
-        populateDropdown("dropdown7", dropdownData.dropdown7);
-        populateDropdown("dropdown8", dropdownData.dropdown8);
+        populateDropdownTags();
 
 // Update score when an option is selected
 function updateScore() {
@@ -107,23 +106,8 @@ document.querySelectorAll(".scoreDropdown").forEach(dropdown => {
 });
 
 
-function addLogo(){
-        let img = document.createElement('img');
-        img.src = "./img/HCJ_logo";
-        img.alt = "HCJ logo";
-        img.width = 150;
-        document.getElementById("logo").appendChild(img);
 
-}
-document.getElementById("logo").src = "./img/HCJ_logo.png";
-        // Set the image source
-        img.src = 'https://via.placeholder.com/150'; // Replace with your image URL
-    
-        // Optionally, set attributes like alt text
-        img.alt = 'Dynamic Image';
-    
-        // Append the image to the div with id 'image-container'
-        document.getElementById('image-container').appendChild(img);
+       
 
        
         
