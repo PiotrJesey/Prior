@@ -84,6 +84,36 @@ const dropdownData = {
         { option: "Medium - Project is aligned to strategic priorities but not key to their achievement ", score: 4 },
         { option: "High - Project will deliver transformative outcomes for, or mitigate significant risks to, the Government of Jersey which may directly or indirectly impact outcomes for the Island’s economy or community ", score: 1 },
         { option: "Very High - Project will deliver transformative outcomes for, or mitigate significant risks to, the Island’s economy or community", score: 1 }
+    ],
+    dropdown14: [
+        { option: "Low - Duration < 6 months", score: 2 },
+        { option: "Medium - Duration of 6+ months", score: 4 },
+        { option: "High - Duration of 12+ months", score: 1 }
+        
+    ],
+    dropdown15: [
+        { option: "Low - Duration < 6 months", score: 2 },
+        { option: "Medium - Duration of 6+ months", score: 4 },
+        { option: "High - Duration of 12+ months", score: 1 }
+        
+    ],
+    dropdown16: [
+        { option: "Low - Duration < 6 months", score: 2 },
+        { option: "Medium - Duration of 6+ months", score: 4 },
+        { option: "High - Duration of 12+ months", score: 1 }
+        
+    ],
+    dropdown17: [
+        { option: "Low - Duration < 6 months", score: 2 },
+        { option: "Medium - Duration of 6+ months", score: 4 },
+        { option: "High - Duration of 12+ months", score: 1 }
+        
+    ],
+    dropdown18: [
+        { option: "Low - Duration < 6 months", score: 2 },
+        { option: "Medium - Duration of 6+ months", score: 4 },
+        { option: "High - Duration of 12+ months", score: 1 }
+        
     ]
 };
 
