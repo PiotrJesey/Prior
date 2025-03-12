@@ -3,7 +3,7 @@ async function sendToPowerAutomate() {
    // let surname = document.getElementById("surname").value;
     let email = document.getElementById("email").value;
     let score = document.getElementById("score").innerText;
-    let dropdown1 = document.getElementById("dopdown1").value;
+    let dropdown1 = document.getElementById("dropdown1").value;
 
     let data = {
         Name: name,
