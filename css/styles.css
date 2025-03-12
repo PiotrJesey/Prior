@@ -124,10 +124,13 @@ body {
   table{
     margin-top: 10px;
     width: 95%;
+    
   }
-  td, tr{
+  td,th, tr{
     background-color: #b2b2b2;
     height: 20px;
     font-size: 12px;
+    border-radius: 4px;
+    
   }
   }

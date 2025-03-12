@@ -1,7 +1,7 @@
  // import  options from './options.js';
 
 let newLocal = document.getElementById('test').innerText = "Complete the questionnaire below to indicate if your initiative is a Project, Programme or Business a usual (BAU).  For Projects & Programme, then continue to the Project Sizing tab. ";
-let logo = document.getElementById("logo").src = "./img/HCJ_logo-01.png";
+let logo = document.getElementById("logo").src = "./img/HCJ_logo.png";
 let today = new Date().toISOString().split('T')[0];
         // Set the input field value to today's date
         document.getElementById('date').value = today;
@@ -49,9 +49,14 @@ const dropdownData = {
         { option: "No defined benefits", score: 1 }
     ],
     dropdown8: [
-        { option: "Red", score: 2 },
-        { option: "Blue", score: 4 },
-        { option: "Green", score: 1 }
+        { option: "Brings about change", score: 2 },
+        { option: "Benefits from change or highlights the need for change", score: 4 }
+       
+    ],
+    dropdown9: [
+        { option: "Benefits of underlying projects support the overarching programme objective", score: 2 },
+        { option: "Defined benefits associated with the delivery of the scope set out", score: 4 },
+        { option: "No defined benefits", score: 1 }
     ]
 };
 
@@ -108,8 +113,6 @@ function updateScore() {
 document.querySelectorAll(".scoreDropdown").forEach(dropdown => {
     dropdown.addEventListener("change", updateScore);
 });
-
-
 function updateSizingScore() {
     scoreType="";
     totalScore = 0; // Reset total score
@@ -123,14 +126,16 @@ function updateSizingScore() {
     if(totalSizingScore>1){
         scoreSizingType = "test"
     } 
-    scorescoreSizingTypeDisplay.textContent = scoreSizingType;// Update displayed score
+   scoreSizingTypeDisplay.textContent = scoreSizingType;// Update displayed score
 }
 
 // Add event listeners to all dropdowns
 document.querySelectorAll(".scoreSizingDropdown").forEach(dropdown => {
     dropdown.addEventListener("change", updateSizingScore);
 });
+
        
+
 
        
         
