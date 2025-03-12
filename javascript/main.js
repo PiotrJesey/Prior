@@ -115,7 +115,7 @@ document.querySelectorAll(".scoreDropdown").forEach(dropdown => {
 });
 function updateSizingScore() {
     scoreType="";
-    totalScore = 0; // Reset total score
+    totalSizingScore = 0; // Reset total score
     document.querySelectorAll(".scoreSizingDropdown").forEach(dropdown => {
         let selectedScore = parseInt(dropdown.value);
         if (!isNaN(selectedScore)) {
