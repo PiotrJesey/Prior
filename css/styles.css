@@ -46,7 +46,7 @@ body {
 .main-container {
     display: grid;
     
-    background-color: beige;
+    background-color: rgb(237, 237, 237);
     grid-template-columns: auto;
     gap: 10px;
     max-width: 80%;
