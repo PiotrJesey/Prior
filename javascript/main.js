@@ -92,27 +92,27 @@ const dropdownData = {
         
     ],
     dropdown15: [
-        { option: "Low - Duration < 6 months", score: 2 },
-        { option: "Medium - Duration of 6+ months", score: 4 },
-        { option: "High - Duration of 12+ months", score: 1 }
-        
+        { option: "None - Has no technology requirements", score: 2 },
+        { option: "Low - Has a low requirement for system change which is localised and affects 1 non core system only", score: 4 },
+        { option: "Medium - Involves change to a core system or 2+ non core technologies", score: 1 },
+        { option: "High - Requires change to core or critical systems or the handling of highly sensitive data", score: 1 }
     ],
     dropdown16: [
-        { option: "Low - Duration < 6 months", score: 2 },
-        { option: "Medium - Duration of 6+ months", score: 4 },
-        { option: "High - Duration of 12+ months", score: 1 }
+        { option: "Low - Limited operational change in one or more departments", score: 2 },
+        { option: "Medium - Involves significant operational change for one department", score: 4 },
+        { option: "High - Cross-departmental in nature or highly impactful to the operational delivery of a department", score: 1 }
         
     ],
     dropdown17: [
-        { option: "Low - Duration < 6 months", score: 2 },
-        { option: "Medium - Duration of 6+ months", score: 4 },
-        { option: "High - Duration of 12+ months", score: 1 }
+        { option: "Low - Includes a low number of stakeholder groups with broadly aligned requirements", score: 2 },
+        { option: "Medium - Includes a large number of stakeholder groups with broadly aligned requirements", score: 4 },
+        { option: "High - Includes a large number of stakeholder groups with differing or opposing requirements", score: 1 }
         
     ],
     dropdown18: [
-        { option: "Low - Duration < 6 months", score: 2 },
-        { option: "Medium - Duration of 6+ months", score: 4 },
-        { option: "High - Duration of 12+ months", score: 1 }
+        { option: "Low - Does not entail contributions from other departments", score: 2 },
+        { option: "Medium - Some interdependent key projects ", score: 4 },
+        { option: "High - Require unique methods or approaches to be adapted to successfully deliver, some interdependency on strategic or major projects", score: 1 }
         
     ]
 };
