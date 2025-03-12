@@ -193,16 +193,94 @@
               <label for="project-name">Project Name</label>
               <input type="text" id="project-name" required><br><br>
           </div>
+          <h2>Questionnaire</h2>
           <div class="form-group">
-            <h4>Questionnaire</h4>
-            
-          </div>
-          
-          <div class="form-group">
-            <label for="dropdown9">Does the initiative directly bring about change?</label>
-        <select id="dropdown9" class="scoreSizingDropdown">
+            <h4>Strategic Priority</h4>
+            <label for="dropdown9">The alignment to strategic priorities</label>
+        <select id="dropdown9" class="scoreSizingDropdown" required>
             <option value="0">Select an option</option>
             </select>
+            <table>
+              <tr>
+                  <th>Major</th>
+                  <th>Strategic</th>
+                  <th>Key</th>
+                  <th>Local</th>
+                  <th>Small</th>
+              </tr>
+              <tr>
+                  <td>Very High</td>
+                  <td>Very High/High</td>
+                  <td>Medium</td>
+                  <td>Low</td>
+                  <td>Low</td>
+              </tr>
+              
+          </table>
+          </div>
+          <div class="form-group">
+            <h4>Financial</h4>
+            <label for="dropdown10">Estimated expenditure - This is the total expenditure the programme/project estimates across cumulative years.</label>
+        <select id="dropdown10" class="scoreSizingDropdown" required>
+            <option value="0">Select an option</option>
+            </select>
+            <label for="dropdown11">Financial benefits - The programme/project funding will be approved on the basis of financial benefits.</label>
+        <select id="dropdown11" class="scoreSizingDropdown" required>
+            <option value="0">Select an option</option>
+            </select>
+            <label for="dropdown12">Financial risk (Benefits) - This is the financial risk to the Government of not achieving the project's stated benefits (financial and non-financial)</label>
+        <select id="dropdown12" class="scoreSizingDropdown" required>
+            <option value="0">Select an option</option>
+            </select>
+            <label for="dropdown13">Financial risk (Failure) - This is the financial impact to the Government or a Government entity or department should an aspect of the programme/project fail</label>
+        <select id="dropdown13" class="scoreSizingDropdown" required>
+            <option value="0">Select an option</option>
+            </select>
+            <table>
+              <tr>
+                  <th>Major</th>
+                  <th>Strategic</th>
+                  <th>Key</th>
+                  <th>Local</th>
+                  <th>Small</th>
+              </tr>
+              <tr>
+                  <td>Very High</td>
+                  <td>Very High/High</td>
+                  <td>Medium</td>
+                  <td>Low</td>
+                  <td>Low</td>
+              </tr>
+              <tr>
+                <td>Very High</td>
+                <td>Very High/High</td>
+                <td>Medium</td>
+                <td>Low</td>
+                <td>Low</td>
+            </tr>
+            <tr>
+              <td>Very High</td>
+              <td>Very High/High</td>
+              <td>Medium</td>
+              <td>Low</td>
+              <td>Low</td>
+          </tr>
+          <tr>
+            <td>Very High</td>
+            <td>Very High/High</td>
+            <td>Medium</td>
+            <td>Low</td>
+            <td>Low</td>
+        </tr>
+        <tr>
+          <td>Very High</td>
+          <td>Very High/High</td>
+          <td>Medium</td>
+          <td>Low</td>
+          <td>Low</td>
+      </tr>
+              
+          </table>
           </div>
             <div class="form-group">
             <label for="name">Name:</label>
@@ -223,6 +301,7 @@
           <div class="form-group">
             <p>Total Score: <span id="sizing-score">0</span></p>
             <p>Score Type: <span id="scoreSizingType"></span></p>
+            <p>Recommended type: <span id="recommendedType"></span></p>
           </div>
         </form>
        

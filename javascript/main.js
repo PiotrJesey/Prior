@@ -54,9 +54,36 @@ const dropdownData = {
        
     ],
     dropdown9: [
-        { option: "Benefits of underlying projects support the overarching programme objective", score: 2 },
-        { option: "Defined benefits associated with the delivery of the scope set out", score: 4 },
-        { option: "No defined benefits", score: 1 }
+        { option: "Low - Some limited alignment to strategic priorities", score: 2 },
+        { option: "Medium - Project is aligned to strategic priorities but not key to their achievement ", score: 4 },
+        { option: "High - Project will deliver transformative outcomes for, or mitigate significant risks to, the Government of Jersey which may directly or indirectly impact outcomes for the Island’s economy or community ", score: 1 },
+        { option: "Very High - Project will deliver transformative outcomes for, or mitigate significant risks to, the Island’s economy or community", score: 1 }
+    ],
+    dropdown10: [
+        { option: "< £25,000", score: 2 },
+        { option: ">£25,000 and < £250,000", score: 1 },
+        { option: ">£250,000 and <£2,000,000", score: 1 },
+        { option: ">£2,000,000", score: 1 },
+        { option: ">£5,000,000", score: 1 }
+
+    ],
+    dropdown11: [
+        { option: "None - There are no financial benefits", score: 2 },
+        { option: "Low - Benefits are estimated to be in excess of £50,000", score: 1 },
+        { option: "Medium - Benefits are estimated to be in excess of £500,000", score: 1 },
+        { option: "High - Benefits are estimated to be in excess of £1,000,000", score: 1 }
+    ],
+    dropdown12: [
+        { option: "Low - Some limited alignment to strategic priorities", score: 2 },
+        { option: "Medium - Project is aligned to strategic priorities but not key to their achievement ", score: 4 },
+        { option: "High - Project will deliver transformative outcomes for, or mitigate significant risks to, the Government of Jersey which may directly or indirectly impact outcomes for the Island’s economy or community ", score: 1 },
+        { option: "Very High - Project will deliver transformative outcomes for, or mitigate significant risks to, the Island’s economy or community", score: 1 }
+    ],
+    dropdown13: [
+        { option: "Low - Some limited alignment to strategic priorities", score: 2 },
+        { option: "Medium - Project is aligned to strategic priorities but not key to their achievement ", score: 4 },
+        { option: "High - Project will deliver transformative outcomes for, or mitigate significant risks to, the Government of Jersey which may directly or indirectly impact outcomes for the Island’s economy or community ", score: 1 },
+        { option: "Very High - Project will deliver transformative outcomes for, or mitigate significant risks to, the Island’s economy or community", score: 1 }
     ]
 };
 
@@ -66,10 +93,12 @@ const scoreDisplay = document.getElementById("score");
 const scoreSizingDisplay = document.getElementById("sizing-score");
 const scoreTypeDisplay = document.getElementById("scoreType");
 const scoreSizingTypeDisplay = document.getElementById("scoreSizingType");
+const recommendedTypeDisplay = document.getElementById("recommendedType");
 let totalScore = 0;
 let totalSizingScore = 0;
 let scoreType = "";
 let scoreSizingType ="";
+let recommendedType ="";
 
 
 //Function to populate a dropdown
@@ -115,6 +144,7 @@ document.querySelectorAll(".scoreDropdown").forEach(dropdown => {
 });
 function updateSizingScore() {
     scoreType="";
+    recommendedType = "";
     totalSizingScore = 0; // Reset total score
     document.querySelectorAll(".scoreSizingDropdown").forEach(dropdown => {
         let selectedScore = parseInt(dropdown.value);
@@ -125,8 +155,12 @@ function updateSizingScore() {
     scoreSizingDisplay.textContent = totalSizingScore;
     if(totalSizingScore>1){
         scoreSizingType = "test"
-    } 
+    }
+    if(totalSizingScore > 1){
+        recommendedType = "type1";
+    }
    scoreSizingTypeDisplay.textContent = scoreSizingType;// Update displayed score
+   recommendedTypeDisplay.textContent = recommendedType; 
 }
 
 // Add event listeners to all dropdowns

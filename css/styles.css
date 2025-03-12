@@ -77,12 +77,15 @@ body {
     
   }
   label {
+    width: 95%;
     text-align: left;
     display: block;
     font-weight: bold;
+    font-size: 12px;
     margin-bottom: 5px;
     margin-top: 5px;
     color: #444;
+    
   }
   
   /* Input Fields */
