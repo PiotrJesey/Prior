@@ -38,7 +38,7 @@
               <h2>Questionnarie</h2>
               <h4>Timing</h4>
             <label for="dropdown1">Does the initiative have a definied start and end date?</label>
-        <select id="dropdown1" class="scoreDropdown">
+        <select id="dropdown1" class="scoreDropdown" name="Timing_question_1">
             <option value="0">Select an option</option>
         </select>
         
@@ -383,20 +383,20 @@
             <label for="message">Message:</label>
             <textarea id="message" name="message" required></textarea><br><br>
           </div>
+          
           <div class="form-group">
-           
+            <p>Total Score: <span id="sizing-score" name="score-sizing">0</span></p>
+            <p>Score Type: <span id="scoreSizingType" name ="score-sizing-type"></span></p>
+            <p>Recommended type: <span id="recommendedType"name="recommendationType"></span></p>
           </div>
           <div class="form-group">
             <div>
               <p id="empty"></p>
             </div>
+            
           <button type="submit" id="submButton" onclick="sendToPowerAutomate(event)" >Submit</button>
           </div>
-          <div class="form-group">
-            <p>Total Score: <span id="sizing-score">0</span></p>
-            <p>Score Type: <span id="scoreSizingType"></span></p>
-            <p>Recommended type: <span id="recommendedType"></span></p>
-          </div>
+          
         </form>
         <h5 id="ref">d</h5>
         <h4 id="totalScore">sd</h4>

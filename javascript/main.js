@@ -1,4 +1,5 @@
  // import  options from './options.js';
+ 
 
  function MyFunction() {
     let button = document.getElementById("submButton");
@@ -10,6 +11,7 @@
         if (element.value.trim() === "" || element.selectedIndex === 0) {
             arr.push(element.name || element.id);
             isEmpty = true;
+            
         }
     });
 
@@ -17,6 +19,7 @@
         //alert("Empty fields: " + arr.join(", ")); // Show empty fields
         document.getElementById("empty").textContent = `Please fill these fields: ${arr.join(", ")}`
         button.disabled = true;
+        
     } else {
         button.disabled = false;
     }
@@ -156,7 +159,7 @@ const dropdownData = {
 const dropdownItems = Object.keys(dropdownData).length;
 const selectElement = document.getElementById("dropdown");
 const scoreDisplay = document.getElementById("score");
-const scoreSizingDisplay = document.getElementById("sizing-score");
+const scoreSizingDisplay = document.getElementById("sizingScore");
 const scoreTypeDisplay = document.getElementById("scoreType");
 const scoreSizingTypeDisplay = document.getElementById("scoreSizingType");
 const recommendedTypeDisplay = document.getElementById("recommendedType");
