@@ -22,17 +22,17 @@
     </header>
     <div class="main-container">
       <h4 id="test"></h4>
-      <h5 id="ref">d</h5>
+      
       <div class="form-container">
         <form id="contactForm">
           <div class="form-group">
               <h2>Project Information</h2>
               <label for="initiative-name">Initiative Name</label>
-              <input type="text" id="initiative-name" required>
+              <input type="text" id="initiative-name" name="initiative-name" required>
               <label for="completed-by">Completed by</label>
-              <input type="text" id="completed-by" required>
+              <input type="text" id="completed-by" name="completed-by" required>
               <label for="date">Date of completition</label>
-              <input type="date" id="date">
+              <input type="date" id="date" name="date">
             </div>
             <div class="form-group">
               <h2>Questionnarie</h2>
@@ -177,11 +177,14 @@
           </div>
           <div class="form-group">
             <label for="ratification">Ratification for type selected if different to recommended type</label>
-            <input type="text" id="ratification"><br>
+            <input type="text" id="ratification" name="ratification"><br>
           </div>
           <div class="form-group">
-            <p>Total Score: <span id="score">0</span></p>
-            <p>Score Type: <span id="scoreType"></span></p>
+            <label for="score">Score:</label>
+            <input type="text" id="score" name="score" value="0">
+            <label for="scoreType">Score Type</label>
+            <input type="text" id="scoreType" name="scoreType">
+            
           </div>
           <h2>CPMO - Initiative Sizing Matrix</h2>
           <br>
@@ -190,7 +193,7 @@
             <h4>Project Information</h4>
            
               <label for="project-name">Project Name</label>
-              <input type="text" id="project-name" required><br><br>
+              <input type="text" id="project-name" name="project-name" required><br><br>
           </div>
           <h2>Questionnaire</h2>
           <div class="form-group">
@@ -383,15 +386,22 @@
           <div class="form-group">
            
           </div>
-          <button type="submit" id="submButton" onclick="sendToPowerAutomate(event)" disabled>Submit</button>
+          <div class="form-group">
+            <div>
+              <p id="empty"></p>
+            </div>
+          <button type="submit" id="submButton" onclick="sendToPowerAutomate(event)" >Submit</button>
+          </div>
           <div class="form-group">
             <p>Total Score: <span id="sizing-score">0</span></p>
             <p>Score Type: <span id="scoreSizingType"></span></p>
             <p>Recommended type: <span id="recommendedType"></span></p>
           </div>
         </form>
-       
+        <h5 id="ref">d</h5>
+        <h4 id="totalScore">sd</h4>
       </div>
+      
 </div>
     <script type="text/javascript" src='./javascript/export.js'></script>
     <script type="text/javascript" src='./javascript/main.js'></script>

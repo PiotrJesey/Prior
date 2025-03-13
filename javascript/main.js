@@ -1,16 +1,41 @@
  // import  options from './options.js';
 
-    
-   function MyFunction(){
+ function MyFunction() {
     let button = document.getElementById("submButton");
-    let selected = document.querySelectorAll("input").value;
-    if(selected ===""){
-        button.disabled = false;
-    }else{
+    let formElements = document.querySelectorAll("input, textarea, select");
+    let isEmpty = false;
+    let arr = [];
+
+    formElements.forEach(element => {
+        if (element.value.trim() === "" || element.selectedIndex === 0) {
+            arr.push(element.name || element.id);
+            isEmpty = true;
+        }
+    });
+
+    if (isEmpty) {
+        //alert("Empty fields: " + arr.join(", ")); // Show empty fields
+        document.getElementById("empty").textContent = `Please fill these fields: ${arr.join(", ")}`
         button.disabled = true;
+    } else {
+        button.disabled = false;
     }
-    }
-   MyFunction();
+}
+
+function attachEventListenersButton() {
+    let formElements = document.querySelectorAll("input, textarea, select");
+
+    formElements.forEach(element => {
+        element.addEventListener("input", MyFunction);  // For text inputs & textarea
+        element.addEventListener("change", MyFunction); // For dropdowns
+    });
+}
+
+// Attach listeners when the page loads
+document.addEventListener("DOMContentLoaded", () => {
+    attachEventListenersButton();
+    MyFunction(); // Run once on load to check initial state
+});
 let newLocal = document.getElementById('test').innerText = "Complete the questionnaire below to indicate if your initiative is a Project, Programme or Business a usual (BAU).  For Projects & Programme, then continue to the Project Sizing tab. ";
 let logo = document.getElementById("logo").src = "./img/HCJ_logo.png";
 let today = new Date().toISOString().split('T')[0];
@@ -172,11 +197,11 @@ function updateScore() {
             totalScore += selectedScore;
         }
     });
-    scoreDisplay.textContent = totalScore;
-    if(totalScore>1){
+    scoreDisplay.value = totalScore;
+    if(totalScore > 1){
         scoreType = "test"
     } 
-    scoreTypeDisplay.textContent = scoreType;// Update displayed score
+    scoreTypeDisplay.value = scoreType;// Update displayed score
 }
 
 // Add event listeners to all dropdowns
@@ -213,5 +238,4 @@ document.querySelectorAll(".scoreSizingDropdown").forEach(dropdown => {
 
 
        
-        
 console.log(Word);

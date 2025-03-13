@@ -97,6 +97,10 @@ body {
     border-radius: 5px;
     font-size: 16px;
   }
+  #score, #score2, #scoreType{
+    pointer-events:none;
+
+  }
   select {
     width: 95%;
     padding: 10px;
@@ -123,6 +127,11 @@ body {
   
   button:hover {
     background: #0056b3;
+  }
+  :disabled {
+    background-color: #b2b2b2;
+    opacity: 0.6;
+    cursor: not-allowed;
   }
   table{
     margin-top: 10px;

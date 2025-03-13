@@ -16,9 +16,9 @@
 
     <textarea name="bio">Hello, I am a web developer.</textarea>
 
-    <button type="button" onclick="handleBuildObject()">Build Object</button>
+    <button type="button" onclick="check()">Build Object</button>
 </form>
-
+<h2 id="check">check</h2>
 <h2 id="output">Result will appear here</h2>
 
 <script>
@@ -42,4 +42,30 @@
         document.getElementById("output").innerText = JSON.stringify(result, null, 2);
         console.log(result);
     }
+    function check() {
+        let isEmpty = false; // Flag to check if any field is empty
+        let formElements = document.querySelectorAll("#dynamicForm input, #dynamicForm select, #dynamicForm textarea").val;
+        let arr = [];
+    
+        formElements.forEach(element => {
+            if (element.value === "") {
+                isEmpty = true; // If any field is empty, set flag to true
+            } else {
+                arr.push(element.id); // Store IDs of filled elements
+            }
+        });
+    
+        document.getElementById("check").innerText = arr.join(", "); // Show filled IDs
+        document.getElementById("submitButton").disabled = isEmpty; // Disable button if any field is empty
+    }
+    
+    // Attach event listeners to all form elements
+    document.querySelectorAll("#dynamicForm input, #dynamicForm select, #dynamicForm textarea")
+        .forEach(element => {
+            element.addEventListener("input", check);
+        });
+    
+    // Initial check on page load
+    check();
+    
 </script>
