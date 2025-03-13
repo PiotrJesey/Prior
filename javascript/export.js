@@ -1,11 +1,14 @@
 let total = 0;
+let sizingTotal = 0;
 let type ="";
+let sizingType ="";
+let recommendationType="";
 let exportData = {};
 function calculateTotalScore() {
     total = 0;
     type = "";
     let dropdowns = document.querySelectorAll(".scoreDropdown");
-
+    
     dropdowns.forEach(dropdown => {
         total += parseInt(dropdown.value);
     });
@@ -14,16 +17,45 @@ function calculateTotalScore() {
     }else{
          type ="null";
     }
+   
     document.getElementById("totalScore").innerText = total;
     document.querySelectorAll(".scoreDropdown").forEach(dropdown => {
         dropdown.addEventListener("change", calculateTotalScore);
    return total;
    
     });
+    
+    
+    
 }
+function calculateTotalSizingScore(){
+    sizingTotal = 0;
+    sizingType = "";
+    recommendationType ="";
 
+    let sizingDropdown = document.querySelectorAll(".scoreSizingDropdown");
+    sizingDropdown.forEach(dropdown => {
+        sizingTotal += parseInt(dropdown.value);
+    });
+    if( sizingTotal > 2){
+        sizingType = "sizing Type Test";   
+    }else{
+        sizingType = "null";
+    }
+    if(sizingTotal > 3){
+        recommendationType = "rec";
+    }else{
+        recommendationType ="rec null"
+    }
+
+    document.getElementById("totalSizingScore").innerText = sizingTotal;
+    document.querySelectorAll(".scoreSizingDropdown").forEach(dropdown =>{
+        dropdown.addEventListener("change", calculateTotalSizingScore);
+    return sizingTotal;
+    });
+} 
 calculateTotalScore();
-
+calculateTotalSizingScore();
 
 async function buildObject() {
     let formElements = document.querySelectorAll("input, select, textarea");
@@ -39,6 +71,15 @@ async function buildObject() {
         }
         if(element.id ==="scoreType"){
             dataObject[element.name] = type;
+        }
+        if(element.id === "sizingScore"){
+            dataObject[element.id] = sizingTotal.toString();
+        }
+        if(element.id === "scoreSizingType"){
+            dataObject[element.id] = sizingType;
+        }
+        if(element.id === "recommendedType"){
+            dataObject[element.id] = recommendationType;
         }
         
     })

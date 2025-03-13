@@ -212,7 +212,7 @@ document.querySelectorAll(".scoreDropdown").forEach(dropdown => {
     dropdown.addEventListener("change", updateScore);
 });
 function updateSizingScore() {
-    scoreType="";
+    scoreType= "";
     recommendedType = "";
     totalSizingScore = 0; // Reset total score
     document.querySelectorAll(".scoreSizingDropdown").forEach(dropdown => {
@@ -221,15 +221,15 @@ function updateSizingScore() {
             totalSizingScore += selectedScore;
         }
     });
-    scoreSizingDisplay.textContent = totalSizingScore;
-    if(totalSizingScore>1){
+    scoreSizingDisplay.value = totalSizingScore;
+    if(totalSizingScore > 1){
         scoreSizingType = "test"
     }
     if(totalSizingScore > 1){
         recommendedType = "type1";
     }
-   scoreSizingTypeDisplay.textContent = scoreSizingType;// Update displayed score
-   recommendedTypeDisplay.textContent = recommendedType; 
+   scoreSizingTypeDisplay.value = scoreSizingType;// Update displayed score
+   recommendedTypeDisplay.value = recommendedType; 
 }
 
 // Add event listeners to all dropdowns

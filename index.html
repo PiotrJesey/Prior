@@ -385,13 +385,17 @@
           </div>
           
           <div class="form-group">
-            <p>Total Score: <span id="sizing-score" name="score-sizing">0</span></p>
-            <p>Score Type: <span id="scoreSizingType" name ="score-sizing-type"></span></p>
-            <p>Recommended type: <span id="recommendedType"name="recommendationType"></span></p>
+            <label for="sizingScore">Sizing Score</label>
+            <input type="text" id="sizingScore" name="sizingScore" value="0">
+            <label for="scoreSizingType">Sizing Type</label>
+            <input id="scoreSizingType" name="scoreSizingType">
+            <label for="recommendedType">Recommended Type</label>
+            <input type="text" id="recommendedType" name="recommendedType">
+        
           </div>
           <div class="form-group">
             <div>
-              <p id="empty"></p>
+              
             </div>
             
           <button type="submit" id="submButton" onclick="sendToPowerAutomate(event)" >Submit</button>
@@ -400,8 +404,12 @@
         </form>
         <h5 id="ref">d</h5>
         <h4 id="totalScore">sd</h4>
+        <h4 id="totalSizingScore"></h4>
       </div>
-      
+      <div class="footer">
+        <p>Footer</p>
+        <p id="empty"></p>
+      </div>
 </div>
     <script type="text/javascript" src='./javascript/export.js'></script>
     <script type="text/javascript" src='./javascript/main.js'></script>
