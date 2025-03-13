@@ -1,0 +1,45 @@
+<form id="dynamicForm">
+    <input type="text" name="name" value="John Doe">
+    <input type="email" name="email" value="john@example.com">
+    <input type="number" name="age" value="30">
+
+    <select name="gender">
+        <option value="M">Male</option>
+        <option value="F" selected>Female</option>
+    </select>
+
+    <select name="country">
+        <option value="us">United States</option>
+        <option value="uk" selected>United Kingdom</option>
+        <option value="ca">Canada</option>
+    </select>
+
+    <textarea name="bio">Hello, I am a web developer.</textarea>
+
+    <button type="button" onclick="handleBuildObject()">Build Object</button>
+</form>
+
+<h2 id="output">Result will appear here</h2>
+
+<script>
+    async function buildObject() {
+        let formElements = document.querySelectorAll("#dynamicForm input, #dynamicForm select, #dynamicForm textarea");
+        let dataObject = {};
+
+        formElements.forEach(element => {
+            if (element.tagName === "SELECT") {
+                dataObject[element.name] = element.options[element.selectedIndex].text;
+            } else {
+                dataObject[element.name] = element.value;
+            }
+        });
+
+        return dataObject;
+    }
+
+    async function handleBuildObject() {
+        let result = await buildObject();
+        document.getElementById("output").innerText = JSON.stringify(result, null, 2);
+        console.log(result);
+    }
+</script>

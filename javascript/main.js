@@ -1,5 +1,16 @@
  // import  options from './options.js';
 
+    
+   function MyFunction(){
+    let button = document.getElementById("submButton");
+    let selected = document.querySelectorAll("input").value;
+    if(selected ===""){
+        button.disabled = false;
+    }else{
+        button.disabled = true;
+    }
+    }
+   MyFunction();
 let newLocal = document.getElementById('test').innerText = "Complete the questionnaire below to indicate if your initiative is a Project, Programme or Business a usual (BAU).  For Projects & Programme, then continue to the Project Sizing tab. ";
 let logo = document.getElementById("logo").src = "./img/HCJ_logo.png";
 let today = new Date().toISOString().split('T')[0];

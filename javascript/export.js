@@ -6,12 +6,12 @@ async function sendToPowerAutomate(event) {
     let name = document.getElementById("name").value.trim();
     let email = document.getElementById("email").value.trim();
     let score = document.getElementById("score").innerText;
-    let dropdown1 = document.getElementById("dropdown1");
+    let dropdown = document.querySelectorAll("select");
 
     // Validate required fields
-    if (!name || !email || dropdown1.selectedIndex === 0) {
+    if (dropdown.selectedIndex === 0) {
         alert("Please fill in all required fields.");
-        return;
+       // return;
     }
 
     let selectedText = dropdown1.options[dropdown1.selectedIndex].text;
@@ -43,4 +43,42 @@ async function sendToPowerAutomate(event) {
         alert("An unexpected error occurred.");
     }
 }
+function dropdown(){
+    let dropDownElement = document.querySelectorAll("select");
+    dropdownObject = {};
+ dropDownElement.forEach(element => {
+    if(element.selectedIndex === 0)
+    {alert(element.id)}
+    } )
+}
+async function buildObject() {
+    let formElements = document.querySelectorAll("input, select, textarea");
+    let dataObject = {};
+
+    formElements.forEach(element => {
+        if (element.tagName === "SELECT") {
+            dataObject[element.id] = element.options[element.selectedIndex].text;
+        } else {
+            dataObject[element.name] = element.value;
+        }
+    });
+
+    document.getElementById("ref").innerText = JSON.stringify(dataObject, null, 2);
+    console.log(dataObject);
+}
+
+    
+
+function attachEventListeners() {
+    let formElements = document.querySelectorAll("input, select, ctextarea");
+
+    formElements.forEach(element => {
+        element.addEventListener("input", buildObject);  // For text inputs & textarea
+        element.addEventListener("change", buildObject); // For dropdowns
+    });
+}
+
+attachEventListeners(); // Attach event listeners on page load
+buildObject(); // Initialize with current values
+//dropdown();
 
