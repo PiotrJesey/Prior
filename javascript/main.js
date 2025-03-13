@@ -17,7 +17,7 @@
 
     if (isEmpty) {
         //alert("Empty fields: " + arr.join(", ")); // Show empty fields
-        document.getElementById("empty").textContent = `Please fill these fields: ${arr.join(", ")}`
+        document.getElementById("empty").textContent = arr.join(",  ")
         button.disabled = true;
         
     } else {
