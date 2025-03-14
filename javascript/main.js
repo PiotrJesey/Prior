@@ -153,6 +153,12 @@ const dropdownData = {
         { option: "Medium - Some interdependent key projects ", score: 4 },
         { option: "High - Require unique methods or approaches to be adapted to successfully deliver, some interdependency on strategic or major projects", score: 1 }
         
+    ],
+    dropdown19: [
+        { option: "Low - Does not entail contributions from other departments", score: 2 },
+        { option: "Medium - Some interdependent key projects ", score: 4 },
+        { option: "High - Require unique methods or approaches to be adapted to successfully deliver, some interdependency on strategic or major projects", score: 1 }
+        
     ]
 };
 
@@ -189,6 +195,8 @@ let recommendedType ="";
         
         // Populate each dropdown with its specific options
         populateDropdownTags();
+
+        
 
 // Update score when an option is selected
 function updateScore() {
@@ -237,7 +245,10 @@ document.querySelectorAll(".scoreSizingDropdown").forEach(dropdown => {
     dropdown.addEventListener("change", updateSizingScore);
 });
 
-       
+document.querySelector(".collapsible").addEventListener("click", function() {
+    let content = this.nextElementSibling;
+    content.style.display = content.style.display === "block" ? "none" : "block";
+});       
 
 
        

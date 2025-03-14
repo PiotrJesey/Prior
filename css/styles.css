@@ -169,3 +169,21 @@ body {
     text-align: center;
     
   }
+  .collapsible {
+    background-color: #f1f1f1;
+    padding: 10px;
+    cursor: pointer;
+    border: none;
+    width: 100%;
+    text-align: left;
+    font-size: 16px;
+}
+
+.content {
+    display: none;
+    padding: 10px;
+    background-color: #ddd;
+    border: 1px solid #ccc;
+    margin-top: 5px;
+}
+}

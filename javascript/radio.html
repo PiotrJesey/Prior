@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        form {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            display: flex;
+            flex-direction: column;
+        }
+        .question {
+            margin-bottom: 15px;
+        }
+        .question p {
+            font-weight: bold;
+        }
+        label {
+            display: block;
+            margin: 5px 0;
+        }
+        button {
+            background: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <form id="quizForm">
+       <div id="questionsContainer"></div>
+        <div id="dropdown4">
+           <p>fdf</p> 
+        </div>
+        <div id="dropdown1">
+            
+        </div>
+        <p>Select an option:</p>
+        <label><input type="radio" name="option" value="1"> Option 1</label><br>
+        <label><input type="radio" name="option" value="2"> Option 2</label><br>
+        <label><input type="radio" name="option" value="3"> Option 3</label><br>
+        <label><input type="radio" name="option" value="4"> Option 4</label><br>
+        <label><input type="radio" name="option" value="5"> Option 5</label><br>
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+    
+    <script>
+        const questionsObj = {
+            dropdown1: [
+        { option: "Defined start and end", score: 5 },
+        { option: "Defined start and end (dates yet to be confirmed)", score: 3 },
+        { option: "No defined start or end", score: 7 }
+    ],
+    dropdown2: [
+        { option: "Contains numerous related projects or programme delivery", score: 10 },
+        { option: "Made up of numerouse related deliverables and/or tasks", score: 6 },
+        { option: "Various unrelated or ungrouped deliverables", score: 8 }
+    ],
+    dropdown3: [
+        { option: "Requires Programme Manager", score: 2 },
+        { option: "Requires Project Manager", score: 4 },
+        { option: "Reports to Line Manager", score: 1 }
+    ],
+    dropdown4: [
+        { option: "Requires Sponsoring SRO across multiple related projects", score: 2 },
+        { option: "Requires Sponsoring SRO", score: 4 },
+        { option: "No dedicated Sponsorship required", score: 1 }
+    ]
+        };
+        
+        const container = document.getElementById("questionsContainer");
+        
+        Object.keys(questionsObj).forEach((question, index) => {
+            const questionDiv = document.createElement("div");
+            questionDiv.classList.add("question");
+            questionDiv.innerHTML = `<p></p>`;
+            
+            questionsObj[question].forEach((item, idx) => {
+                const label = document.createElement("label");
+                label.innerHTML = `<input type="radio" name="${question}" value="${item.option}"> ${item.option}`;
+                questionDiv.appendChild(label);
+            });
+            
+          container.appendChild(questionDiv);
+        });
+
+        function populateDropdown(dropdownId, options) {
+            const dropdown = document.getElementById(dropdownId);
+            options.forEach(item => {
+                let optionElement = document.createElement("label");
+                optionElement.classList.add("question");
+                optionElement.value = item.score;
+                optionElement.innerHTML = `<input type="radio" name="${question}" value="${item.option}"> ${item.option}`;;
+                dropdown.appendChild(optionElement);
+            });
+        }
+        function populateDropdownTags() {
+            for (let i = 1; i <= dropdownItems; i++) {
+                let item = "dropdown" + i;  // Construct the part name (dropdown0, dropdown1, ...)
+                populateDropdown(item, dropdownData[item]);  // Access the correct dropdown data
+            }
+        }
+        
+        // Populate each dropdown with its specific options
+        populateDropdownTags();
+
+        function generateQuestion(dropdownId, question) {
+            const container = document.getElementById(dropdownId);
+            container.innerHTML = `<p><strong>${questionObj.question}</strong></p>`; // Display question text
+            
+            questionObj.options.forEach((option, index) => {
+                const label = document.createElement("label");
+                label.innerHTML = `<input type="radio" name="answer" value="${option}"> ${option}`;
+                container.appendChild(label);
+                container.appendChild(document.createElement("br"));
+            });
+        }
+        generateQuestion();
+
+        const dropdownElement = document.getElementById("dropdown4");
+        const label = document.createElement("label");
+
+    label.innerHTML = questionsObj.dropdown1.map(item => 
+        `<input type="radio" name="re" value="${item.score}"> ${item.option}<br>`
+    ).join("");
+    dropdownElement.appendChild(label)
+    </script>
+</body>
+</html>
