@@ -1,59 +1,4 @@
- // import  options from './options.js';
- 
- let radioPush = document.getElementById("radioTest").innerText = "radio"  
-
- function MyFunction() {
-    let button = document.getElementById("submButton");
-    let formElements = document.querySelectorAll("input, textarea, select");
-    let isEmpty = false;
-    let arr = [];
-
-    formElements.forEach(element => {
-        if (element.value.trim() === "" || element.selectedIndex === 0) {
-            arr.push(element.name || element.id);
-            isEmpty = true;
-            
-        }
-    });
-
-    if (isEmpty) {
-        //alert("Empty fields: " + arr.join(", ")); // Show empty fields
-        document.getElementById("empty").textContent = arr.join(",  ")
-        button.disabled = true;
-        
-    } else {
-        button.disabled = false;
-    }
-}
-
-function attachEventListenersButton() {
-    let formElements = document.querySelectorAll("input, textarea, select");
-
-    formElements.forEach(element => {
-        element.addEventListener("input", MyFunction);  // For text inputs & textarea
-        element.addEventListener("change", MyFunction); // For dropdowns
-    });
-}
-
-// Attach listeners when the page loads
-document.addEventListener("DOMContentLoaded", () => {
-    attachEventListenersButton();
-    MyFunction(); // Run once on load to check initial state
-});
-    
-let newLocal = document.getElementById('test').innerText = "Complete the questionnaire below to indicate if your initiative is a Project, Programme or Business a usual (BAU).  For Projects & Programme, then continue to the Project Sizing tab. ";
-let logo = document.getElementById("logo").src = "./img/HCJ_logo.png";
-let today = new Date().toISOString().split('T')[0];
-        // Set the input field value to today's date
-        document.getElementById('date').value = today;
-
-window.onload = function () {
-    if (!sessionStorage.getItem("alertShown")) {
-        alert("This alert will be shown only once per session.");
-        sessionStorage.setItem("alertShown", "true");
-    }
-};
-const dropdownData = {
+const data = {
     dropdown1: [
         { option: "Defined start and end", score: 5 },
         { option: "Defined start and end (dates yet to be confirmed)", score: 3 },
@@ -164,110 +109,20 @@ const dropdownData = {
     ]
 };
 
-const dropdownItems = Object.keys(dropdownData).length;
-const selectElement = document.getElementById("dropdown");
-const scoreDisplay = document.getElementById("score");
-const scoreSizingDisplay = document.getElementById("sizingScore");
-const scoreTypeDisplay = document.getElementById("scoreType");
-const scoreSizingTypeDisplay = document.getElementById("scoreSizingType");
-const recommendedTypeDisplay = document.getElementById("recommendedType");
-let totalScore = 0;
-let totalSizingScore = 0;
-let scoreType = "";
-let scoreSizingType ="";
-let recommendedType ="";
+function length(){
+    let arr =[]
+    let obj = Object.keys(data).forEach(key => {
 
-
-//Function to populate a dropdown
-        function populateDropdown(dropdownId, options) {
-            const dropdown = document.getElementById(dropdownId);
-            options.forEach(item => {
-                let optionElement = document.createElement("option");
-                optionElement.value = item.score;
-                optionElement.textContent = item.option;
-                dropdown.appendChild(optionElement);
-            });
-        }
-        function populateDropdownTags() {
-            for (let i = 1; i <= dropdownItems; i++) {
-                let item = "dropdown" + i;  // Construct the part name (dropdown0, dropdown1, ...)
-                populateDropdown(item, dropdownData[item]);  // Access the correct dropdown data
-            }
-        }
-        
-        // Populate each dropdown with its specific options
-        populateDropdownTags();
-
-        function radioPopulate(radioId, options){
-            const radio = document.getElementById(radioId);
-            options.forEach(item => {
-                let radioElement = document.createElement("label");
-                radioElement.classList.add("question");
-                radioElement.value = item.score;
-                radioElement.innerHTML = `<input type="radio" value="${item.score}" name="${radioId}">${item.option}`;
-                radio.appendChild(radioElement)
-                })
-        }
-        function populateRadioTag() {
-            for (let i = 1; i <= dropdownItems; i++) {
-                let item = "dropdown" + i;  // Construct the part name (dropdown0, dropdown1, ...)
-                radioPopulate(item, dropdownData[item]);  // Access the correct dropdown data
-            }
-        }
-        populateRadioTag();
-
-
-// Update score when an option is selected
-function updateScore() {
-    scoreType="";
-    totalScore = 0; // Reset total score
-    document.querySelectorAll(".scoreDropdown").forEach(dropdown => {
-        let selectedScore = parseInt(dropdown.value);
-        if (!isNaN(selectedScore)) {
-            totalScore += selectedScore;
-        }
+        arr.push(key); // Logs: key1, key2, key3
     });
-    scoreDisplay.value = totalScore;
-    if(totalScore > 1){
-        scoreType = "test"
-    } 
-    scoreTypeDisplay.value = scoreType;// Update displayed score
-}
+    arr.push(obj);
 
-// Add event listeners to all dropdowns
-document.querySelectorAll(".scoreDropdown").forEach(dropdown => {
-    dropdown.addEventListener("change", updateScore);
-});
-function updateSizingScore() {
-    scoreType= "";
-    recommendedType = "";
-    totalSizingScore = 0; // Reset total score
-    document.querySelectorAll(".scoreSizingDropdown").forEach(dropdown => {
-        let selectedScore = parseInt(dropdown.value);
-        if (!isNaN(selectedScore)) {
-            totalSizingScore += selectedScore;
-        }
-    });
-    scoreSizingDisplay.value = totalSizingScore;
-    if(totalSizingScore > 1){
-        scoreSizingType = "test"
-    }
-    if(totalSizingScore > 1){
-        recommendedType = "type1";
-    }
-   scoreSizingTypeDisplay.value = scoreSizingType;// Update displayed score
-   recommendedTypeDisplay.value = recommendedType; 
+    return arr;
 }
+Object.keys(data).forEach(key => {
 
-// Add event listeners to all dropdowns
-document.querySelectorAll(".scoreSizingDropdown").forEach(dropdown => {
-    dropdown.addEventListener("change", updateSizingScore);
+    console.log(key); // Logs: key1, key2, key3
 });
 
-document.querySelector(".collapsible").addEventListener("click", function() {
-    let content = this.nextElementSibling;
-    content.style.display = content.style.display === "block" ? "none" : "block";
-});       
+length();
 
-       
-console.log(Word);

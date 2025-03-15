@@ -76,6 +76,9 @@ body {
     margin-bottom: 10px;
     
   }
+  .form-group #dropdown1{
+    width: 100%;
+  }
   .form-group-button{
     display: flex;
     margin: auto;
@@ -101,7 +104,36 @@ body {
     color: #444;
     
   }
+  .question {
+    display: flex;
+    flex-direction: row; /* Aligns items vertically */
+    align-items:end; /* Aligns content to the left */
+    gap: 10px; /* Adds spacing between child elements */
+    
+    margin-bottom: 20px;
+    font-size: 16px;
+    font-weight: normal;
+    text-align: left;
+    border: 2px solid black;;
+}
+
+.radio-container {
+  display: flex;
+  flex-direction: column; /* Stack radio options vertically */
+  gap: 5px;
+  align-items:center;
   
+  
+  
+}
+
+input[type="radio"] {
+  
+    width: 20px;  /* Increase size */
+    height: 20px;
+    margin-right: 20px;
+    accent-color: #007bff; /* Change color (modern browsers) */
+}
   /* Input Fields */
   input, textarea {
     

@@ -20,7 +20,7 @@ function calculateTotalScore() {
    
     document.getElementById("totalScore").innerText = total;
     document.querySelectorAll(".scoreDropdown").forEach(dropdown => {
-        dropdown.addEventListener("change", calculateTotalScore);
+    dropdown.addEventListener("change", calculateTotalScore);
    return total;
    
     });
