@@ -1,12 +1,48 @@
  // import  options from './options.js';
+ const collapsibles = document.querySelectorAll(".collapsible");
  
+        collapsibles.forEach(collapsible => {
+            collapsible.addEventListener("click", function(event) {
+                event.preventDefault(); // Prevent any default behavior (like scrolling)
+      
+                const content = this.nextElementSibling;
+                const icon = this.querySelector(".icon");
+                
+                // Toggle the display of the content div
+                if (content.style.display === "block") {
+                    content.style.display = "none"; // Hide the content
+                    icon.textContent = "+"; // Change icon to "+"
+                } else {
+                    content.style.display = "block"; // Show the content
+                    icon.textContent = "-"; // Change icon to "-"
+                }
+
+                // Optionally change the button text based on visibility
+                
+            });
+        });
+
+ let radioPush = document.getElementById("radioTest").innerText = "radio"  
 
  function MyFunction() {
     let button = document.getElementById("submButton");
+    let formRadios = document.querySelectorAll("input[type='radio']");
     let formElements = document.querySelectorAll("input, textarea, select");
     let isEmpty = false;
     let arr = [];
+    
+    let radioGroups = new Set();
+    formRadios.forEach(radio => radioGroups.add(radio.name));
 
+    radioGroups.forEach(group => {
+        let checkedRadio = document.querySelector(`input[name='${group}']:checked`);
+        if (!checkedRadio) {
+            arr.push(group); // Add group name if no radio is selected
+            isEmpty = true;
+        }
+    });
+        
+    
     formElements.forEach(element => {
         if (element.value.trim() === "" || element.selectedIndex === 0) {
             arr.push(element.name || element.id);
@@ -26,7 +62,7 @@
 }
 
 function attachEventListenersButton() {
-    let formElements = document.querySelectorAll("input, textarea, select");
+    let formElements = document.querySelectorAll("input, textarea, select,input[type='radio']");
 
     formElements.forEach(element => {
         element.addEventListener("input", MyFunction);  // For text inputs & textarea
@@ -39,6 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
     attachEventListenersButton();
     MyFunction(); // Run once on load to check initial state
 });
+    
 let newLocal = document.getElementById('test').innerText = "Complete the questionnaire below to indicate if your initiative is a Project, Programme or Business a usual (BAU).  For Projects & Programme, then continue to the Project Sizing tab. ";
 let logo = document.getElementById("logo").src = "./img/HCJ_logo.png";
 let today = new Date().toISOString().split('T')[0];
@@ -53,31 +90,37 @@ window.onload = function () {
 };
 const dropdownData = {
     dropdown1: [
+        {title: "Timing"},
         { option: "Defined start and end", score: 5 },
         { option: "Defined start and end (dates yet to be confirmed)", score: 3 },
         { option: "No defined start or end", score: 7 }
     ],
     dropdown2: [
+        {title: "Scope"},
         { option: "Contains numerous related projects or programme delivery", score: 10 },
         { option: "Made up of numerouse related deliverables and/or tasks", score: 6 },
         { option: "Various unrelated or ungrouped deliverables", score: 8 }
     ],
     dropdown3: [
+        
         { option: "Requires Programme Manager", score: 2 },
         { option: "Requires Project Manager", score: 4 },
         { option: "Reports to Line Manager", score: 1 }
     ],
     dropdown4: [
+        {title: "sd"},
         { option: "Requires Sponsoring SRO across multiple related projects", score: 2 },
         { option: "Requires Sponsoring SRO", score: 4 },
         { option: "No dedicated Sponsorship required", score: 1 }
     ],
     dropdown5: [
+        {title: "sd"},
         { option: "Requires oversight and control", score: 2 },
         { option: "No dedicated oversight, controlled via functional or departmental operational process", score: 4 }
         
     ],
     dropdown6: [
+        {title: "sd"},
         { option: "Carries risk and requires dedicated management of risks and issues", score: 2 },
         { option: "No specific risks", score: 4 }
        
@@ -163,7 +206,7 @@ const dropdownData = {
 };
 
 const dropdownItems = Object.keys(dropdownData).length;
-const selectElement = document.getElementById("dropdown");
+const radio = document.getElementById("dropdown");
 const scoreDisplay = document.getElementById("score");
 const scoreSizingDisplay = document.getElementById("sizingScore");
 const scoreTypeDisplay = document.getElementById("scoreType");
@@ -176,27 +219,52 @@ let scoreSizingType ="";
 let recommendedType ="";
 
 
-//Function to populate a dropdown
-        function populateDropdown(dropdownId, options) {
-            const dropdown = document.getElementById(dropdownId);
-            options.forEach(item => {
-                let optionElement = document.createElement("option");
-                optionElement.value = item.score;
-                optionElement.textContent = item.option;
-                dropdown.appendChild(optionElement);
-            });
-        }
-        function populateDropdownTags() {
-            for (let i = 1; i <= dropdownItems; i++) {
-                let item = "dropdown" + i;  // Construct the part name (dropdown0, dropdown1, ...)
-                populateDropdown(item, dropdownData[item]);  // Access the correct dropdown data
-            }
-        }
-        
-        // Populate each dropdown with its specific options
-        populateDropdownTags();
 
-        
+
+function radioPopulate(radioId, options) {
+    const radio = document.getElementById(radioId);
+    if (!radio) return; // Prevent error if element doesn't exist
+
+    radio.innerHTML = ""; // Clear previous radio buttons
+
+    options.forEach(item => {
+        if (!item.option) return; // Skip objects without "option"
+        let title = options.length > 0 && options[0].title ? options[0].title : radioId;
+        let radioElement = document.createElement("label");
+        radioElement.classList.add("question");
+
+        let radioButton = document.createElement("input");
+        radioButton.type = "radio";
+        radioButton.value = item.score;
+        radioButton.name = title; // Ensure all radios in a group share the same name
+        radioButton.id = `${item.option.replace(/\s+/g, "-")}`; // Unique ID
+
+        radioElement.appendChild(radioButton);
+        radioElement.appendChild(document.createTextNode(item.option));
+        radio.appendChild(radioElement);
+
+        // Event listener for selection
+        radioButton.addEventListener("change", () => {
+            displaySelectedRadioValue(radioId, item.option);
+        });
+    });
+}
+
+function displaySelectedRadioValue(radioId, selectedValue) {
+    const displayParagraph = document.getElementById("radioTest");
+    if (displayParagraph) {
+        displayParagraph.innerText = `Selected value from ${radioId}: ${selectedValue}`;
+    }
+}
+
+// Function to dynamically populate radio buttons
+function populateRadioTag() {
+    Object.keys(dropdownData).forEach(item => {
+        radioPopulate(item, dropdownData[item]);
+    });
+}
+
+populateRadioTag();
 
 // Update score when an option is selected
 function updateScore() {
@@ -244,11 +312,6 @@ function updateSizingScore() {
 document.querySelectorAll(".scoreSizingDropdown").forEach(dropdown => {
     dropdown.addEventListener("change", updateSizingScore);
 });
-
-document.querySelector(".collapsible").addEventListener("click", function() {
-    let content = this.nextElementSibling;
-    content.style.display = content.style.display === "block" ? "none" : "block";
-});       
 
 
        

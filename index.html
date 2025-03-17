@@ -24,24 +24,29 @@
       <h4 id="test"></h4>
       
       <div class="form-container">
-        <form id="contactForm">
+        <form id="contactForm" method="get">
+          <h2>Project Information</h2>
           <div class="form-group">
-              <h2>Project Information</h2>
+              
               <label for="initiative-name">Initiative Name</label>
-              <input type="text" id="initiative-name" name="initiative-name" required>
+              <input type="text" id="initiative-name" name="initiative-name" onChange="buildRadioObject()" required>
               <label for="completed-by">Completed by</label>
               <input type="text" id="completed-by" name="completed-by" required>
               <label for="date">Date of completition</label>
               <input type="date" id="date" name="date">
             </div>
+            <h2>Questionnarie</h2>
+            
             <div class="form-group">
-              <h2>Questionnarie</h2>
-              <h4>Timing</h4>
-            <label for="dropdown1">Does the initiative have a definied start and end date?</label>
-        <select id="dropdown1" class="scoreDropdown" name="Timing_question_1">
-            <option value="0">Select an option</option>
-        </select>
-        
+              
+              <button class="collapsible">
+                <span>Timing</span>
+                <span class="icon">+</span> <!-- Initially display "+" -->
+            </button>
+            <div class="content">               
+                <div class="radio-container" id="dropdown1" name="scoreDropdown" onClick="buildRadioObject()">
+                  <span>Question</span>
+                </div>
         <table>
           <tr>
               <th>Programme</th>
@@ -55,15 +60,17 @@
           </tr>
           
       </table>
-      </div>
-      <div class="form-group">
-      <h4>Scope</h4>
       
-
-        <label for="dropdown2">What best describes the scope of the initiative?</label>
-        <select id="dropdown2" class="scoreDropdown">
-            <option value="0">Select an option</option>
-        </select>
+    </div>
+     </div> 
+      <div class="form-group">
+        <button class="collapsible">
+          <span>Scope</span>
+          <span class="icon">+</span> <!-- Initially display "+" -->
+      </button>
+      <div class="content">               
+        <div class="radio-container" id="dropdown2" onClick="buildRadioObject()" ></div>
+    
         <table>
           <tr>
               <th>Programme</th>
@@ -78,20 +85,24 @@
           
       </table>
       </div>
+      </div>
       <div class="form-group">
-      <h4>Oversight and Control</h4>
-        <label for="dropdown3">Does the initiative require a dedicated manager?</label>
-        <select id="dropdown3" class="scoreDropdown">
-            <option value="0">Select an option</option>
-        </select>
-        <label for="dropdown4">Does the initiative require a sponsor?</label>
-        <select id="dropdown4" class="scoreDropdown">
-            <option value="0">Select an option</option>
-        </select>
-        <label for="dropdown5">Does the initiative require dedicated oversight and control?:</label>
-        <select id="dropdown5" class="scoreDropdown">
-            <option value="0">Select an option</option>
-        </select>
+        <button class="collapsible">
+          <span>Oversight and Control</span>
+          <span class="icon">+</span> <!-- Initially display "+" -->
+      </button>
+      <div class="content">               
+        <div class="radio-container" id="dropdown3" onClick="buildRadioObject()">
+          <span>dsd</span>
+        </div>
+        <div class="radio-container" id="dropdown4">
+          <span>dsd</span>
+        </div>
+        
+        <div class="radio-container" id="dropdown5">
+          <span>dsd</span>
+        </div>
+      
         <table>
           <tr>
               <th>Programme</th>
@@ -115,6 +126,7 @@
         </tr>
           
       </table>
+      </div>
       </div>
       <div class="form-group">
       <h4>Risk</h4>
@@ -356,10 +368,8 @@
         </tr>
           </table>
           </div>
-          <div class="form-group">
+          <div class="form-group" id="dropdow">
             <h4>Resourcing</h4>
-            <label for="dropdown19">TEST</label>
-            <input type="radio" id="dropdown19" class="scoreSizingDropdown" value="0" >
             
            
           </div>
@@ -414,13 +424,17 @@
           </div>
           
         </form>
+        <p id="link"></p>
         <h5 id="ref">d</h5>
         <h4 id="totalScore">sd</h4>
         <h4 id="totalSizingScore"></h4>
+        <h5 id="reff">d</h5>
       </div>
       <div class="footer">
         <p>Please fill these fields:</p>
         <p id="empty"></p>
+        <p id="radioTest"></p>
+        
       </div>
       
 </div>
