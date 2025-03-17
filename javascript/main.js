@@ -26,10 +26,23 @@
 
  function MyFunction() {
     let button = document.getElementById("submButton");
-    let formElements = document.querySelectorAll("input, textarea, select, input[type='radio'] ");
+    let formRadios = document.querySelectorAll("input[type='radio']");
+    let formElements = document.querySelectorAll("input, textarea, select");
     let isEmpty = false;
     let arr = [];
+    
+    let radioGroups = new Set();
+    formRadios.forEach(radio => radioGroups.add(radio.name));
 
+    radioGroups.forEach(group => {
+        let checkedRadio = document.querySelector(`input[name='${group}']:checked`);
+        if (!checkedRadio) {
+            arr.push(group); // Add group name if no radio is selected
+            isEmpty = true;
+        }
+    });
+        
+    
     formElements.forEach(element => {
         if (element.value.trim() === "" || element.selectedIndex === 0) {
             arr.push(element.name || element.id);
@@ -77,31 +90,37 @@ window.onload = function () {
 };
 const dropdownData = {
     dropdown1: [
+        {title: "Timing"},
         { option: "Defined start and end", score: 5 },
         { option: "Defined start and end (dates yet to be confirmed)", score: 3 },
         { option: "No defined start or end", score: 7 }
     ],
     dropdown2: [
+        {title: "sdx"},
         { option: "Contains numerous related projects or programme delivery", score: 10 },
         { option: "Made up of numerouse related deliverables and/or tasks", score: 6 },
         { option: "Various unrelated or ungrouped deliverables", score: 8 }
     ],
     dropdown3: [
+        
         { option: "Requires Programme Manager", score: 2 },
         { option: "Requires Project Manager", score: 4 },
         { option: "Reports to Line Manager", score: 1 }
     ],
     dropdown4: [
+        {title: "sd"},
         { option: "Requires Sponsoring SRO across multiple related projects", score: 2 },
         { option: "Requires Sponsoring SRO", score: 4 },
         { option: "No dedicated Sponsorship required", score: 1 }
     ],
     dropdown5: [
+        {title: "sd"},
         { option: "Requires oversight and control", score: 2 },
         { option: "No dedicated oversight, controlled via functional or departmental operational process", score: 4 }
         
     ],
     dropdown6: [
+        {title: "sd"},
         { option: "Carries risk and requires dedicated management of risks and issues", score: 2 },
         { option: "No specific risks", score: 4 }
        
@@ -204,17 +223,22 @@ let recommendedType ="";
 
 function radioPopulate(radioId, options) {
     const radio = document.getElementById(radioId);
-    
+    if (!radio) return; // Prevent error if element doesn't exist
+
+    radio.innerHTML = ""; // Clear previous radio buttons
+
     options.forEach(item => {
+        if (!item.option) return; // Skip objects without "option"
+        let title = options.length > 0 && options[0].title ? options[0].title : radioId;
         let radioElement = document.createElement("label");
         radioElement.classList.add("question");
-        
+
         let radioButton = document.createElement("input");
         radioButton.type = "radio";
         radioButton.value = item.score;
-        radioButton.name = radioId; // Ensure all radios in a group share the same name
+        radioButton.name = title; // Ensure all radios in a group share the same name
         radioButton.id = `${item.option.replace(/\s+/g, "-")}`; // Unique ID
-        
+
         radioElement.appendChild(radioButton);
         radioElement.appendChild(document.createTextNode(item.option));
         radio.appendChild(radioElement);
@@ -235,12 +259,9 @@ function displaySelectedRadioValue(radioId, selectedValue) {
 
 // Function to dynamically populate radio buttons
 function populateRadioTag() {
-    for (let i = 1; i <= dropdownItems; i++) {
-        let item = "dropdown" + i;
-        if (dropdownData[item]) {
-            radioPopulate(item, dropdownData[item]);
-        }
-    }
+    Object.keys(dropdownData).forEach(item => {
+        radioPopulate(item, dropdownData[item]);
+    });
 }
 
 populateRadioTag();

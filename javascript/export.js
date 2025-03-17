@@ -122,6 +122,7 @@ function buildRadioObject() {
     } else {
         console.error("Element with ID 'reff' not found.");
     }
+    exportData = formData;
 }
 
 
@@ -179,3 +180,42 @@ function dropdown(){
     {alert(element.id)}
     } )
 }
+
+//Prefilled link
+document.addEventListener("DOMContentLoaded", function () {
+    function generatePrefilledFormLink(baseURL, formData) {
+        let params = new URLSearchParams(formData);
+        return `${baseURL}?${params.toString()}`;
+    }
+ 
+    const formURL = window.location.href
+    const formFields = exportData;
+
+    function updatePrefilledLink() {
+        // Get the latest values from input fields
+        Object.keys(formFields).forEach(fieldID => {
+            let inputElement = document.querySelector(`[name="${fieldID}"]`);
+            if (inputElement) {
+                formFields[fieldID] = inputElement.value;
+            }
+        });
+
+        // Generate and update the prefilled link
+        let prefilledLink = generatePrefilledFormLink(formURL, formFields);
+        console.log(prefilledLink); // Debugging
+
+        const linkElement = document.getElementById("link");
+        if (linkElement) {
+            linkElement.textContent = prefilledLink;
+            linkElement.href = prefilledLink;
+        }
+    }
+
+    // Attach event listeners to form fields
+    document.querySelectorAll("input, textarea, select").forEach(input => {
+        input.addEventListener("input", updatePrefilledLink);
+    });
+
+    // Initialize link on page load
+    updatePrefilledLink();
+});

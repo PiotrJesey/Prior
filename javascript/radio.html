@@ -3,151 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz Form</title>
+    <title>Collapsible Div with Icon</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f4f4f4;
-        }
-        form {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
-            display: flex;
-            flex-direction: column;
-        }
-        .question {
-            margin-bottom: 15px;
-        }
-        .question p {
-            font-weight: bold;
-        }
-        input[type="radio"] {
-
-            width: 200px;  /* Increase size */
-            height: 20px;
-            accent-color: #007bff; /* Change color (modern browsers) */
-        }
-        label {
-            
-            display: block;
-            margin: 5px 0;
-        }
-        button {
-            background: #007BFF;
+        /* Style the collapsible button */
+        .collapsible {
+            background-color: #777;
             color: white;
-            border: none;
             padding: 10px;
-            border-radius: 5px;
             cursor: pointer;
+            text-align: center;
+            border: none;
+            width: 100%;
+            border-radius: 5px;
             font-size: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        button:hover {
-            background: #0056b3;
+
+        /* Initially hide the content */
+        .content {
+            padding: 15px;
+            display: none;
+            background-color: lightgray;
+            margin-top: 5px;
+        }
+
+        .icon {
+            font-size: 20px;
         }
     </style>
 </head>
 <body>
-    <form id="quizForm">
-       <div id="questionsContainer"></div>
-        <div id="dropdown4">
-           <p>fdf</p> 
-        </div>
-        <div id="zeo">
-            
-        </div>
-        <p>Select an option:</p>
-        <label><input type="radio" name="option" value="1"> Option 1</label><br>
-        <label><input type="radio" name="option" value="2"> Option 2</label><br>
-        <label><input type="radio" name="option" value="3"> Option 3</label><br>
-        <label><input type="radio" name="option" value="4"> Option 4</label><br>
-        <label><input type="radio" name="option" value="5"> Option 5</label><br>
-        <br>
-        <button type="submit">Submit</button>
-    </form>
+
+    <h2>Collapsible Div Example</h2>
     
+    <button class="collapsible">
+        <span>Click to Toggle Content</span>
+        <span class="icon">+</span> <!-- Initially display "+" -->
+    </button>
+    <div class="content">
+        <p>This is some hidden content that will be revealed when the button is clicked.</p>
+    </div>
+
     <script>
-        const questionsObj = {
-            dropdown1: [
-        { option: "Defined start and end", score: 5 },
-        { option: "Defined start and end (dates yet to be confirmed)", score: 3 },
-        { option: "No defined start or end", score: 7 }
-    ],
-    dropdown2: [
-        { option: "Contains numerous related projects or programme delivery", score: 10 },
-        { option: "Made up of numerouse related deliverables and/or tasks", score: 6 },
-        { option: "Various unrelated or ungrouped deliverables", score: 8 }
-    ],
-    dropdown3: [
-        { option: "Requires Programme Manager", score: 2 },
-        { option: "Requires Project Manager", score: 4 },
-        { option: "Reports to Line Manager", score: 1 }
-    ],
-    dropdown4: [
-        { option: "Requires Sponsoring SRO across multiple related projects", score: 2 },
-        { option: "Requires Sponsoring SRO", score: 4 },
-        { option: "No dedicated Sponsorship required", score: 1 }
-    ]
-        };
-        
-        document.addEventListener("DOMContentLoaded", function() {
-            const container = document.getElementById("zero");
-            if (container) {
-                const test = document.createElement("div");
-                test.innerHTML = `<p>tesdssdsdsst</p>`; 
-                container.appendChild(test);
-            } else {
-                console.error("Element with id 'zero' not found.");
-            }
+        // Get all collapsible buttons
+        const collapsibles = document.querySelectorAll(".collapsible");
+
+        collapsibles.forEach(collapsible => {
+            collapsible.addEventListener("click", function(event) {
+                event.preventDefault(); // Prevent any default behavior (like scrolling)
+
+                const content = this.nextElementSibling;
+                const icon = this.querySelector(".icon");
+
+                // Toggle the display of the content div
+                if (content.style.display === "block") {
+                    content.style.display = "none"; // Hide the content
+                    icon.textContent = "+"; // Change icon to "+"
+                } else {
+                    content.style.display = "block"; // Show the content
+                    icon.textContent = "-"; // Change icon to "-"
+                }
+
+                // Optionally change the button text based on visibility
+                if (content.style.display === "block") {
+                    this.querySelector("span").innerText = "Click to Hide Content";
+                } else {
+                    this.querySelector("span").innerText = "Click to Show Content";
+                }
+            });
         });
-       
-
-        function populateDropdown(dropdownId, options) {
-            const dropdown = document.getElementById(dropdownId);
-            options.forEach(item => {
-                let optionElement = document.createElement("label");
-                optionElement.classList.add("question");
-                optionElement.value = item.score;
-                optionElement.innerHTML = `<input type="radio" name="${question}" value="${item.option}"> ${item.option}`;;
-                dropdown.appendChild(optionElement);
-            });
-        }
-        function populateDropdownTags() {
-            for (let i = 1; i <= dropdownItems; i++) {
-                let item = "dropdown" + i;  // Construct the part name (dropdown0, dropdown1, ...)
-                populateDropdown(item, dropdownData[item]);  // Access the correct dropdown data
-            }
-        }
-        
-        // Populate each dropdown with its specific options
-        populateDropdownTags();
-
-        function generateQuestion(dropdownId, question) {
-            const container = document.getElementById(dropdownId);
-            container.innerHTML = `<p><strong>${questionObj.question}</strong></p>`; // Display question text
-            
-            questionObj.options.forEach((option, index) => {
-                const label = document.createElement("label");
-                label.innerHTML = `<input type="radio" name="answer" value="${option}"> ${option}`;
-                container.appendChild(label);
-                container.appendChild(document.createElement("br"));
-            });
-        }
-        generateQuestion();
-
-        const dropdownElement = document.getElementById("dropdown4");
-        const label = document.createElement("label");
-
-    label.innerHTML = questionsObj.dropdown1.map(item => 
-        `<input type="radio" name="re" value="${item.score}"> ${item.option}<br>`
-    ).join("");
-    dropdownElement.appendChild(label)
     </script>
+
 </body>
 </html>
