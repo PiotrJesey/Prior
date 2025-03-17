@@ -197,7 +197,8 @@ document.addEventListener("DOMContentLoaded", function () {
         "initiative-name": "",
         "completed-by": "",
         "date": "",
-        "sdx": "" // For radio buttons
+        "Timing": "",
+        "Scope": "" // For radio buttons
     };
 
     // Function to update the prefilled link
@@ -208,9 +209,8 @@ document.addEventListener("DOMContentLoaded", function () {
             if (inputElement) {
                 if (inputElement.type === "radio") {
                     // Check which radio button is selected
-                    if (inputElement.checked) {
-                        formFields[fieldID] = inputElement.value;
-                    }
+                    const selectedRadio = document.querySelector(`[name="${fieldID}"]:checked`);
+                    formFields[fieldID] = selectedRadio ? selectedRadio.value : ""; // Get the value of the selected radio
                 } else {
                     formFields[fieldID] = inputElement.value;
                 }
@@ -253,4 +253,3 @@ document.addEventListener("DOMContentLoaded", function () {
     // Initialize the prefilled link on page load
     updatePrefilledLink();
 });
-

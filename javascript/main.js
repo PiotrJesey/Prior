@@ -96,7 +96,7 @@ const dropdownData = {
         { option: "No defined start or end", score: 7 }
     ],
     dropdown2: [
-        {title: "sdx"},
+        {title: "Scope"},
         { option: "Contains numerous related projects or programme delivery", score: 10 },
         { option: "Made up of numerouse related deliverables and/or tasks", score: 6 },
         { option: "Various unrelated or ungrouped deliverables", score: 8 }
