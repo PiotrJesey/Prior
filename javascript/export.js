@@ -82,6 +82,7 @@ async function buildObject() {
             dataObject[element.id] = recommendationType;
         }
         
+        
     })
     
     exportData  = dataObject;

@@ -1,5 +1,26 @@
  // import  options from './options.js';
- 
+ const collapsibles = document.querySelectorAll(".collapsible");
+
+        collapsibles.forEach(collapsible => {
+            collapsible.addEventListener("click", function() {
+                const content = this.nextElementSibling;
+
+                // Toggle the display of the content div
+                if (content.style.display === "block") {
+                    content.style.display = "none"; // Hide the content
+                } else {
+                    content.style.display = "block"; // Show the content
+                }
+
+                // Optionally change the button text based on visibility
+                if (content.style.display === "block") {
+                    this.innerText = "Click to Hide Content";
+                } else {
+                    this.innerText = "Click to Show Content";
+                }
+            });
+        });
+
  let radioPush = document.getElementById("radioTest").innerText = "radio"  
 
  function MyFunction() {
@@ -165,7 +186,7 @@ const dropdownData = {
 };
 
 const dropdownItems = Object.keys(dropdownData).length;
-const selectElement = document.getElementById("dropdown");
+const radio = document.getElementById("dropdown");
 const scoreDisplay = document.getElementById("score");
 const scoreSizingDisplay = document.getElementById("sizingScore");
 const scoreTypeDisplay = document.getElementById("scoreType");
@@ -178,25 +199,7 @@ let scoreSizingType ="";
 let recommendedType ="";
 
 
-//Function to populate a dropdown
-        function populateDropdown(dropdownId, options) {
-            const dropdown = document.getElementById(dropdownId);
-            options.forEach(item => {
-                let optionElement = document.createElement("option");
-                optionElement.value = item.score;
-                optionElement.textContent = item.option;
-                dropdown.appendChild(optionElement);
-            });
-        }
-        function populateDropdownTags() {
-            for (let i = 1; i <= dropdownItems; i++) {
-                let item = "dropdown" + i;  // Construct the part name (dropdown0, dropdown1, ...)
-                populateDropdown(item, dropdownData[item]);  // Access the correct dropdown data
-            }
-        }
-        
-        // Populate each dropdown with its specific options
-        populateDropdownTags();
+
 
         function radioPopulate(radioId, options){
             const radio = document.getElementById(radioId);
@@ -206,14 +209,28 @@ let recommendedType ="";
                 radioElement.value = item.score;
                 radioElement.innerHTML = `<input type="radio" value="${item.score}" name="${radioId}">${item.option}`;
                 radio.appendChild(radioElement)
-                })
+                
+        const radioButton = radioElement.querySelector("input[type='radio']");
+        radioButton.addEventListener("change", (e) => {
+            displaySelectedRadioValue(radioId, e.item);
+            });
+        })
         }
+        function displaySelectedRadioValue(radioId, selectedValue) {
+            // Find the <p> element where you want to display the selected value
+            const displayParagraph = document.getElementById("radioTest");
+        
+            // Update the text content of the <p> element
+            displayParagraph.innerText = `Selected value from ${radioId}: ${selectedValue}`;
+        }
+
         function populateRadioTag() {
             for (let i = 1; i <= dropdownItems; i++) {
                 let item = "dropdown" + i;  // Construct the part name (dropdown0, dropdown1, ...)
                 radioPopulate(item, dropdownData[item]);  // Access the correct dropdown data
             }
         }
+       
         populateRadioTag();
 
 
@@ -264,10 +281,6 @@ document.querySelectorAll(".scoreSizingDropdown").forEach(dropdown => {
     dropdown.addEventListener("change", updateSizingScore);
 });
 
-document.querySelector(".collapsible").addEventListener("click", function() {
-    let content = this.nextElementSibling;
-    content.style.display = content.style.display === "block" ? "none" : "block";
-});       
 
        
 console.log(Word);

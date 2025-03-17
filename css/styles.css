@@ -125,6 +125,7 @@ body {
   
   
   
+  
 }
 
 input[type="radio"] {
@@ -202,20 +203,34 @@ input[type="radio"] {
     
   }
   .collapsible {
-    background-color: #f1f1f1;
+    background-color: #777;
+    color: white;
     padding: 10px;
     cursor: pointer;
+    text-align: center;
     border: none;
     width: 100%;
-    text-align: left;
-    font-size: 16px;
+    border-radius: 5px;
 }
 
+.collapsible {
+  background-color: #777;
+  color: white;
+  padding: 10px;
+  cursor: pointer;
+  text-align: center;
+  border: none;
+  width: 100%;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+/* Initially hide the content */
 .content {
-    display: none;
-    padding: 10px;
-    background-color: #ddd;
-    border: 1px solid #ccc;
-    margin-top: 5px;
+  
+  padding: 15px;
+  display: none;
+  background-color: lightgray;
+  margin-top: 5px;
 }
 }
