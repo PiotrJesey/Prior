@@ -183,27 +183,42 @@ function dropdown(){
 
 //Prefilled link
 document.addEventListener("DOMContentLoaded", function () {
+    // Function to generate the prefilled form link
     function generatePrefilledFormLink(baseURL, formData) {
         let params = new URLSearchParams(formData);
         return `${baseURL}?${params.toString()}`;
     }
- 
-    const formURL = window.location.href
-    const formFields = exportData;
 
+    // Get the base URL (without query params)
+    const formURL = window.location.href.split('?')[0];
+
+    // Initialize form fields with empty values
+    const formFields = {
+        "initiative-name": "",
+        "completed-by": "",
+        "date": "",
+        "sdx": "" // For radio buttons
+    };
+
+    // Function to update the prefilled link
     function updatePrefilledLink() {
         // Get the latest values from input fields
         Object.keys(formFields).forEach(fieldID => {
             let inputElement = document.querySelector(`[name="${fieldID}"]`);
             if (inputElement) {
-                formFields[fieldID] = inputElement.value;
+                if (inputElement.type === "radio") {
+                    // Check which radio button is selected
+                    if (inputElement.checked) {
+                        formFields[fieldID] = inputElement.value;
+                    }
+                } else {
+                    formFields[fieldID] = inputElement.value;
+                }
             }
         });
 
         // Generate and update the prefilled link
         let prefilledLink = generatePrefilledFormLink(formURL, formFields);
-        console.log(prefilledLink); // Debugging
-
         const linkElement = document.getElementById("link");
         if (linkElement) {
             linkElement.textContent = prefilledLink;
@@ -211,11 +226,31 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // Attach event listeners to form fields
+    // Prefill the form fields based on URL query parameters
+    const queryParams = new URLSearchParams(window.location.search);
+    Object.keys(formFields).forEach(fieldID => {
+        const paramValue = queryParams.get(fieldID);
+        let inputElement = document.querySelector(`[name="${fieldID}"]`);
+        if (inputElement) {
+            if (inputElement.type === "radio" && paramValue) {
+                // Select the prefilled radio button
+                const radioButton = document.querySelector(`[name="${fieldID}"][value="${paramValue}"]`);
+                if (radioButton) {
+                    radioButton.checked = true;
+                }
+            } else if (paramValue) {
+                // Prefill text and date fields
+                inputElement.value = paramValue;
+            }
+        }
+    });
+
+    // Attach event listeners to form fields to update link when the form changes
     document.querySelectorAll("input, textarea, select").forEach(input => {
         input.addEventListener("input", updatePrefilledLink);
     });
 
-    // Initialize link on page load
+    // Initialize the prefilled link on page load
     updatePrefilledLink();
 });
+
