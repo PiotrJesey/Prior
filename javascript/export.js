@@ -58,7 +58,7 @@ calculateTotalScore();
 calculateTotalSizingScore();
 
 async function buildObject() {
-    let formElements = document.querySelectorAll("input, select, textarea");
+    let formElements = document.querySelectorAll("input, select, textarea querySelector, input[type='radio']");
     dataObject = {};
     formElements.forEach(element => {
         if (element.tagName === "SELECT") {

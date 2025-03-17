@@ -2,7 +2,8 @@
  const collapsibles = document.querySelectorAll(".collapsible");
 
         collapsibles.forEach(collapsible => {
-            collapsible.addEventListener("click", function() {
+            collapsible.addEventListener("click", function(event) {
+                event.preventDefault();
                 const content = this.nextElementSibling;
 
                 // Toggle the display of the content div
@@ -212,7 +213,7 @@ let recommendedType ="";
                 
         const radioButton = radioElement.querySelector("input[type='radio']");
         radioButton.addEventListener("change", (e) => {
-            displaySelectedRadioValue(radioId, e.item);
+            displaySelectedRadioValue(radioId, item.option);
             });
         })
         }
