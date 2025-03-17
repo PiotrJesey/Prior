@@ -25,6 +25,7 @@
       
       <div class="form-container">
         <form id="contactForm" method="get">
+          
           <h2>Project Information</h2>
           <div class="form-group">
               
@@ -137,11 +138,17 @@
       </div>
       </div>
       <div class="form-group">
-      <h4>Risk</h4>
-        <label for="dropdown6">Does the initiative carry risk and require dedicated management of risks and issues?</label>
-        <select id="dropdown6" class="scoreDropdown">
-            <option value="0">Select an option</option>
-        </select>
+        <button class="collapsible">
+          <span>Risk</span>
+          <span class="icon">+</span> <!-- Initially display "+" -->
+      </button>
+      <div class="content">    
+        <h4>Does the initiative carry risk and require dedicated management of risks and issues?</h4>           
+          <div class="radio-container" id="dropdown6" name="scoreDropdown" onClick="buildRadioObject()">
+            
+          </div>
+      
+          
         <table>
           <tr>
               <th>Programme</th>
@@ -154,6 +161,7 @@
               <td>Departmental risk management</td>
           </tr>
           </table>
+        </div>
         </div>
         <div class="form-group">
           <h4>Benefits</h4>

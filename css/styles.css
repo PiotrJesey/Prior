@@ -206,11 +206,12 @@ input[type="radio"] {
             cursor: pointer;
             text-align: center;
             border: none;
-            width: 91%;
+            width: 95%;
+            justify-content: space-between;
+
             border-radius: 5px 5px 0px 0px;
             font-size: 16px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
             margin-top: 10px;
 }
@@ -219,7 +220,7 @@ input[type="radio"] {
 }
 /* Initially hide the content */
 .content {
-  width: 87%;
+  width: 90%;
   padding: 15px;
   display: none;
   background-color: lightgray;
