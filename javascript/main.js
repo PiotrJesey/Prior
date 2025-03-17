@@ -1,24 +1,24 @@
  // import  options from './options.js';
  const collapsibles = document.querySelectorAll(".collapsible");
-
+ 
         collapsibles.forEach(collapsible => {
             collapsible.addEventListener("click", function(event) {
-                event.preventDefault();
+                event.preventDefault(); // Prevent any default behavior (like scrolling)
+      
                 const content = this.nextElementSibling;
-
+                const icon = this.querySelector(".icon");
+                
                 // Toggle the display of the content div
                 if (content.style.display === "block") {
                     content.style.display = "none"; // Hide the content
+                    icon.textContent = "+"; // Change icon to "+"
                 } else {
                     content.style.display = "block"; // Show the content
+                    icon.textContent = "-"; // Change icon to "-"
                 }
 
                 // Optionally change the button text based on visibility
-                if (content.style.display === "block") {
-                    this.innerText = "Click to Hide Content";
-                } else {
-                    this.innerText = "Click to Show Content";
-                }
+                
             });
         });
 

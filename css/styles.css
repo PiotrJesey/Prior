@@ -205,20 +205,25 @@ input[type="radio"] {
 
 .collapsible {
   background-color: #777;
-  color: white;
-  padding: 10px;
-  cursor: pointer;
-  text-align: center;
-  border: none;
-  width: 90%;
-  border-radius: 5px;
-  font-size: 16px;
-  margin-top: 10px;
+            color: white;
+            padding: 10px;
+            cursor: pointer;
+            text-align: center;
+            border: none;
+            width: 90%;
+            border-radius: 5px;
+            font-size: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
 }
-
+.icon {
+  font-size: 20px;
+}
 /* Initially hide the content */
 .content {
-  width: 80%;
+  width: 85%;
   padding: 15px;
   display: none;
   background-color: lightgray;
