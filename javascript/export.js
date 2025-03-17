@@ -57,8 +57,9 @@ function calculateTotalSizingScore(){
 calculateTotalScore();
 calculateTotalSizingScore();
 
+ 
 async function buildObject() {
-    let formElements = document.querySelectorAll("input, select, textarea querySelector, input[type='radio']");
+    let formElements = document.querySelectorAll("input, select, textarea, input[type='radio'], label");
     dataObject = {};
     formElements.forEach(element => {
         if (element.tagName === "SELECT") {
@@ -81,30 +82,67 @@ async function buildObject() {
         if(element.id === "recommendedType"){
             dataObject[element.id] = recommendationType;
         }
-        
-        
+      
+       
+           
     })
     
     exportData  = dataObject;
     document.getElementById("ref").innerText = JSON.stringify(dataObject, null, 2);
     console.log(dataObject);
 }
+function buildRadioObject() {
+    let formTexts = document.querySelectorAll("input[type='text']"); // Select all text inputs
+    let formRadios = document.querySelectorAll("input[type='radio']:checked"); // Select checked radios
+    let formDate = document.querySelectorAll("input[type='date']");
+    let formData = {}; 
 
-    
+    formDate.forEach(element => {
+        if (element.name) {
+            formData[element.name] = element.value; 
+        }
+    });
+    // Add text input values to the object
+    formTexts.forEach(element => {
+        if (element.name) {
+            formData[element.name] = element.value; 
+        }
+    });
+
+    // Add selected radio button values to the object
+    formRadios.forEach(element => {
+        if (element.name) {
+            formData[element.name] = element.id;
+        }
+    });
+
+    let outputElement = document.getElementById("reff");
+    if (outputElement) {
+        outputElement.innerText = JSON.stringify(formData, null, 2);
+    } else {
+        console.error("Element with ID 'reff' not found.");
+    }
+}
+
+
+
+
 
 function attachEventListeners() {
-    let formElements = document.querySelectorAll("input, select, textarea, a");
+    let formElements = document.querySelectorAll("input, select, textarea, a, input[type='radio']");
 
     formElements.forEach(element => {
         element.addEventListener("input", buildObject);  // For text inputs & textarea
         element.addEventListener("change", buildObject); // For dropdowns
+        element.addEventListener("input", buildRadioObject);  // For text inputs & textarea
+        element.addEventListener("change", buildRadioObject); // For dropdowns
     });
 }
 
 attachEventListeners(); // Attach event listeners on page load
 buildObject(); // Initialize with current values
 //dropdown();
-
+setTimeout(buildRadioObject, 500);
 
 async function sendToPowerAutomate(event) {
     event.preventDefault(); // Prevent default form submission

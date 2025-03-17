@@ -26,7 +26,7 @@
 
  function MyFunction() {
     let button = document.getElementById("submButton");
-    let formElements = document.querySelectorAll("input, textarea, select");
+    let formElements = document.querySelectorAll("input, textarea, select, input[type='radio'] ");
     let isEmpty = false;
     let arr = [];
 
@@ -49,7 +49,7 @@
 }
 
 function attachEventListenersButton() {
-    let formElements = document.querySelectorAll("input, textarea, select");
+    let formElements = document.querySelectorAll("input, textarea, select,input[type='radio']");
 
     formElements.forEach(element => {
         element.addEventListener("input", MyFunction);  // For text inputs & textarea
@@ -202,38 +202,48 @@ let recommendedType ="";
 
 
 
-        function radioPopulate(radioId, options){
-            const radio = document.getElementById(radioId);
-            options.forEach(item => {
-                let radioElement = document.createElement("label");
-                radioElement.classList.add("question");
-                radioElement.value = item.score;
-                radioElement.innerHTML = `<input type="radio" value="${item.score}" name="${radioId}">${item.option}`;
-                radio.appendChild(radioElement)
-                
-        const radioButton = radioElement.querySelector("input[type='radio']");
-        radioButton.addEventListener("change", (e) => {
-            displaySelectedRadioValue(radioId, item.option);
-            });
-        })
-        }
-        function displaySelectedRadioValue(radioId, selectedValue) {
-            // Find the <p> element where you want to display the selected value
-            const displayParagraph = document.getElementById("radioTest");
+function radioPopulate(radioId, options) {
+    const radio = document.getElementById(radioId);
+    
+    options.forEach(item => {
+        let radioElement = document.createElement("label");
+        radioElement.classList.add("question");
         
-            // Update the text content of the <p> element
-            displayParagraph.innerText = `Selected value from ${radioId}: ${selectedValue}`;
-        }
+        let radioButton = document.createElement("input");
+        radioButton.type = "radio";
+        radioButton.value = item.score;
+        radioButton.name = radioId; // Ensure all radios in a group share the same name
+        radioButton.id = `${item.option.replace(/\s+/g, "-")}`; // Unique ID
+        
+        radioElement.appendChild(radioButton);
+        radioElement.appendChild(document.createTextNode(item.option));
+        radio.appendChild(radioElement);
 
-        function populateRadioTag() {
-            for (let i = 1; i <= dropdownItems; i++) {
-                let item = "dropdown" + i;  // Construct the part name (dropdown0, dropdown1, ...)
-                radioPopulate(item, dropdownData[item]);  // Access the correct dropdown data
-            }
-        }
-       
-        populateRadioTag();
+        // Event listener for selection
+        radioButton.addEventListener("change", () => {
+            displaySelectedRadioValue(radioId, item.option);
+        });
+    });
+}
 
+function displaySelectedRadioValue(radioId, selectedValue) {
+    const displayParagraph = document.getElementById("radioTest");
+    if (displayParagraph) {
+        displayParagraph.innerText = `Selected value from ${radioId}: ${selectedValue}`;
+    }
+}
+
+// Function to dynamically populate radio buttons
+function populateRadioTag() {
+    for (let i = 1; i <= dropdownItems; i++) {
+        let item = "dropdown" + i;
+        if (dropdownData[item]) {
+            radioPopulate(item, dropdownData[item]);
+        }
+    }
+}
+
+populateRadioTag();
 
 // Update score when an option is selected
 function updateScore() {
