@@ -73,7 +73,7 @@
       <div class="content">         
         <h4>What best describes the scope of the initiative?</h4>           
       
-        <div class="radio-container" id="dropdown2" onClick="buildRadioObject()" ></div>
+        <div class="radio-container" id="dropdown2" name="score1" onClick="buildRadioObject()" ></div>
     
         <table>
           <tr>
@@ -164,11 +164,16 @@
         </div>
         </div>
         <div class="form-group">
-          <h4>Benefits</h4>
-        <label for="dropdown7">Does the initiative have definied measurable benefits?</label>
-        <select id="dropdown7" class="scoreDropdown">
-            <option value="0">Select an option</option>
-        </select>
+          <button class="collapsible">
+            <span>Benefits</span>
+            <span class="icon">+</span> <!-- Initially display "+" -->
+        </button>
+        <div class="content">    
+          <h4>Does the initiative have definied measurable benefits?</h4>           
+            <div class="radio-container" id="dropdown7" name="scoreDropdown" onClick="buildRadioObject()">
+              
+            </div>
+         
         <table>
           <tr>
               <th>Programme</th>
@@ -183,12 +188,18 @@
           
       </table>
       </div>
+      </div>
       <div class="form-group">
-        <h4>Change</h4>
-        <label for="dropdown8">Does the initiative directly bring about change?</label>
-        <select id="dropdown8" class="scoreDropdown">
-            <option value="0">Select an option</option>
-        </select>
+        <button class="collapsible">
+          <span>Change</span>
+          <span class="icon">+</span> <!-- Initially display "+" -->
+      </button>
+      <div class="content">    
+        <h4>Does the initiative directly bring about change?</h4>           
+          <div class="radio-container" id="dropdown8" name="scoreDropdown" onClick="buildRadioObject()">
+            
+          </div>
+        
         <table>
           <tr>
               <th>Programme</th>
@@ -202,6 +213,7 @@
           </tr>
           
       </table>
+          </div>
           </div>
           <div class="form-group">
             <label for="ratification">Ratification for type selected if different to recommended type</label>

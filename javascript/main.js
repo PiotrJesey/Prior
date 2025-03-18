@@ -90,47 +90,49 @@ window.onload = function () {
 };
 const dropdownData = {
     dropdown1: [
-        {title: "Timing"},
+        { title: "Timing"},
         { option: "Defined start and end", score: 5 },
         { option: "Defined start and end (dates yet to be confirmed)", score: 3 },
         { option: "No defined start or end", score: 7 }
     ],
     dropdown2: [
-        {title: "Scope"},
+        { title: "Scope"},
         { option: "Contains numerous related projects or programme delivery", score: 10 },
         { option: "Made up of numerouse related deliverables and/or tasks", score: 6 },
         { option: "Various unrelated or ungrouped deliverables", score: 8 }
     ],
     dropdown3: [
-        {title: "s"},
+        { title: "Oversight And Control 1"},
         { option: "Requires Programme Manager", score: 2 },
         { option: "Requires Project Manager", score: 4 },
         { option: "Reports to Line Manager", score: 1 }
     ],
     dropdown4: [
-        {title: "sd"},
+        { title: "Oversight And Control 2"},
         { option: "Requires Sponsoring SRO across multiple related projects", score: 2 },
         { option: "Requires Sponsoring SRO", score: 4 },
         { option: "No dedicated Sponsorship required", score: 1 }
     ],
     dropdown5: [
-        {title: "Oversight And Control"},
+        { title: "Oversight And Control 3"},
         { option: "Requires oversight and control", score: 2 },
         { option: "No dedicated oversight, controlled via functional or departmental operational process", score: 4 }
         
     ],
     dropdown6: [
-        {title: "Risk"},
+        { title: "Risk"},
         { option: "Carries risk and requires dedicated management of risks and issues", score: 2 },
         { option: "No specific risks", score: 4 }
        
     ],
     dropdown7: [
+        { title: "Benefits"},
         { option: "Benefits of underlying projects support the overarching programme objective", score: 2 },
         { option: "Defined benefits associated with the delivery of the scope set out", score: 4 },
         { option: "No defined benefits", score: 1 }
     ],
     dropdown8: [
+        {  title: "Change"},
         { option: "Brings about change", score: 2 },
         { option: "Benefits from change or highlights the need for change", score: 4 }
        
@@ -268,24 +270,41 @@ populateRadioTag();
 
 // Update score when an option is selected
 function updateScore() {
-    scoreType="";
-    totalScore = 0; // Reset total score
-    document.querySelectorAll(".scoreDropdown").forEach(dropdown => {
-        let selectedScore = parseInt(dropdown.value);
-        if (!isNaN(selectedScore)) {
-            totalScore += selectedScore;
-        }
-    });
-    scoreDisplay.value = totalScore;
-    if(totalScore > 1){
-        scoreType = "test"
-    } 
-    scoreTypeDisplay.value = scoreType;// Update displayed score
+    let scoreType = "";
+    let totalScore = 0; // Reset total score
+
+    // Select checked radio buttons inside div with name="score1"
+    document.querySelectorAll('div[name="score1"] .question input[type="radio"]:checked')
+        .forEach(element => {
+            let selectedScore = parseInt(element.value);
+            if (!isNaN(selectedScore)) {
+                totalScore += selectedScore;
+            }
+        });
+
+    // Select the elements where the score should be displayed
+    let scoreDisplay = document.getElementById("scoreDisplay");
+    let scoreTypeDisplay = document.getElementById("scoreTypeDisplay");
+
+    // Update displayed score if elements exist
+    if (scoreDisplay) {
+        scoreDisplay.value = totalScore;
+    }
+
+    if (totalScore > 1) {
+        scoreType = "test";
+    }
+
+    if (scoreTypeDisplay) {
+        scoreTypeDisplay.value = scoreType;
+    }
 }
 
+// Call the function
+updateScore()
 // Add event listeners to all dropdowns
-document.querySelectorAll(".scoreDropdown").forEach(dropdown => {
-    dropdown.addEventListener("change", updateScore);
+document.querySelectorAll('div[name="score1"] .question input[type="radio"]:checked').forEach(element => {
+    element.addEventListener("change", updateScore);
 });
 function updateSizingScore() {
     scoreType= "";

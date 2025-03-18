@@ -194,11 +194,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Initialize form fields with empty values
     const formFields = {
-        "initiative-name": "",
+        "initiative-name": "", // For radio buttons
         "completed-by": "",
         "date": "",
         "Timing": "",
-        "Scope": "" // For radio buttons
+        "Scope": "" 
     };
 
     // Function to update the prefilled link
