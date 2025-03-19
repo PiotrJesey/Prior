@@ -182,35 +182,93 @@ const dropdownData = {
         
     ],
     dropdown15: [
+        { title: "Complexity 1"},
         { option: "None - Has no technology requirements", score: 2 },
         { option: "Low - Has a low requirement for system change which is localised and affects 1 non core system only", score: 4 },
         { option: "Medium - Involves change to a core system or 2+ non core technologies", score: 1 },
         { option: "High - Requires change to core or critical systems or the handling of highly sensitive data", score: 1 }
     ],
     dropdown16: [
+        { title: "Complexity 2"},
         { option: "Low - Limited operational change in one or more departments", score: 2 },
         { option: "Medium - Involves significant operational change for one department", score: 4 },
         { option: "High - Cross-departmental in nature or highly impactful to the operational delivery of a department", score: 1 }
         
     ],
     dropdown17: [
+        { title: "Complexity 3"},
         { option: "Low - Includes a low number of stakeholder groups with broadly aligned requirements", score: 2 },
         { option: "Medium - Includes a large number of stakeholder groups with broadly aligned requirements", score: 4 },
         { option: "High - Includes a large number of stakeholder groups with differing or opposing requirements", score: 1 }
         
     ],
     dropdown18: [
+        { title: "Complexity 4"},
         { option: "Low - Does not entail contributions from other departments", score: 2 },
         { option: "Medium - Some interdependent key projects ", score: 4 },
         { option: "High - Require unique methods or approaches to be adapted to successfully deliver, some interdependency on strategic or major projects", score: 1 }
         
     ],
     dropdown19: [
-        { option: "Low - Does not entail contributions from other departments", score: 2 },
-        { option: "Medium - Some interdependent key projects ", score: 4 },
-        { option: "High - Require unique methods or approaches to be adapted to successfully deliver, some interdependency on strategic or major projects", score: 1 }
+        { title: "Resourcing 1"},
+        { option: "Low - Project team of <10 people ", score: 2 },
+        { option: "Medium - Project team of >10 but less than 20 people ", score: 4 },
+        { option: "High - Project team of 20+ people ", score: 1 }
         
-    ]
+    ],
+    dropdown20: [
+        { title: "Resourcing 2"},
+        { option: "Low - Does not entail contributions from other departments", score: 2 },
+        { option: "Medium - Minor involvement of other departments", score: 4 },
+        { option: "High - Significant impact to other departments", score: 1 }
+        
+    ],
+    dropdown21: [
+        { title: "Information Security 1"},
+        { option: "Yes", score: 2 },
+        { option: "No", score: 4 }
+        
+    ],
+    dropdown22: [
+        { title: "Information Security 2"},
+        { option: "Low - Public", score: 2 },
+        { option: "Medium - Official  ", score: 4 },
+        { option: "High/Medium - Official sensitive", score: 1 },
+        { option: "High - Top secret/secret", score: 1 }
+        
+    ],
+    dropdown23: [
+        { title: "Risk"},
+        { option: "Community, Corporate and departmental risk", score: 2 },
+        { option: "Departmental - Departmental service delivery risks*", score: 4 },
+        { option: "Corporate - Risks that affect the achievement of the objectives of the GoJ business model", score: 1 },
+        { option: "Community - National events or emergencies", score: 1 }
+        
+    ],
+    dropdown24: [
+        { title: "Customer impact 1"},
+        { option: "None - No impact to internal customers", score: 2 },
+        { option: "Low impact / Medium or Low volume", score: 4 },
+        { option: "Medium impact / High or Medium volume", score: 1 },
+        { option: "High impact / High volume", score: 1 }
+        
+    ],
+    dropdown25: [
+        { title: "Customer impact 2"},
+        { option: "None - No impact to external customers", score: 2 },
+        { option: "Low impact / Medium or Low volume", score: 4 },
+        { option: "Medium impact / High or Medium volume", score: 1 },
+        { option: "High impact / High volume", score: 1 }
+        
+    ],
+    dropdown26: [
+        { title: "Commercial"},
+        { option: "None - There will be no requirement for external expenditure and there are no deliverables from external parties", score: 2 },
+        { option: "Low - Limited external expenditure or delivery by an external party", score: 4 },
+        { option: "Medium - Requires some external expenditure or delivery by an external party", score: 1 },
+        { option: "High - Requires significant external expenditure or is highly reliant on the delivery of an external party", score: 1 }
+        
+    ],
 };
 
 const dropdownItems = Object.keys(dropdownData).length;
@@ -361,6 +419,7 @@ score();
 // Add event listeners to all radio buttons
 document.querySelectorAll("input[type='radio']").forEach(element => {
     element.addEventListener("change", score);
+    element.addEventListener("input", score);
 });
 
 

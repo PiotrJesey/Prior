@@ -220,8 +220,9 @@
             <input type="text" id="ratification" name="ratification"><br>
           </div>
           <div class="form-group">
+            
             <label for="score-one">Score:</label>
-            <input type="text" id="score-one" name="score-one" value="0" onchange="buildRadioObject()">
+            <input type="text" id="score-one" name="score-one" value="0" >
             <label for="type-one">Score Type</label>
             <input type="text" id="type-one" name="type-one">
             
@@ -354,23 +355,27 @@
           </div>
           </div>
           <div class="form-group">
-            <h4>Complexity</h4>
-            <label for="dropdown15">Technical complexity - This is the complexity of technical or system components of the programme/project.</label>
-            <select id="dropdown15" class="scoreSizingDropdown" required>
-            <option value="0">Select an option</option>
-            </select>
-            <label for="dropdown16">Operational complexity - This is the complexity of the operational change and the impact to processes and people across the organisation</label>
-            <select id="dropdown16" class="scoreSizingDropdown" required>
-            <option value="0">Select an option</option>
-            </select>
-            <label for="dropdown17">Stakeholder complexity - This is the complexity of the stakeholder environment which the project must navigate</label>
-            <select id="dropdown17" class="scoreSizingDropdown" required>
-            <option value="0">Select an option</option>
-            </select>
-            <label for="dropdown18">Delivery complexity - This is the complexity of the environment within which the programme/project will be delivered</label>
-            <select id="dropdown18" class="scoreSizingDropdown" required>
-            <option value="0">Select an option</option>
-            </select>
+            <button class="collapsible">
+              <span>Complexity</span>
+              <span class="icon">+</span> <!-- Initially display "+" -->
+          </button>
+          <div class="content">    
+            <h4>Technical complexity - This is the complexity of technical or system components of the programme/project.</h4>           
+              <div class="radio-container" id="dropdown15" name="scoreDropdown" onClick="buildRadioObject()">
+              </div>
+             
+            <h4>Operational complexity - This is the complexity of the operational change and the impact to processes and people across the organisation.</h4>           
+              <div class="radio-container" id="dropdown16" name="scoreDropdown" onClick="buildRadioObject()">
+              </div>
+                 
+            <h4>Stakeholder complexity - This is the complexity of the stakeholder environment which the project must navigate</h4>           
+              <div class="radio-container" id="dropdown17" name="scoreDropdown" onClick="buildRadioObject()">
+              </div>
+                      
+            <h4>Delivery complexity - This is the complexity of the environment within which the programme/project will be delivered</h4>           
+              <div class="radio-container" id="dropdown18" name="scoreDropdown" onClick="buildRadioObject()">
+              </div>
+
             <table>
               <tr>
                   <th>Major</th>
@@ -409,35 +414,84 @@
         </tr>
           </table>
           </div>
+          </div>
           <div class="form-group" id="dropdow">
-            <h4>Resourcing</h4>
+            <button class="collapsible">
+              <span>Resourcing</span>
+              <span class="icon">+</span> <!-- Initially display "+" -->
+          </button>
+          <div class="content">  
+            <h4>Resource requirements - This is the requirement for input or support to deliver from GoJ or other external resource</h4>           
+            <div class="radio-container" id="dropdown19" name="scoreDropdown" onClick="buildRadioObject()">
+            </div>
+            <h4>Cross departmental impacts - This is the requirement for support from other departments or functions to deliver</h4>           
+            <div class="radio-container" id="dropdown20" name="scoreDropdown" onClick="buildRadioObject()">
+            </div>    
             
-           
+          </div> 
           </div>
           <div class="form-group">
-            <h4>Information Security</h4>
+            <button class="collapsible">
+              <span>Information Security</span>
+              <span class="icon">+</span> <!-- Initially display "+" -->
+          </button>
+          <div class="content">  
+            <h4>Are there any information security related regulatory/legal requirements? (e.g. Data Protection Law, PCIDSS)</h4>           
+            <div class="radio-container" id="dropdown21" name="scoreDropdown" onClick="buildRadioObject()">
+            </div>
+            <h4>What type of data will the project be handling?</h4>           
+            <div class="radio-container" id="dropdown22" name="scoreDropdown" onClick="buildRadioObject()">
+            </div>
+            
+          </div> 
           </div>
           <div class="form-group">
-            <h4>Risk</h4>
+            <button class="collapsible">
+              <span>Risk</span>
+              <span class="icon">+</span> <!-- Initially display "+" -->
+          </button>
+          <div class="content">  
+            <h4>Type of risk either in terms of the risk being addressed by, or the risk of failure to deliver, the programme/project
+              *Departmental risks can include transformational risks but these need to be escalated to ELT if they affect the GoJ strategic business objectives</h4>           
+            <div class="radio-container" id="dropdown23" name="scoreDropdown" onClick="buildRadioObject()">
+            </div>
+            
+          </div> 
           </div>
           <div class="form-group">
-            <h4>Customer Impact</h4>
+            <button class="collapsible">
+              <span>Customer Impact</span>
+              <span class="icon">+</span> <!-- Initially display "+" -->
+          </button>
+          <div class="content">  
+            <h4>Internal customers - The current or forecast impact to internal customers.  Consider the type of impact (positive/negative and the emotive factors) and the likely volume of people impacted.</h4>           
+            <div class="radio-container" id="dropdown24" name="scoreDropdown" onClick="buildRadioObject()">
+            </div>
+            <h4>External customers - The current or forecast impact to external customers.  Consider the type of impact (positive/negative and the emotive factors) and the likely volume of people impacted.</h4>           
+            <div class="radio-container" id="dropdown25" name="scoreDropdown" onClick="buildRadioObject()">
+            </div>
+         </div>
           </div>
           <div class="form-group">
-            <h4>Commercial</h4>
+            <button class="collapsible">
+              <span>Commercial</span>
+              <span class="icon">+</span> <!-- Initially display "+" -->
+          </button>
+          <div class="content">  
+            <h4>Commerical impact - The requirement the programme/project has for purchasing and commercial services support</h4>           
+            <div class="radio-container" id="dropdown24" name="scoreDropdown" onClick="buildRadioObject()">
+            </div>
           </div>
-            <div class="form-group">
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required><br><br>
           </div>
           <div class="form-group">
+            <label for="ratification-2">Include ratification for type selected if different to recommended type</label>
+              <input type="text" id="ratification-2" name="ratification-2" onChange="buildRadioObject()" required>
+            <label for="sponsor">SRO/Project Sponsor Approval</label>
+            <input type="text" id="sponsor" name="sponsor" onchange="buildRadioObject()" required>
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" required><br><br>
           </div>
-          <div class="form-group">
-            <label for="message">Message:</label>
-            <textarea id="message" name="message" required></textarea><br><br>
-          </div>
+         
           
           <div class="form-group">
             <label for="scoreTwo">Sizing Score</label>
@@ -446,16 +500,8 @@
             <input id="scoreSizingType" name="scoreSizingType">
             <label for="recommendedType">Recommended Type</label>
             <input type="text" id="recommendedType" name="recommendedType">
-            <details>
-              <summary>Click to Expand</summary>
-              <div>
-                <p>This is the hidden content inside the collapsible div.</p>
-              </div>
-            </details>
-            <button class="collapsible">Click to Expand</button>
-<div class="content">
-    <p>This is the collapsible content.</p>
-</div>
+            
+           
 
           </div>
           <div class="form-group-button">

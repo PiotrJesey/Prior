@@ -6,6 +6,7 @@ function buildRadioObject() {
     let formTexts = document.querySelectorAll("input[type='text']"); // Select all text inputs
     let formRadios = document.querySelectorAll("input[type='radio']:checked"); // Select checked radios
     let formDate = document.querySelectorAll("input[type='date']");
+   
     let formData = {}; 
 
     formDate.forEach(element => {
@@ -26,6 +27,7 @@ function buildRadioObject() {
             formData[element.name] = element.id;
         }
     });
+    
 
     let outputElement = document.getElementById("reff");
     if (outputElement) {
@@ -39,21 +41,14 @@ function buildRadioObject() {
 
 
 
-
-function attachEventListeners() {
-    let formElements = document.querySelectorAll("input[type='text'], select, textarea, a, input[type='radio']");
-
-    formElements.forEach(element => {
-    
-        element.addEventListener("input", buildRadioObject);  // For text inputs & textarea
-        element.addEventListener("change", buildRadioObject); // For dropdowns
-    });
-}
-
-attachEventListeners(); // Attach event listeners on page load
+document.addEventListener("change", (event) => {
+    if (event.target.matches("input[type='text'], input[type='radio'], input[type='date']")) {
+        buildRadioObject();
+    }
+});
 
 
-setTimeout(buildRadioObject, 500);
+setTimeout(buildRadioObject, 100);
 
 async function sendToPowerAutomate(event) {
     event.preventDefault(); // Prevent default form submission
@@ -81,15 +76,7 @@ async function sendToPowerAutomate(event) {
         alert("An unexpected error occurred.");
     }
 }
-//for testing purpose, display alert with all empty fields
-function dropdown(){
-    let dropDownElement = document.querySelectorAll("select");
-    dropdownObject = {};
- dropDownElement.forEach(element => {
-    if(element.selectedIndex === 0)
-    {alert(element.id)}
-    } )
-}
+
 
 //Prefilled link
 document.addEventListener("DOMContentLoaded", function () {
@@ -114,7 +101,16 @@ document.addEventListener("DOMContentLoaded", function () {
         "Oversight and Control 3": "",
         "Risk": "",
         "Benefits": "",
-        "Change": ""
+        "Change": "",
+        "Strategic Priority": "",
+        "Financial 1": "",
+        "Financial 2": "",
+        "Financial 3": "",
+        "Financial 4": ""
+
+
+
+
     };
 
     // Function to update the prefilled link
