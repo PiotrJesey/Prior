@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
     
 let newLocal = document.getElementById('test').innerText = "Complete the questionnaire below to indicate if your initiative is a Project, Programme or Business a usual (BAU).  For Projects & Programme, then continue to the Project Sizing tab. ";
-let logo = document.getElementById("logo").src = "./img/HCJ_logo.png";
+let logo = document.getElementById("logo").src = "./img/DH_logo_W.png";
 let today = new Date().toISOString().split('T')[0];
         // Set the input field value to today's date
         document.getElementById('date').value = today;
@@ -268,23 +268,42 @@ populateRadioTag();
 
 
 function score() {
-    let num = 0;
-    let scoreData = document.querySelectorAll("input[type='radio']:checked"); // Get only checked radio buttons
 
-    scoreData.forEach(element => {
-        num += parseInt(element.value) || 0; // Convert value to number and handle NaN
+    let arr = [];
+Object.keys(dropdownData).forEach((key, index) => {
+   if (index <8 ){
+      arr.push(key);
+   }
+})
+
+  //let arr = ["dropdown1", "dropdown2"];
+    let num = 0;
+
+    // Loop through each element in arr (dropdown IDs)
+    arr.forEach(e => {
+        // Get all radio buttons within the dropdown element
+        let questionGroup = document.querySelectorAll(`#${e} input[type='radio']:checked`);
+
+        // Loop through all checked radio buttons in the group
+        questionGroup.forEach(question => {
+            num += parseInt(question.value) || 0; // Add the value of each checked radio button
+        });
     });
-    
+
+    // Display the total score
     let numDisp = document.getElementById("scores");
     if (numDisp) {
-        numDisp.innerText = num; // Correctly display the score
+        numDisp.innerText = num+arr; // Correctly display the score
     }
-} 
-score();
-document.querySelectorAll("input[type='radio']").forEach(element => {
-    element.addEventListener("change", score)
-});
+}
 
+// Initial score calculation
+score();
+
+// Add event listeners to all radio buttons
+document.querySelectorAll("input[type='radio']").forEach(element => {
+    element.addEventListener("change", score);
+});
 
 
 // Update score when an option is selected

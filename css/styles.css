@@ -30,10 +30,11 @@
 }
 .header-item h1{
   font-size: 30px;
+  color: white;
 }
 #logo {
   
-  width: 250px;
+  width: 270px;
   height: auto;
 
 }
@@ -42,7 +43,9 @@ h1 {
 }
 body {
  
-    background-color:rgb(239, 239, 239);
+    background-color:rgba(0,134,203,0.8);
+   
+    /* Remove any default margin */
 }
 body::before {
   content: "";
@@ -51,18 +54,15 @@ body::before {
   left: 1%;
   width: 20px;
   height: 100%;
-  background-color: rgb(2, 112, 255);
+  background-color: rgb(255,255,255);
 }
   .main-container {
-    display: grid;
     
-    background-color: rgb(237, 237, 237);
-    grid-template-columns: auto;
     gap: 10px;
     max-width: 80%;
     margin: 40px auto;
     padding: 40px;
-    background: #fff;
+    background:  rgba(255, 255, 255,0.9);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     text-align: center;
@@ -70,7 +70,7 @@ body::before {
 .form-container {
     
     
-    background: #fff;
+    
     width: 100%;
     text-align: center;
   }
@@ -177,7 +177,7 @@ input[type="radio"] {
   }
   
   button:hover {
-    background: #0056b3;
+    background: RGB(0,134,203);
   }
   :disabled {
     background-color: #b2b2b2;
@@ -192,7 +192,7 @@ input[type="radio"] {
     
   }
   td,th, tr{
-    background-color: #b2b2b2;
+    background-color: RGBA(0,134,203,0.2);
     height: 20px;
     font-size: 12px;
     border-radius: 4px;
@@ -210,7 +210,7 @@ input[type="radio"] {
  
 
 .collapsible {
-  background-color: #777;
+  background-color: rgba(0,134,203,0.6);
             color: white;
             padding: 10px;
             cursor: pointer;
@@ -230,10 +230,16 @@ input[type="radio"] {
 }
 /* Initially hide the content */
 .content {
+  background-image: url('/img/DH_hero-01.png');
+
+  background-blend-mode: 10%;
+  background-size: 70%, contain;
+  background-position: top right;
+  background-repeat: no-repeat;
   width: 90%;
   padding: 15px;
   display: none;
-  background-color: lightgray;
+  background-color: RGBA(0,134,203,0.1);
   margin:auto;
   border-radius: 0px 0px 5px 5px;
 }
