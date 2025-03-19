@@ -1,16 +1,16 @@
-const nodemailer = require("nodemailer");
+import nodemailer from "nodemailer";
 
 const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-        user: "piotr.marcin.wrobel@gmail.com",
-        pass: "Natusza.7" // Use App Password for security
+        user: "",
+        pass: "facu zbbu yjce nscj" // Use App Password for security
     }
 });
 
 async function sendEmail(to, subject, text) {
     await transporter.sendMail({
-        from: "prior@gov.je",
+        from: "hell@ws.s",
         to,
         subject,
         text
@@ -18,4 +18,4 @@ async function sendEmail(to, subject, text) {
     console.log("Email sent successfully");
 }
 
-sendEmail("piotr@retroad.co.uk", "Hello", "This is a test email.");
+sendEmail("hello", "Hello", "This is a test email.");
