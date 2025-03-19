@@ -1,96 +1,7 @@
-let total = 0;
-let sizingTotal = 0;
-let type ="";
-let sizingType ="";
-let recommendationType="";
+
 let exportData = {};
-function calculateTotalScore() {
-    total = 0;
-    type = "";
-    let dropdowns = document.querySelectorAll(".scoreDropdown");
-    
-    dropdowns.forEach(dropdown => {
-        total += parseInt(dropdown.value);
-    });
-    if(total > 2){
-         type ="test"
-    }else{
-         type ="null";
-    }
-   
-    document.getElementById("totalScore").innerText = total;
-    document.querySelectorAll(".scoreDropdown").forEach(dropdown => {
-    dropdown.addEventListener("change", calculateTotalScore);
-   return total;
-   
-    });
-    
-    
-    
-}
-function calculateTotalSizingScore(){
-    sizingTotal = 0;
-    sizingType = "";
-    recommendationType ="";
 
-    let sizingDropdown = document.querySelectorAll(".scoreSizingDropdown");
-    sizingDropdown.forEach(dropdown => {
-        sizingTotal += parseInt(dropdown.value);
-    });
-    if( sizingTotal > 2){
-        sizingType = "sizing Type Test";   
-    }else{
-        sizingType = "null";
-    }
-    if(sizingTotal > 3){
-        recommendationType = "rec";
-    }else{
-        recommendationType ="rec null"
-    }
 
-    document.getElementById("totalSizingScore").innerText = sizingTotal;
-    document.querySelectorAll(".scoreSizingDropdown").forEach(dropdown =>{
-        dropdown.addEventListener("change", calculateTotalSizingScore);
-    return sizingTotal;
-    });
-} 
-calculateTotalScore();
-calculateTotalSizingScore();
-
- 
-async function buildObject() {
-    let formElements = document.querySelectorAll("input, select, textarea, input[type='radio'], label");
-    dataObject = {};
-    formElements.forEach(element => {
-        if (element.tagName === "SELECT") {
-            dataObject[element.id] = element.options[element.selectedIndex].text;
-        } else {
-            dataObject[element.name] = element.value;
-        } 
-        if (element.id === "score"){
-            dataObject[element.id] = total.toString();
-        }
-        if(element.id ==="scoreType"){
-            dataObject[element.name] = type;
-        }
-        if(element.id === "sizingScore"){
-            dataObject[element.id] = sizingTotal.toString();
-        }
-        if(element.id === "scoreSizingType"){
-            dataObject[element.id] = sizingType;
-        }
-        if(element.id === "recommendedType"){
-            dataObject[element.id] = recommendationType;
-        }
-      
-       
-           
-    })
-    
-    exportData  = dataObject;
-    document.getElementById("ref").innerText = JSON.stringify(dataObject, null, 2);
-    console.log(dataObject);
-}
 function buildRadioObject() {
     let formTexts = document.querySelectorAll("input[type='text']"); // Select all text inputs
     let formRadios = document.querySelectorAll("input[type='radio']:checked"); // Select checked radios
@@ -130,19 +41,18 @@ function buildRadioObject() {
 
 
 function attachEventListeners() {
-    let formElements = document.querySelectorAll("input, select, textarea, a, input[type='radio']");
+    let formElements = document.querySelectorAll("input[type='text'], select, textarea, a, input[type='radio']");
 
     formElements.forEach(element => {
-        element.addEventListener("input", buildObject);  // For text inputs & textarea
-        element.addEventListener("change", buildObject); // For dropdowns
+    
         element.addEventListener("input", buildRadioObject);  // For text inputs & textarea
         element.addEventListener("change", buildRadioObject); // For dropdowns
     });
 }
 
 attachEventListeners(); // Attach event listeners on page load
-buildObject(); // Initialize with current values
-//dropdown();
+
+
 setTimeout(buildRadioObject, 500);
 
 async function sendToPowerAutomate(event) {
@@ -198,7 +108,13 @@ document.addEventListener("DOMContentLoaded", function () {
         "completed-by": "",
         "date": "",
         "Timing": "",
-        "Scope": "" 
+        "Scope": "",
+        "Oversight and Control 1": "",
+        "Oversight and Control 2": "",
+        "Oversight and Control 3": "",
+        "Risk": "",
+        "Benefits": "",
+        "Change": ""
     };
 
     // Function to update the prefilled link

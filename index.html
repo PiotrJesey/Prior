@@ -220,10 +220,10 @@
             <input type="text" id="ratification" name="ratification"><br>
           </div>
           <div class="form-group">
-            <label for="score">Score:</label>
-            <input type="text" id="score" name="score" value="0">
-            <label for="scoreType">Score Type</label>
-            <input type="text" id="scoreType" name="scoreType">
+            <label for="score-one">Score:</label>
+            <input type="text" id="score-one" name="score-one" value="0" onchange="buildRadioObject()">
+            <label for="type-one">Score Type</label>
+            <input type="text" id="type-one" name="type-one">
             
           </div>
           <h2>CPMO - Initiative Sizing Matrix</h2>
@@ -237,11 +237,16 @@
           </div>
           <h2>Questionnaire</h2>
           <div class="form-group">
-            <h4>Strategic Priority</h4>
-            <label for="dropdown9">The alignment to strategic priorities</label>
-        <select id="dropdown9" class="scoreSizingDropdown" required>
-            <option value="0">Select an option</option>
-            </select>
+            <button class="collapsible">
+              <span>Strategic Priority</span>
+              <span class="icon">+</span> <!-- Initially display "+" -->
+          </button>
+          <div class="content">    
+            <h4>The alignment to strategic priorities</h4>           
+              <div class="radio-container" id="dropdown9" name="scoreDropdown" onClick="buildRadioObject()">
+                
+              </div>
+            
             <table>
               <tr>
                   <th>Major</th>
@@ -260,24 +265,26 @@
               
           </table>
           </div>
+          </div>
           <div class="form-group">
-            <h4>Financial</h4>
-            <label for="dropdown10">Estimated expenditure - This is the total expenditure the programme/project estimates across cumulative years.</label>
-        <select id="dropdown10" class="scoreSizingDropdown" required>
-            <option value="0">Select an option</option>
-            </select>
-            <label for="dropdown11">Financial benefits - The programme/project funding will be approved on the basis of financial benefits.</label>
-        <select id="dropdown11" class="scoreSizingDropdown" required>
-            <option value="0">Select an option</option>
-            </select>
-            <label for="dropdown12">Financial risk (Benefits) - This is the financial risk to the Government of not achieving the project's stated benefits (financial and non-financial)</label>
-        <select id="dropdown12" class="scoreSizingDropdown" required>
-            <option value="0">Select an option</option>
-            </select>
-            <label for="dropdown13">Financial risk (Failure) - This is the financial impact to the Government or a Government entity or department should an aspect of the programme/project fail</label>
-        <select id="dropdown13" class="scoreSizingDropdown" required>
-            <option value="0">Select an option</option>
-            </select>
+            <button class="collapsible">
+              <span>Financial</span>
+              <span class="icon">+</span> <!-- Initially display "+" -->
+          </button>
+          <div class="content">    
+            <h4>Estimated expenditure - This is the total expenditure the programme/project estimates across cumulative years.</h4>           
+              <div class="radio-container" id="dropdown10" name="scoreDropdown" onClick="buildRadioObject()">
+              </div>
+              <h4>Financial benefits - The programme/project funding will be approved on the basis of financial benefits.</h4>           
+              <div class="radio-container" id="dropdown11" name="scoreDropdown" onClick="buildRadioObject()">
+              </div>
+              <h4>Financial risk (Benefits) - This is the financial risk to the Government of not achieving the project's stated benefits (financial and non-financial)</h4>           
+              <div class="radio-container" id="dropdown12" name="scoreDropdown" onClick="buildRadioObject()">
+              </div>
+              <h4>Financial risk (Failure) - This is the financial impact to the Government or a Government entity or department should an aspect of the programme/project fail</h4>           
+              <div class="radio-container" id="dropdown13" name="scoreDropdown" onClick="buildRadioObject()">
+              </div>
+            
             <table>
               <tr>
                   <th>Major</th>
@@ -316,12 +323,17 @@
         </tr>
           </table>
           </div>
+          </div>
           <div class="form-group">
-            <h4>Duration</h4>
-            <label for="dropdown14">The length of time to complete the programme/project from start to finish</label>
-            <select id="dropdown14" class="scoreSizingDropdown" required>
-            <option value="0">Select an option</option>
-            </select>
+            <button class="collapsible">
+              <span>Duration</span>
+              <span class="icon">+</span> <!-- Initially display "+" -->
+          </button>
+          <div class="content">    
+            <h4>The length of time to complete the programme/project from start to finish</h4>           
+              <div class="radio-container" id="dropdown14" name="scoreDropdown" onClick="buildRadioObject()">
+              </div>
+            
             <table>
               <tr>
                   <th>Major</th>
@@ -339,6 +351,7 @@
               </tr>
               
           </table>
+          </div>
           </div>
           <div class="form-group">
             <h4>Complexity</h4>
@@ -427,8 +440,8 @@
           </div>
           
           <div class="form-group">
-            <label for="sizingScore">Sizing Score</label>
-            <input type="text" id="sizingScore" name="sizingScore" value="0">
+            <label for="scoreTwo">Sizing Score</label>
+            <input type="text" id="scoreTwo" name="scoreTwo" value="0">
             <label for="scoreSizingType">Sizing Type</label>
             <input id="scoreSizingType" name="scoreSizingType">
             <label for="recommendedType">Recommended Type</label>

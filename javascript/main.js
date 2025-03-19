@@ -90,58 +90,62 @@ window.onload = function () {
 };
 const dropdownData = {
     dropdown1: [
-        {title: "Timing"},
+        { title: "Timing"},
         { option: "Defined start and end", score: 5 },
         { option: "Defined start and end (dates yet to be confirmed)", score: 3 },
         { option: "No defined start or end", score: 7 }
     ],
     dropdown2: [
-        {title: "Scope"},
+        { title: "Scope"},
         { option: "Contains numerous related projects or programme delivery", score: 10 },
         { option: "Made up of numerouse related deliverables and/or tasks", score: 6 },
         { option: "Various unrelated or ungrouped deliverables", score: 8 }
     ],
     dropdown3: [
-        {title: "s"},
+        { title: "Oversight and Control 1"},
         { option: "Requires Programme Manager", score: 2 },
         { option: "Requires Project Manager", score: 4 },
         { option: "Reports to Line Manager", score: 1 }
     ],
     dropdown4: [
-        {title: "sd"},
+        { title: "Oversight And Control 2"},
         { option: "Requires Sponsoring SRO across multiple related projects", score: 2 },
         { option: "Requires Sponsoring SRO", score: 4 },
         { option: "No dedicated Sponsorship required", score: 1 }
     ],
     dropdown5: [
-        {title: "Oversight And Control"},
+        { title: "Oversight And Control 3"},
         { option: "Requires oversight and control", score: 2 },
         { option: "No dedicated oversight, controlled via functional or departmental operational process", score: 4 }
         
     ],
     dropdown6: [
-        {title: "Risk"},
+        { title: "Risk"},
         { option: "Carries risk and requires dedicated management of risks and issues", score: 2 },
         { option: "No specific risks", score: 4 }
        
     ],
     dropdown7: [
+        { title: "Benefits"},
         { option: "Benefits of underlying projects support the overarching programme objective", score: 2 },
         { option: "Defined benefits associated with the delivery of the scope set out", score: 4 },
         { option: "No defined benefits", score: 1 }
     ],
     dropdown8: [
+        { title: "Change"},
         { option: "Brings about change", score: 2 },
         { option: "Benefits from change or highlights the need for change", score: 4 }
        
     ],
     dropdown9: [
+        { title: "Strategic Priority"},
         { option: "Low - Some limited alignment to strategic priorities", score: 2 },
         { option: "Medium - Project is aligned to strategic priorities but not key to their achievement ", score: 4 },
         { option: "High - Project will deliver transformative outcomes for, or mitigate significant risks to, the Government of Jersey which may directly or indirectly impact outcomes for the Island’s economy or community ", score: 1 },
         { option: "Very High - Project will deliver transformative outcomes for, or mitigate significant risks to, the Island’s economy or community", score: 1 }
     ],
     dropdown10: [
+        { title: "Financial 1"},
         { option: "< £25,000", score: 2 },
         { option: ">£25,000 and < £250,000", score: 1 },
         { option: ">£250,000 and <£2,000,000", score: 1 },
@@ -150,24 +154,28 @@ const dropdownData = {
 
     ],
     dropdown11: [
+        { title: "Financial 2"},
         { option: "None - There are no financial benefits", score: 2 },
         { option: "Low - Benefits are estimated to be in excess of £50,000", score: 1 },
         { option: "Medium - Benefits are estimated to be in excess of £500,000", score: 1 },
         { option: "High - Benefits are estimated to be in excess of £1,000,000", score: 1 }
     ],
     dropdown12: [
+        { title: "Financial 3"},
         { option: "Low - Some limited alignment to strategic priorities", score: 2 },
         { option: "Medium - Project is aligned to strategic priorities but not key to their achievement ", score: 4 },
         { option: "High - Project will deliver transformative outcomes for, or mitigate significant risks to, the Government of Jersey which may directly or indirectly impact outcomes for the Island’s economy or community ", score: 1 },
         { option: "Very High - Project will deliver transformative outcomes for, or mitigate significant risks to, the Island’s economy or community", score: 1 }
     ],
     dropdown13: [
+        { title: "Financial 4"},
         { option: "Low - Some limited alignment to strategic priorities", score: 2 },
         { option: "Medium - Project is aligned to strategic priorities but not key to their achievement ", score: 4 },
         { option: "High - Project will deliver transformative outcomes for, or mitigate significant risks to, the Government of Jersey which may directly or indirectly impact outcomes for the Island’s economy or community ", score: 1 },
         { option: "Very High - Project will deliver transformative outcomes for, or mitigate significant risks to, the Island’s economy or community", score: 1 }
     ],
     dropdown14: [
+        { title: "Duration"},
         { option: "Low - Duration < 6 months", score: 2 },
         { option: "Medium - Duration of 6+ months", score: 4 },
         { option: "High - Duration of 12+ months", score: 1 }
@@ -268,32 +276,82 @@ populateRadioTag();
 
 
 function score() {
+    let ScoreOneArr = [];
+    let ScoreTwoArr = [];
+    let TypeOne = "";
+    let TypeTwo = "";
 
-    let arr = [];
-Object.keys(dropdownData).forEach((key, index) => {
-   if (index <8 ){
-      arr.push(key);
-   }
-})
+    // Split keys into two groups
+    Object.keys(dropdownData).forEach((key, index) => {
+        if (index < 8) {
+            ScoreOneArr.push(key);
+        } else {
+            ScoreTwoArr.push(key);
+        }
+    });
 
-  //let arr = ["dropdown1", "dropdown2"];
-    let num = 0;
+    let scoreOne = 0;
+    let scoreTwo = 0;
 
-    // Loop through each element in arr (dropdown IDs)
-    arr.forEach(e => {
-        // Get all radio buttons within the dropdown element
-        let questionGroup = document.querySelectorAll(`#${e} input[type='radio']:checked`);
+    // Loop through ScoreOneArr
+    ScoreOneArr.forEach(e => {
+        // Get all checked radio buttons within the dropdown element
+        let questionGroupOne = document.querySelectorAll(`#${e} input[type='radio']:checked`);
 
         // Loop through all checked radio buttons in the group
-        questionGroup.forEach(question => {
-            num += parseInt(question.value) || 0; // Add the value of each checked radio button
+        questionGroupOne.forEach(question => {
+            scoreOne += parseInt(question.value) || 0; // Add the value of each checked radio button
         });
     });
 
-    // Display the total score
-    let numDisp = document.getElementById("scores");
-    if (numDisp) {
-        numDisp.innerText = num+arr; // Correctly display the score
+    // Loop through ScoreTwoArr
+    ScoreTwoArr.forEach(e => {
+        let questionGroupTwo = document.querySelectorAll(`#${e} input[type='radio']:checked`);  
+        questionGroupTwo.forEach(question => {
+            scoreTwo += parseInt(question.value) || 0;
+        });
+    });
+
+    // Determine TypeOne based on scoreOne
+    switch(true) {
+        case scoreOne > 5:
+            TypeOne = "higher than 5";
+            break;
+        case scoreOne > 2:
+            TypeOne = "value higher than 2";
+            break;
+        default:
+            TypeOne = "default";
+    }
+
+    // Display scores and types
+    let scoreOneDisplay = document.getElementById("score-one");
+    if (scoreOneDisplay) {
+        scoreOneDisplay.value = scoreOne;
+    }
+
+    let scoreTwoDisplay = document.getElementById("scoreTwo");
+    if (scoreTwoDisplay) {
+        scoreTwoDisplay.value = scoreTwo;
+    }
+
+    let typeOneDisplay = document.getElementById("type-one");
+    if (typeOneDisplay) {
+        typeOneDisplay.value = TypeOne;
+    }
+
+    // Optionally, you can add logic for TypeTwo based on scoreTwo here:
+    if (scoreTwo > 5) {
+        TypeTwo = "higher than 5";
+    } else if (scoreTwo > 2) {
+        TypeTwo = "value higher than 2";
+    } else {
+        TypeTwo = "default";
+    }
+
+    let typeTwoDisplay = document.getElementById("type-two");
+    if (typeTwoDisplay) {
+        typeTwoDisplay.innerText = TypeTwo;
     }
 }
 
@@ -306,51 +364,7 @@ document.querySelectorAll("input[type='radio']").forEach(element => {
 });
 
 
-// Update score when an option is selected
-function updateScore() {
-    scoreType="";
-    totalScore = 0; // Reset total score
-    document.querySelectorAll(".scoreDropdown").forEach(dropdown => {
-        let selectedScore = parseInt(dropdown.value);
-        if (!isNaN(selectedScore)) {
-            totalScore += selectedScore;
-        }
-    });
-    scoreDisplay.value = totalScore;
-    if(totalScore > 1){
-        scoreType = "test"
-    } 
-    scoreTypeDisplay.value = scoreType;// Update displayed score
-}
 
-// Add event listeners to all dropdowns
-document.querySelectorAll(".scoreDropdown").forEach(dropdown => {
-    dropdown.addEventListener("change", updateScore);
-});
-function updateSizingScore() {
-    scoreType= "";
-    recommendedType = "";
-    totalSizingScore = 0; // Reset total score
-    document.querySelectorAll(".scoreSizingDropdown").forEach(dropdown => {
-        let selectedScore = parseInt(dropdown.value);
-        if (!isNaN(selectedScore)) {
-            totalSizingScore += selectedScore;
-        }
-    });
-    scoreSizingDisplay.value = totalSizingScore;
-    if(totalSizingScore > 1){
-        scoreSizingType = "test"
-    }
-    if(totalSizingScore > 1){
-        recommendedType = "type1";
-    }
-   scoreSizingTypeDisplay.value = scoreSizingType;// Update displayed score
-   recommendedTypeDisplay.value = recommendedType; 
-}
 
-// Add event listeners to all dropdowns
-document.querySelectorAll(".scoreSizingDropdown").forEach(dropdown => {
-    dropdown.addEventListener("change", updateSizingScore);
-});
 
 
