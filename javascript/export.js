@@ -1,5 +1,6 @@
 
-let exportData = {}; // Global object to hold form data
+let exportData = {};
+let exportLinkData = {}; // Global object to hold form data
 const baseURL = window.location.href.split('?')[0]; // Get the base URL without query parameters
 let link = ""; // Global variable to store the generated URL
 
@@ -10,7 +11,7 @@ function buildRadioObject() {
     let formEmail = document.querySelectorAll("input[type='email']");
 
     let formData = {}; // Temporary object to hold form data
-
+    
     // Loop through date inputs and add to formData
     formDate.forEach(element => {
         if (element.name) {
@@ -31,19 +32,46 @@ function buildRadioObject() {
         }
     });
 
-    // Loop through selected radio buttons and add to formData
     formRadios.forEach(element => {
         if (element.name) {
             formData[element.name] = element.id; // Assuming you're using `id` for radio buttons
         }
     });
+    let exportLink ={};
+
+    formDate.forEach(element => {
+        if (element.name) {
+            exportLink[element.name] = element.value; 
+        }
+    });
+
+    // Loop through text inputs and add to formData
+    formTexts.forEach(element => {
+        if (element.name) {
+            exportLink[element.name] = element.value; 
+        }
+    });
+
+    formEmail.forEach(element => {
+        if (element.name) {
+            exportLink[element.name] = element.value; 
+        }
+    });
+    formRadios.forEach(element => {
+        if (element.name) {
+            exportLink[element.name] = element.value; // Assuming you're using `id` for radio buttons
+        }
+    });
+
+    // Loop through selected radio buttons and add to formData
+   
 
     // Update the global exportData object with the current form data
     exportData = formData; 
-
+    exportLinkData = exportLink;
     // Create query parameters from the formData object
-    const queryParams = Object.keys(formData).map(key => {
-        return encodeURIComponent(key) + '=' + encodeURIComponent(formData[key]);
+    const queryParams = Object.keys(exportLink).map(key => {
+        return encodeURIComponent(key) + '=' + encodeURIComponent(exportLink[key]);
     });
 
     // Join the key-value pairs with '&' and append them to the base URL
@@ -211,6 +239,7 @@ document.addEventListener("DOMContentLoaded", function () {
         "initiative-name": "", // For radio buttons
         "completed-by": "",
         "date": "",
+        "email": "",
         "Timing": "",
         "Scope": "",
         "Oversight and Control 1": "",
@@ -223,7 +252,9 @@ document.addEventListener("DOMContentLoaded", function () {
         "Financial 1": "",
         "Financial 2": "",
         "Financial 3": "",
-        "Financial 4": ""
+        "Financial 4": "",
+        "Commercial": "",
+        "sponsor": ""
 
 
 

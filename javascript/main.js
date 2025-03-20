@@ -273,16 +273,7 @@ const dropdownData = {
 
 const dropdownItems = Object.keys(dropdownData).length;
 const radio = document.getElementById("dropdown");
-const scoreDisplay = document.getElementById("score");
-const scoreSizingDisplay = document.getElementById("sizingScore");
-const scoreTypeDisplay = document.getElementById("scoreType");
-const scoreSizingTypeDisplay = document.getElementById("scoreSizingType");
-const recommendedTypeDisplay = document.getElementById("recommendedType");
-let totalScore = 0;
-let totalSizingScore = 0;
-let scoreType = "";
-let scoreSizingType ="";
-let recommendedType ="";
+
 
 
 
@@ -338,6 +329,7 @@ function score() {
     let ScoreTwoArr = [];
     let TypeOne = "";
     let TypeTwo = "";
+    let recommendedType = "";
 
     // Split keys into two groups
     Object.keys(dropdownData).forEach((key, index) => {
@@ -381,6 +373,26 @@ function score() {
         default:
             TypeOne = "default";
     }
+    switch(true) {
+        case scoreTwo > 5:
+            TypeTwo = "higher than 5";
+            break;
+        case scoreTwo > 2:
+            TypeTwo = "value higher than 2";
+            break;
+        default:
+            TypeTwo = "default";
+    }
+    switch(true) {
+        case scoreTwo > 2:
+            recommendedType = "higher than 5";
+            break;
+        case scoreTwo > 5:
+            recommendedType = "value higher than 2";
+            break;
+        default:
+            recommendedType = "default";
+    }
 
     // Display scores and types
     let scoreOneDisplay = document.getElementById("score-one");
@@ -398,18 +410,13 @@ function score() {
         typeOneDisplay.value = TypeOne;
     }
 
-    // Optionally, you can add logic for TypeTwo based on scoreTwo here:
-    if (scoreTwo > 5) {
-        TypeTwo = "higher than 5";
-    } else if (scoreTwo > 2) {
-        TypeTwo = "value higher than 2";
-    } else {
-        TypeTwo = "default";
-    }
-
     let typeTwoDisplay = document.getElementById("type-two");
     if (typeTwoDisplay) {
-        typeTwoDisplay.innerText = TypeTwo;
+        typeTwoDisplay.value = TypeTwo;
+    }
+    let recommendedTypeDisplay = document.getElementById("recommendedType");
+    if (recommendedType) {
+        recommendedTypeDisplay.value = recommendedType;
     }
 }
 
