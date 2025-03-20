@@ -30,11 +30,13 @@
           <div class="form-group">
               
               <label for="initiative-name">Initiative Name</label>
-              <input type="text" id="initiative-name" name="initiative-name" onChange="buildRadioObject()" required>
+              <input type="text" id="initiative-name" name="initiative-name" onchange="buildRadioObject()" required>
               <label for="completed-by">Completed by</label>
-              <input type="text" id="completed-by" name="completed-by" required>
+              <input type="text" id="completed-by" name="completed-by" onChange="buildRadioObject()" required>
+              <label for="email">Your Email:</label>
+              <input type="email" id="email" name="email" onchange="buildRadioObject()" required>
               <label for="date">Date of completition</label>
-              <input type="date" id="date" name="date">
+              <input type="date" id="date" name="date"><br><br>
             </div>
             <h2>Questionnarie</h2>
             
@@ -427,7 +429,30 @@
             <h4>Cross departmental impacts - This is the requirement for support from other departments or functions to deliver</h4>           
             <div class="radio-container" id="dropdown20" name="scoreDropdown" onClick="buildRadioObject()">
             </div>    
-            
+            <table>
+              <tr>
+                  <th>Major</th>
+                  <th>Strategic</th>
+                  <th>Key</th>
+                  <th>Local</th>
+                  <th>Small</th>
+              </tr>
+              <tr>
+                  <td>High</td>
+                  <td>High/Medium</td>
+                  <td>Medium/Low</td>
+                  <td>Low</td>
+                  <td>Low</td>
+              </tr>
+              <tr>
+                <td>High</td>
+                <td>High</td>
+                <td>Medium</td>
+                <td>Low</td>
+                <td>Low</td>
+            </tr>
+           
+          </table>
           </div> 
           </div>
           <div class="form-group">
@@ -442,7 +467,30 @@
             <h4>What type of data will the project be handling?</h4>           
             <div class="radio-container" id="dropdown22" name="scoreDropdown" onClick="buildRadioObject()">
             </div>
-            
+            <table>
+              <tr>
+                  <th>Major</th>
+                  <th>Strategic</th>
+                  <th>Key</th>
+                  <th>Local</th>
+                  <th>Small</th>
+              </tr>
+              <tr>
+                  <td>High</td>
+                  <td>High</td>
+                  <td>n/a</td>
+                  <td>Low</td>
+                  <td>Low</td>
+              </tr>
+              <tr>
+                <td>High</td>
+                <td>High</td>
+                <td>High/Medium</td>
+                <td>Low</td>
+                <td>Low</td>
+            </tr>
+           
+          </table>
           </div> 
           </div>
           <div class="form-group">
@@ -455,7 +503,23 @@
               *Departmental risks can include transformational risks but these need to be escalated to ELT if they affect the GoJ strategic business objectives</h4>           
             <div class="radio-container" id="dropdown23" name="scoreDropdown" onClick="buildRadioObject()">
             </div>
-            
+            <table>
+              <tr>
+                  <th>Major</th>
+                  <th>Strategic</th>
+                  <th>Key</th>
+                  <th>Local</th>
+                  <th>Small</th>
+              </tr>
+              <tr>
+                  <td>Community/Corporate</td>
+                  <td>Community/Corporate</td>
+                  <td>Corporate/Departmental</td>
+                  <td>Departmental</td>
+                  <td>Departmental</td>
+              </tr>
+   
+          </table>
           </div> 
           </div>
           <div class="form-group">
@@ -470,6 +534,30 @@
             <h4>External customers - The current or forecast impact to external customers.  Consider the type of impact (positive/negative and the emotive factors) and the likely volume of people impacted.</h4>           
             <div class="radio-container" id="dropdown25" name="scoreDropdown" onClick="buildRadioObject()">
             </div>
+            <table>
+              <tr>
+                  <th>Major</th>
+                  <th>Strategic</th>
+                  <th>Key</th>
+                  <th>Local</th>
+                  <th>Small</th>
+              </tr>
+              <tr>
+                  <td>High</td>
+                  <td>High</td>
+                  <td>Medium</td>
+                  <td>Low/None</td>
+                  <td>Low/None</td>
+              </tr>
+              <tr>
+                <td>High</td>
+                <td>High</td>
+                <td>Medium</td>
+                <td>Low/None</td>
+                <td>Low/None</td>
+            </tr>
+           
+          </table>
          </div>
           </div>
           <div class="form-group">
@@ -479,8 +567,25 @@
           </button>
           <div class="content">  
             <h4>Commerical impact - The requirement the programme/project has for purchasing and commercial services support</h4>           
-            <div class="radio-container" id="dropdown24" name="scoreDropdown" onClick="buildRadioObject()">
+            <div class="radio-container" id="dropdown26" name="scoreDropdown" onClick="buildRadioObject()">
             </div>
+            <table>
+              <tr>
+                  <th>Major</th>
+                  <th>Strategic</th>
+                  <th>Key</th>
+                  <th>Local</th>
+                  <th>Small</th>
+              </tr>
+              <tr>
+                  <td>High</td>
+                  <td>High/Medium</td>
+                  <td>Medium/Low</td>
+                  <td>Low/None</td>
+                  <td>Low/None</td>
+              </tr>
+       
+          </table>
           </div>
           </div>
           <div class="form-group">
@@ -488,16 +593,15 @@
               <input type="text" id="ratification-2" name="ratification-2" onChange="buildRadioObject()" required>
             <label for="sponsor">SRO/Project Sponsor Approval</label>
             <input type="text" id="sponsor" name="sponsor" onchange="buildRadioObject()" required>
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required><br><br>
+           
           </div>
          
           
           <div class="form-group">
             <label for="scoreTwo">Sizing Score</label>
             <input type="text" id="scoreTwo" name="scoreTwo" value="0">
-            <label for="scoreSizingType">Sizing Type</label>
-            <input id="scoreSizingType" name="scoreSizingType">
+            <label for="type-two">Sizing Type</label>
+            <input type="text" id="type-two" name="type-two">
             <label for="recommendedType">Recommended Type</label>
             <input type="text" id="recommendedType" name="recommendedType">
             
@@ -511,8 +615,11 @@
           </div>
           
         </form>
+        <div class="form-group-button">
+        <button id="downloadButton" >Save Form</button>
+        </div>
         <p id="link"></p>
-        <h5 id="ref">d</h5>
+        <h5 id="radioDisplay">d</h5>
         <h4 id="totalScore">sd</h4>
         <h4 id="scores"><</h4>
         <h4 id="totalSizingScore"></h4>

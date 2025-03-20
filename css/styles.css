@@ -175,7 +175,10 @@ input[type="radio"] {
     cursor: pointer;
     transition: 0.3s;
   }
-  
+  #downloadButton {
+    background-color: rgba(108, 213, 150, 0.8);
+    width:40%;
+  }
   button:hover {
     background: RGB(0,134,203);
   }
