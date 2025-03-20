@@ -2,7 +2,7 @@
 let exportData = {};
 let exportLinkData = {}; // Global object to hold form data
 const baseURL = window.location.href.split('?')[0]; // Get the base URL without query parameters
-let link = ""; // Global variable to store the generated URL
+let link = ""; //global link
 
 function buildRadioObject() {
     let formTexts = document.querySelectorAll("input[type='text']"); // Select all text inputs

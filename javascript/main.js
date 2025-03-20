@@ -343,7 +343,7 @@ function score() {
     let scoreOne = 0;
     let scoreTwo = 0;
 
-    // Loop through ScoreOneArr
+    // Loop through ScoreOneArr test
     ScoreOneArr.forEach(e => {
         // Get all checked radio buttons within the dropdown element
         let questionGroupOne = document.querySelectorAll(`#${e} input[type='radio']:checked`);
