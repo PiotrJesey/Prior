@@ -254,7 +254,21 @@ document.addEventListener("DOMContentLoaded", function () {
         "Financial 3": "",
         "Financial 4": "",
         "Commercial": "",
-        "sponsor": ""
+        "Duration": "",
+        "Complexity 1": "",
+        "Complexity 2": "",
+        "Complexity 3": "",
+        "Complexity 4": "",
+        "Resourcing 1": "",
+        "Resourcing 2": "",
+        "Information Security 1": "",
+        "Information Security 2": "",
+        "Customer impact 1": "",
+        "Customer impact 2": "",
+        "ratification": "",
+        "ratification-2": "",
+        "sponsor": "",
+        "project-name": ""
 
 
 
@@ -318,6 +332,6 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-
+console.log(link);
 //Document Save as HTML with prefilled link
 //let refi = document.getElementById("refi").textContent =JSON.stringify(exportData, null, 2);;

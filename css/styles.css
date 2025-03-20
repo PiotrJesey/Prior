@@ -167,7 +167,7 @@ input[type="radio"] {
   button {
     width: 90%;
     padding: 12px;
-    background: #007bff;
+    background: rgba(0,134,203,0.8);
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -179,11 +179,14 @@ input[type="radio"] {
     background-color: rgba(108, 213, 150, 0.8);
     width:40%;
   }
+  #downloadButton:hover {
+    background-color: RGBA(108, 213, 150, 1);
+  }
   button:hover {
-    background: RGB(0,134,203);
+    background: rgba(0,134,203,1);
   }
   :disabled {
-    background-color: #b2b2b2;
+    background-color: rgba(0,134,203,0.4);
     opacity: 0.6;
     cursor: not-allowed;
   }
