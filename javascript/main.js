@@ -92,49 +92,49 @@ const dropdownData = {
     dropdown1: [
         { title: "Timing"},
         { option: "Defined start and end", score: 5 },
-        { option: "Defined start and end (dates yet to be confirmed)", score: 3 },
-        { option: "No defined start or end", score: 7 }
+        { option: "Defined start and end (dates yet to be confirmed)", score: 5 },
+        { option: "No defined start or end", score: 0 }
     ],
     dropdown2: [
         { title: "Scope"},
-        { option: "Contains numerous related projects or programme delivery", score: 10 },
-        { option: "Made up of numerouse related deliverables and/or tasks", score: 6 },
-        { option: "Various unrelated or ungrouped deliverables", score: 8 }
+        { option: "Contains numerous related projects or programme delivery", score: 5 },
+        { option: "Made up of numerouse related deliverables and/or tasks", score: 3 },
+        { option: "Various unrelated or ungrouped deliverables", score: 0 }
     ],
     dropdown3: [
         { title: "Oversight and Control 1"},
-        { option: "Requires Programme Manager", score: 2 },
-        { option: "Requires Project Manager", score: 4 },
-        { option: "Reports to Line Manager", score: 1 }
+        { option: "Requires Programme Manager", score: 5 },
+        { option: "Requires Project Manager", score: 3 },
+        { option: "Reports to Line Manager", score: 0 }
     ],
     dropdown4: [
         { title: "Oversight And Control 2"},
-        { option: "Requires Sponsoring SRO across multiple related projects", score: 2 },
-        { option: "Requires Sponsoring SRO", score: 4 },
-        { option: "No dedicated Sponsorship required", score: 1 }
+        { option: "Requires Sponsoring SRO across multiple related projects", score: 5 },
+        { option: "Requires Sponsoring SRO", score: 3 },
+        { option: "No dedicated Sponsorship required", score: 0 }
     ],
     dropdown5: [
         { title: "Oversight And Control 3"},
-        { option: "Requires oversight and control", score: 2 },
-        { option: "No dedicated oversight, controlled via functional or departmental operational process", score: 4 }
+        { option: "Requires oversight and control", score: 5 },
+        { option: "No dedicated oversight, controlled via functional or departmental operational process", score: 0 }
         
     ],
     dropdown6: [
         { title: "Risk"},
-        { option: "Carries risk and requires dedicated management of risks and issues", score: 2 },
-        { option: "No specific risks", score: 4 }
+        { option: "Carries risk and requires dedicated management of risks and issues", score: 5 },
+        { option: "No specific risks", score: 0 }
        
     ],
     dropdown7: [
         { title: "Benefits"},
-        { option: "Benefits of underlying projects support the overarching programme objective", score: 2 },
-        { option: "Defined benefits associated with the delivery of the scope set out", score: 4 },
-        { option: "No defined benefits", score: 1 }
+        { option: "Benefits of underlying projects support the overarching programme objective", score: 5 },
+        { option: "Defined benefits associated with the delivery of the scope set out", score: 3 },
+        { option: "No defined benefits", score: 0 }
     ],
     dropdown8: [
         { title: "Change"},
-        { option: "Brings about change", score: 2 },
-        { option: "Benefits from change or highlights the need for change", score: 4 }
+        { option: "Brings about change", score: 5 },
+        { option: "Benefits from change or highlights the need for change", score: 0 }
        
     ],
     dropdown9: [
@@ -358,25 +358,25 @@ function score() {
     });
 
     // Determine TypeOne based on scoreOne
+    if (scoreOne > 35){
+        TypeOne = "Programme";
+    } else if 
+        (scoreOne > 15) {
+            TypeOne = "Project";
+        }else {
+            TypeOne = "BAU inititive are not required to follow the CPMO Delivery Framework";
+        }
+    
+    
     switch(true) {
-        case scoreOne > 5:
-            TypeOne = "higher than 5";
+        case scoreTwo > 15:
+            TypeTwo = "Project";
             break;
-        case scoreOne > 2:
-            TypeOne = "value higher than 2";
+        case scoreTwo > 35:
+            TypeTwo = "Programme";
             break;
         default:
-            TypeOne = "default";
-    }
-    switch(true) {
-        case scoreTwo > 5:
-            TypeTwo = "higher than 5";
-            break;
-        case scoreTwo > 2:
-            TypeTwo = "value higher than 2";
-            break;
-        default:
-            TypeTwo = "default";
+            TypeTwo = "BAU inititive are not required to follow the CPMO Delivery Framework";
     }
     switch(true) {
         case scoreTwo > 2:
