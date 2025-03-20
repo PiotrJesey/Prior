@@ -268,7 +268,8 @@ document.addEventListener("DOMContentLoaded", function () {
         "ratification": "",
         "ratification-2": "",
         "sponsor": "",
-        "project-name": ""
+        "project-name": "",
+        "score-one":""
 
 
 
@@ -294,7 +295,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Generate and update the prefilled link
         let prefilledLink = generatePrefilledFormLink(formURL, formFields);
-        const linkElement = document.getElementById("link");
+        const linkElement = document.getElementById("tag name");
         if (linkElement) {
             linkElement.textContent = prefilledLink;
             linkElement.href = prefilledLink;

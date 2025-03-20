@@ -148,7 +148,7 @@ input[type="radio"] {
     border-radius: 5px;
     font-size: 16px;
   }
-  #score, #sizingScore, #scoreType,#scoreSizingType, #recommendedType {
+  #score-one, #type-one, #score-two ,#scoreSizingType, #recommendedType {
     pointer-events:none;
 
   }

@@ -22,7 +22,7 @@
             });
         });
 
- let radioPush = document.getElementById("radioTest").innerText = "radio"  
+  
 
  function MyFunction() {
     let button = document.getElementById("submButton");
@@ -307,12 +307,7 @@ function radioPopulate(radioId, options) {
     });
 }
 
-function displaySelectedRadioValue(radioId, selectedValue) {
-    const displayParagraph = document.getElementById("radioTest");
-    if (displayParagraph) {
-        displayParagraph.innerText = `Selected value from ${radioId}: ${selectedValue}`;
-    }
-}
+
 
 // Function to dynamically populate radio buttons
 function populateRadioTag() {
