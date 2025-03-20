@@ -1,54 +1,170 @@
 
-let exportData = {};
-
+let exportData = {}; // Global object to hold form data
+const baseURL = window.location.href.split('?')[0]; // Get the base URL without query parameters
+let link = ""; // Global variable to store the generated URL
 
 function buildRadioObject() {
     let formTexts = document.querySelectorAll("input[type='text']"); // Select all text inputs
     let formRadios = document.querySelectorAll("input[type='radio']:checked"); // Select checked radios
     let formDate = document.querySelectorAll("input[type='date']");
-   
-    let formData = {}; 
+    let formEmail = document.querySelectorAll("input[type='email']");
 
+    let formData = {}; // Temporary object to hold form data
+
+    // Loop through date inputs and add to formData
     formDate.forEach(element => {
         if (element.name) {
             formData[element.name] = element.value; 
         }
     });
-    // Add text input values to the object
+
+    // Loop through text inputs and add to formData
     formTexts.forEach(element => {
         if (element.name) {
             formData[element.name] = element.value; 
         }
     });
 
-    // Add selected radio button values to the object
-    formRadios.forEach(element => {
+    formEmail.forEach(element => {
         if (element.name) {
-            formData[element.name] = element.id;
+            formData[element.name] = element.value; 
         }
     });
-    
 
-    let outputElement = document.getElementById("reff");
-    if (outputElement) {
-        outputElement.innerText = JSON.stringify(formData, null, 2);
-    } else {
-        console.error("Element with ID 'reff' not found.");
+    // Loop through selected radio buttons and add to formData
+    formRadios.forEach(element => {
+        if (element.name) {
+            formData[element.name] = element.id; // Assuming you're using `id` for radio buttons
+        }
+    });
+
+    // Update the global exportData object with the current form data
+    exportData = formData; 
+
+    // Create query parameters from the formData object
+    const queryParams = Object.keys(formData).map(key => {
+        return encodeURIComponent(key) + '=' + encodeURIComponent(formData[key]);
+    });
+
+    // Join the key-value pairs with '&' and append them to the base URL
+    const queryString = queryParams.join('&');
+    const url = baseURL + '?' + queryString;
+
+    link = url; // Store the generated URL in the global link variable
+
+    // Update the DOM with the generated link
+    let refiElement = document.getElementById("reff");
+    if (refiElement) {
+        refiElement.innerText = link;
+    let objectDisplay = document.getElementById("radioDisplay");
+    if (objectDisplay) {
+        objectDisplay.innerText = JSON.stringify(formData, null, 2);
     }
-    exportData = formData;
+    }
 }
 
+// Function to download an HTML file with a button linking to the generated URL
+function downloadFile() {
+    let content = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Centered Button</title>
+<style>
+.container {
+    background-color: rgba(0,134,203,0.8);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #fff;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    width: 50%;
+    height: 20%;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    
+}
+.button {
+    margin: auto;
+    align-self: center;
+    background-color: rgba(0,134,203,0.8);;
+    color: white;
+    padding: 15px 30px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+}
 
+.button:hover {
+    background-color: lightgray;
+}
+p {
+    text-justify: auto;
+    margin: auto;
+    text-wrap: true;
+}
+</style>
+</head>
+<body>
 
+<div class="container">
+    <div id="inner">
+        <p>Please click on the button to continue to your form</p>
+<a href="${link}" class='button'>continue</a>
+</div>
+</div>
 
+</body>
+</html>`;
+
+    // Create a Blob from the HTML content
+    const blob = new Blob([content], { type: "text/html" });
+    
+    // Create a link to download the Blob as a file
+    const downloadLink = document.createElement("a"); // Renamed to avoid conflict
+    downloadLink.href = URL.createObjectURL(blob);
+    downloadLink.download = "myForm.html";
+    
+    // Append the link to the body, click it to start download, then remove it
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+}
+
+// Set up event listeners to update form data on change or input
 document.addEventListener("change", (event) => {
     if (event.target.matches("input[type='text'], input[type='radio'], input[type='date']")) {
         buildRadioObject();
     }
 });
 
+document.addEventListener("input", (event) => {
+    if (event.target.matches("input[type='text'], input[type='radio'], input[type='date']")) {
+        buildRadioObject();
+    }
+});
 
-setTimeout(buildRadioObject, 100);
+// Initial execution after a slight delay to ensure elements are loaded
+window.addEventListener("DOMContentLoaded", (event) => {
+    setTimeout(buildRadioObject, 100);
+});
+
+// Example of calling the downloadFile function (e.g., on a button click)
+document.getElementById("downloadButton").addEventListener("click", () => {
+    downloadFile(); // This will trigger the download of the HTML file with the link
+});
 
 async function sendToPowerAutomate(event) {
     event.preventDefault(); // Prevent default form submission
@@ -77,6 +193,7 @@ async function sendToPowerAutomate(event) {
     }
 }
 
+let globalPrefilledLink = "";
 
 //Prefilled link
 document.addEventListener("DOMContentLoaded", function () {
@@ -115,6 +232,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Function to update the prefilled link
     function updatePrefilledLink() {
+       
         // Get the latest values from input fields
         Object.keys(formFields).forEach(fieldID => {
             let inputElement = document.querySelector(`[name="${fieldID}"]`);
@@ -135,7 +253,9 @@ document.addEventListener("DOMContentLoaded", function () {
         if (linkElement) {
             linkElement.textContent = prefilledLink;
             linkElement.href = prefilledLink;
+            
         }
+        
     }
 
     // Prefill the form fields based on URL query parameters
@@ -156,7 +276,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
     });
-
+   
     // Attach event listeners to form fields to update link when the form changes
     document.querySelectorAll("input, textarea, select").forEach(input => {
         input.addEventListener("input", updatePrefilledLink);
@@ -165,3 +285,8 @@ document.addEventListener("DOMContentLoaded", function () {
     // Initialize the prefilled link on page load
     updatePrefilledLink();
 });
+
+
+
+//Document Save as HTML with prefilled link
+//let refi = document.getElementById("refi").textContent =JSON.stringify(exportData, null, 2);;
