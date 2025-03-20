@@ -148,7 +148,7 @@ input[type="radio"] {
     border-radius: 5px;
     font-size: 16px;
   }
-  #score-one, #type-one, #score-two ,#scoreSizingType, #recommendedType {
+  #score-one, #type-one, #scoreTwo ,#type-two, #recommendedType {
     pointer-events:none;
 
   }
@@ -206,13 +206,17 @@ input[type="radio"] {
   }
   .footer {
     position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    background-color: rgba(165, 163, 163, 0.7);
+    left: 50%;
+    bottom: 10px;
+    width: 90%;
+    max-width: 1200px; /* Optional: Prevents it from getting too wide */
+    background-color: rgba(0, 134, 203, 0.6);
     color: rgb(32, 32, 32);
     text-align: center;
-  }
+    border-radius: 5px;
+    padding: 10px; /* Adds some spacing inside */
+    transform: translateX(-50%);
+}
  
 
 .collapsible {

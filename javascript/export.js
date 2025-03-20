@@ -269,7 +269,12 @@ document.addEventListener("DOMContentLoaded", function () {
         "ratification-2": "",
         "sponsor": "",
         "project-name": "",
-        "score-one":""
+        "score-one":"",
+        "scoreTwo":"",
+        "type-two":"",
+        "recommendedType": "",
+        "type-one": ""
+
 
 
 
