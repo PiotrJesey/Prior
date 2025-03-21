@@ -1,4 +1,6 @@
  // import  options from './options.js';
+ let scoreOneCheck =0  ;
+
  const collapsibles = document.querySelectorAll(".collapsible");
  
         collapsibles.forEach(collapsible => {
@@ -30,37 +32,47 @@
     let formElements = document.querySelectorAll("input, textarea, select");
     let isEmpty = false;
     let arr = [];
+    let sumRadioValues = 0;
+    let sizingForm = document.getElementById("sizing");
+    
     
     let radioGroups = new Set();
     formRadios.forEach(radio => radioGroups.add(radio.name));
 
     radioGroups.forEach(group => {
         let checkedRadio = document.querySelector(`input[name='${group}']:checked`);
+      
         if (!checkedRadio) {
             arr.push(group); // Add group name if no radio is selected
             isEmpty = true;
+        } else {
+            sumRadioValues += parseInt(checkedRadio.value) || 0; // Sum selected radio values
         }
     });
         
     
     formElements.forEach(element => {
         if (element.value.trim() === "" || element.selectedIndex === 0) {
-            arr.push(element.name || element.id);
+            arr.push(element.name || element.id );
             isEmpty = true;
             
         }
     });
-
+   
+    
     if (isEmpty) {
         //alert("Empty fields: " + arr.join(", ")); // Show empty fields
-        document.getElementById("empty").textContent = arr.join(",  ")
+        document.getElementById("empty").textContent = arr.join(",  ");
+    }
+    if (sumRadioValues < 15) {
         button.disabled = true;
-        
+        sizingForm.style.display = "none";
     } else {
         button.disabled = false;
+        sizingForm.style.display = "block";
     }
 }
-
+ 
 function attachEventListenersButton() {
     let formElements = document.querySelectorAll("input, textarea, select,input[type='radio']");
 
@@ -84,7 +96,7 @@ let today = new Date().toISOString().split('T')[0];
 
 window.onload = function () {
     if (!sessionStorage.getItem("alertShown")) {
-        alert("This alert will be shown only once per session.");
+        alert("To start the process, please fill out this form");
         sessionStorage.setItem("alertShown", "true");
     }
 };
@@ -413,6 +425,7 @@ function score() {
     if (recommendedType) {
         recommendedTypeDisplay.value = recommendedType;
     }
+    scoreOneCheck = scoreOne;
 }
 
 // Initial score calculation
@@ -424,7 +437,11 @@ document.querySelectorAll("input[type='radio']").forEach(element => {
     element.addEventListener("input", score);
 });
 
-
+document.addEventListener("change", function(event) {
+    if (event.target.matches("input[type='radio']")) {
+        score();
+    }
+});
 
 
 
