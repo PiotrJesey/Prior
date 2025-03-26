@@ -1,4 +1,6 @@
- // import  options from './options.js';
+
+
+
  let scoreOneCheck =0  ;
 
  const collapsibles = document.querySelectorAll(".collapsible");
@@ -318,12 +320,20 @@ const dropdownData = {
         
     ],
 };
+const ServiceDropdown = [];
 
 const dropdownItems = Object.keys(dropdownData).length;
 const radio = document.getElementById("dropdown");
 
 
+function servicePopulate (){
+ServiceDropdown.forEach(element => {
+    let ServiceField = document.getElementById("service");
+    let option = document.create
+})
+    
 
+};
 
 
 function radioPopulate(radioId, options) {
