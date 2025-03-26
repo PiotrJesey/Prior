@@ -30,12 +30,43 @@
     let button = document.getElementById("submButton");
     let formRadios = document.querySelectorAll("input[type='radio']");
     let formElements = document.querySelectorAll("input, textarea, select");
+    let BAUempty = false;
     let isEmpty = false;
     let arr = [];
     let sumRadioValues = 0;
     let sizingForm = document.getElementById("sizing");
+    let BAUform = document.getElementById("BAU");
+    let BAUarr = [];
+
+
     
+        let inputs = BAUform.querySelectorAll("input, textarea, select");
+        let BAUradio = BAUform.querySelectorAll("input[type='radio']");
+        
+        let BAUradioGroup = new Set();
+        BAUradio.forEach(radio => BAUradioGroup.add(radio.name));
+
+        BAUradioGroup.forEach(group => {
+            let BAUradioChecked = document.querySelector(`input[name='${group}']:checked`);
+            if(!BAUradioChecked){
+                BAUarr.push(group)
+                BAUempty = true;
+            } else {
+                sumRadioValues += parseInt(BAUradioChecked.value) || 0; // Sum selected radio values
+            }
+        })
+
+        inputs.forEach(input => {
+            if (input.value.trim() === "") {
+                BAUarr.push(input.name || input.id);
+                BAUempty = true;
+            }
+        });
+        
+        
+        
     
+
     let radioGroups = new Set();
     formRadios.forEach(radio => radioGroups.add(radio.name));
 
@@ -45,9 +76,7 @@
         if (!checkedRadio) {
             arr.push(group); // Add group name if no radio is selected
             isEmpty = true;
-        } else {
-            sumRadioValues += parseInt(checkedRadio.value) || 0; // Sum selected radio values
-        }
+        } 
     });
         
     
@@ -58,18 +87,25 @@
             
         }
     });
-   
-    
-    if (isEmpty) {
-        //alert("Empty fields: " + arr.join(", ")); // Show empty fields
-        document.getElementById("empty").textContent = arr.join(",  ");
+    if (BAUempty) {
+        document.getElementById("empty").innerHTML = "Please fill these empty fields:<br>"+ BAUarr.join(", ");
+    } else if (isEmpty && sumRadioValues > 15) {
+        document.getElementById("empty").innerHTML = "Please fill the Initiative Sizing Matrix:<br>"+ arr.join(", ");
+    } else {
+        document.getElementById("empty").textContent = "Please, submit your form!"; // Clear error message when valid
     }
-    if (sumRadioValues < 15) {
+    
+    
+    
+    if (BAUempty && sumRadioValues < 15  ) {
         button.disabled = true;
         sizingForm.style.display = "none";
-    } else {
-        button.disabled = false;
+    } else if (sumRadioValues > 15 && isEmpty) {
+        button.disabled = true;
         sizingForm.style.display = "block";
+    }else {
+        button.disabled = false;
+        sizingForm.style.display = "none";
     }
 }
  
