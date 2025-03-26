@@ -101,7 +101,7 @@
     
     if (BAUempty && sumRadioValues < 15  ) {
         button.disabled = true;
-        sizingForm.style.display = "none";
+       // sizingForm.style.display = "none";   //for testing 
     } else if (sumRadioValues > 15 && isEmpty) {
         button.disabled = true;
         sizingForm.style.display = "block";
@@ -488,6 +488,50 @@ document.addEventListener("change", function(event) {
         score();
     }
 });
+function initializeSignaturePad(canvasId) {
+    const canvas = document.getElementById(canvasId);
+    const ctx = canvas.getContext("2d");
+    let isDrawing = false;
+
+    // Resize canvas to fit container
+    function resizeCanvas() {
+        canvas.width = canvas.clientWidth;
+        canvas.height = canvas.clientHeight;
+    }
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
+
+    // Event listeners for drawing
+    canvas.addEventListener("mousedown", (e) => {
+        isDrawing = true;
+        ctx.beginPath();
+        ctx.moveTo(e.offsetX, e.offsetY);
+    });
+
+    canvas.addEventListener("mousemove", (e) => {
+        if (isDrawing) {
+            ctx.lineTo(e.offsetX, e.offsetY);
+            ctx.stroke();
+        }
+    });
+
+    canvas.addEventListener("mouseup", () => isDrawing = false);
+    canvas.addEventListener("mouseleave", () => isDrawing = false);
+}
+
+// Initialize multiple signature pads
+initializeSignaturePad("signature-pad-1");
+initializeSignaturePad("signature-pad-2");
+
+// Function to clear a specific signature pad
+function clearSignature(canvasId, event) {
+    if (event) event.preventDefault(); // Prevent scrolling
+
+    const canvas = document.getElementById(canvasId);
+    const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
 
 
 

@@ -4,6 +4,8 @@ let exportLinkData = {}; // Global object to hold form data
 const baseURL = window.location.href.split('?')[0]; // Get the base URL without query parameters
 let link = ""; //global link
 
+
+
 function buildRadioObject() {
     let formTexts = document.querySelectorAll("input[type='text']"); // Select all text inputs
     let formRadios = document.querySelectorAll("input[type='radio']:checked"); // Select checked radios
@@ -62,8 +64,6 @@ function buildRadioObject() {
             exportLink[element.name] = element.value; // Assuming you're using `id` for radio buttons
         }
     });
-
-    // Loop through selected radio buttons and add to formData
    
 
     // Update the global exportData object with the current form data
@@ -194,9 +194,11 @@ document.getElementById("downloadButton").addEventListener("click", () => {
     downloadFile(); // This will trigger the download of the HTML file with the link
 });
 
+
 async function sendToPowerAutomate(event) {
     event.preventDefault(); // Prevent default form submission
-
+    const canvas = document.getElementById("signature-pad");
+    const signatureDataURL = canvas.toDataURL();
     
     let data = exportData;
 
@@ -274,6 +276,7 @@ document.addEventListener("DOMContentLoaded", function () {
         "type-two":"",
         "recommendedType": "",
         "type-one": ""
+        
 
 
 

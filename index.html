@@ -594,6 +594,7 @@
             <label for="ratification-2">Include ratification for type selected if different to recommended type</label>
               <input type="text" id="ratification-2" name="ratification-2" onChange="buildRadioObject()" required>
             <label for="sponsor">SRO/Project Sponsor Approval</label>
+            <a class="details">I confirm that that there is a clear mandate for change.</a>
             <input type="text" id="sponsor" name="sponsor" onchange="buildRadioObject()" required>
            
           </div>
@@ -609,6 +610,12 @@
             
            
 
+          </div>
+          <div class="form-group">
+            <div class="signature-container">
+              <h3>Signature 1</h3>
+              <canvas id="signature-pad-1" name="signature1"></canvas>
+              <button onclick="clearSignature('signature-pad-1', event)">Clear</button>
           </div>
           
           </div>

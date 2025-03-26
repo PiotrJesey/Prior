@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signature Export</title>
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad"></script>
+    <style>
+        #signatureContainer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        canvas {
+            border: 1px solid #000;
+            width: 90%;
+            max-width: 600px;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div id="signatureContainer">
+        <h2>Sign Below</h2>
+        <canvas id="signatureCanvas"></canvas>
+        <button id="clearButton">Clear</button>
+        <button id="saveButton">Save Signature</button>
+        <h3>Saved Signature:</h3>
+        <img id="signatureImage" style="border:1px solid #000; max-width:100%; display:none;" />
+        <p>Signature Link: <a id="signatureLink" href="#" target="_blank" style="display:none;">View Image</a></p>
+    </div>
+
+    <script>
+        const canvas = document.getElementById("signatureCanvas");
+        const signaturePad = new SignaturePad(canvas);
+        const clearButton = document.getElementById("clearButton");
+        const saveButton = document.getElementById("saveButton");
+        const signatureImage = document.getElementById("signatureImage");
+        const signatureLink = document.getElementById("signatureLink");
+
+        function resizeCanvas() {
+            const ratio = Math.max(window.devicePixelRatio || 1, 1);
+            canvas.width = canvas.offsetWidth * ratio;
+            canvas.height = 200 * ratio;
+            canvas.getContext("2d").scale(ratio, ratio);
+            signaturePad.clear();
+        }
+
+        window.addEventListener("resize", resizeCanvas);
+        resizeCanvas();
+
+        clearButton.addEventListener("click", () => {
+            signaturePad.clear();
+        });
+
+        saveButton.addEventListener("click", () => {
+            if (signaturePad.isEmpty()) {
+                alert("Please provide a signature first.");
+                return;
+            }
+            const dataURL = signaturePad.toDataURL("image/png");
+            signatureImage.src = dataURL;
+            signatureImage.style.display = "block";
+            signatureLink.href = dataURL;
+            signatureLink.style.display = "inline";
+            signatureLink.textContent = "Download Signature";
+        });
+    </script>
+</body>
+</html>

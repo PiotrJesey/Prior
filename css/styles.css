@@ -155,6 +155,9 @@ input[type="radio"] {
     pointer-events:none;
 
   }
+  .details {
+    font-size: 10px;
+  }
   select {
     width: 95%;
     padding: 10px;
