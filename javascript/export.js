@@ -67,10 +67,7 @@ function buildRadioObject() {
     link = url;
 
     // **Update the DOM with the Generated Link**
-    let refiElement = document.getElementById("reff");
-    if (refiElement) {
-        refiElement.innerText = link;
-    }
+   
 
     // **Display Form Data in JSON Format**
     let objectDisplay = document.getElementById("radioDisplay");
@@ -80,87 +77,7 @@ function buildRadioObject() {
 }
 
 
-// Function to download an HTML file with a button linking to the generated URL
-function downloadFile() {
-    let content = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Centered Button</title>
-<style>
-.container {
-    background-color: rgba(0,134,203,0.8);
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-#inner {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: #fff;
-    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
-    border-radius: 10px;
-    width: 50%;
-    height: 20%;
-    padding-bottom: 10px;
-    margin-bottom: 10px;
-    
-}
-.button {
-    margin: auto;
-    align-self: center;
-    background-color: rgba(0,134,203,0.8);;
-    color: white;
-    padding: 15px 30px;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    text-decoration: none;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
-}
 
-.button:hover {
-    background-color: lightgray;
-}
-p {
-    text-justify: auto;
-    margin: auto;
-    text-wrap: true;
-}
-</style>
-</head>
-<body>
-
-<div class="container">
-    <div id="inner">
-        <p>Please click on the button to continue to your form</p>
-<a href="${link}" class='button'>continue</a>
-</div>
-</div>
-
-</body>
-</html>`;
-
-    // Create a Blob from the HTML content
-    const blob = new Blob([content], { type: "text/html" });
-    
-    // Create a link to download the Blob as a file
-    const downloadLink = document.createElement("a"); // Renamed to avoid conflict
-    downloadLink.href = URL.createObjectURL(blob);
-    downloadLink.download = "myForm.html";
-    
-    // Append the link to the body, click it to start download, then remove it
-    document.body.appendChild(downloadLink);
-    downloadLink.click();
-    document.body.removeChild(downloadLink);
-}
-
-// Set up event listeners to update form data on change or input
 document.addEventListener("change", (event) => {
     if (event.target.matches("input[type='text'], input[type='radio'], input[type='date']")) {
         buildRadioObject();
@@ -187,7 +104,7 @@ document.getElementById("downloadButton").addEventListener("click", () => {
 async function sendToPowerAutomate(event) {
     event.preventDefault(); // Prevent default form submission
     const canvas = document.getElementById("signature-pad");
-    const signatureDataURL = canvas.toDataURL();
+    
     
     let data = exportData;
 
@@ -211,108 +128,3 @@ async function sendToPowerAutomate(event) {
         alert("An unexpected error occurred.");
     }
 }
-document.addEventListener("DOMContentLoaded", function () {
-    function generatePrefilledFormLink(baseURL, formData) {
-        let params = new URLSearchParams(formData);
-        return `${baseURL}?${params.toString()}`;
-    }
-
-    const formURL = window.location.href.split('?')[0];
-
-    const formFields = {
-        "initiative-name": "",
-        "completed-by": "",
-        "date": "",
-        "email": "",
-        "Timing": "",
-        "Scope": "",
-        "Oversight and Control 1": "",
-        "Oversight and Control 2": "",
-        "Oversight and Control 3": "",
-        "Risk": "",
-        "Benefits": "",
-        "Change": "",
-        "Strategic Priority": "",
-        "Financial 1": "",
-        "Financial 2": "",
-        "Financial 3": "",
-        "Financial 4": "",
-        "Commercial": "",
-        "Duration": "",
-        "Complexity 1": "",
-        "Complexity 2": "",
-        "Complexity 3": "",
-        "Complexity 4": "",
-        "Resourcing 1": "",
-        "Resourcing 2": "",
-        "Information Security 1": "",
-        "Information Security 2": "",
-        "Customer impact 1": "",
-        "Customer impact 2": "",
-        "ratification": "",
-        "ratification-2": "",
-        "sponsor": "",
-        "project-name": "",
-        "score-one": "",
-        "scoreTwo": "",
-        "type-two": "",
-        "recommendedType": "",
-        "type-one": "",
-        "signature1": "" // Add a placeholder for the signature
-    };
-
-    function updatePrefilledLink() {
-        Object.keys(formFields).forEach(fieldID => {
-            let inputElement = document.querySelector(`[name="${fieldID}"]`);
-            if (inputElement) {
-                if (inputElement.type === "radio") {
-                    const selectedRadio = document.querySelector(`[name="${fieldID}"]:checked`);
-                    formFields[fieldID] = selectedRadio ? selectedRadio.value : "";
-                } else if (inputElement.type === "file" || inputElement.tagName === "CANVAS") {
-                    // Handle signature or file inputs
-                    if (inputElement.tagName === "CANVAS") {
-                        formFields[fieldID] = inputElement.toDataURL(); // Serialize canvas to base64
-                    }
-                    // For file input, you would need special handling based on how you wish to display the file (link to the uploaded file, etc.)
-                } else {
-                    formFields[fieldID] = inputElement.value;
-                }
-            }
-        });
-
-        let prefilledLink = generatePrefilledFormLink(formURL, formFields);
-        const linkElement = document.getElementById("tag name");
-        if (linkElement) {
-            linkElement.textContent = prefilledLink;
-            linkElement.href = prefilledLink;
-        }
-    }
-
-    // Prefill the form fields based on URL query parameters
-    const queryParams = new URLSearchParams(window.location.search);
-    Object.keys(formFields).forEach(fieldID => {
-        const paramValue = queryParams.get(fieldID);
-        let inputElement = document.querySelector(`[name="${fieldID}"]`);
-        if (inputElement) {
-            if (inputElement.type === "radio" && paramValue) {
-                const radioButton = document.querySelector(`[name="${fieldID}"][value="${paramValue}"]`);
-                if (radioButton) {
-                    radioButton.checked = true;
-                }
-            } else if (paramValue) {
-                inputElement.value = paramValue;
-            }
-        }
-    });
-
-    // Attach event listeners to form fields to update link when the form changes
-    document.querySelectorAll("input, textarea, select").forEach(input => {
-        input.addEventListener("input", updatePrefilledLink);
-    });
-
-    // Initialize the prefilled link on page load
-    updatePrefilledLink();
-});
-
-
-console.log(link);

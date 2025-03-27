@@ -112,13 +112,21 @@
             }
         
             // Enable/Disable Submit Button Logic
-            if (BAUempty || (sumRadioValues < 15 && isEmpty) || canvasEmpty) {
+            if (sumRadioValues > 15 && isEmpty && canvasEmpty) {
                 button.disabled = true;
                 sizingForm.style.display = "block";
             } else {
                 button.disabled = false;
+                sizingForm.style.display = "block";
+            }
+            if (BAUempty) {
+                button.disabled = true;
+                sizingForm.style.display = "none";
+            } else {
+                button.disabled = false;
                 sizingForm.style.display = "none";
             }
+            
         }
         
         // **Detect User Drawing to Trigger Validation**
@@ -512,84 +520,199 @@ document.addEventListener("change", function(event) {
     }
 });
 let formData = {}; // Stores form data
+let formLink = "";
+let signature1 = null;  // Store the signature canvas setup object
 
-        // Signature handling for two canvases
-        function setupSignatureCanvas(canvasId) {
-            const canvas = document.getElementById(canvasId);
-            const ctx = canvas.getContext("2d");
-            let drawing = false;
+// Signature handling for two canvases
+function setupSignatureCanvas(canvasId) {
+    const canvas = document.getElementById(canvasId);
+    const ctx = canvas.getContext("2d");
+    let drawing = false;
 
-            canvas.addEventListener("mousedown", () => drawing = true);
-            canvas.addEventListener("mouseup", () => drawing = false);
-            canvas.addEventListener("mousemove", (event) => draw(event, canvas, ctx));
+    canvas.addEventListener("mousedown", () => drawing = true);
+    canvas.addEventListener("mouseup", () => drawing = false);
+    canvas.addEventListener("mousemove", (event) => draw(event, canvas, ctx));
 
-            return { canvas, ctx };
-        }
+    return { canvas, ctx };
+}
 
-        function draw(event, canvas, ctx) {
-            if (!event.buttons) return;
-            ctx.lineWidth = 2;
-            ctx.lineCap = "round";
-            ctx.strokeStyle = "black";
+function draw(event, canvas, ctx) {
+    if (!event.buttons) return;
+    ctx.lineWidth = 2;
+    ctx.lineCap = "round";
+    ctx.strokeStyle = "black";
 
-            ctx.lineTo(event.offsetX, event.offsetY);
-            ctx.stroke();
-            ctx.beginPath();
-            ctx.moveTo(event.offsetX, event.offsetY);
-        }
+    ctx.lineTo(event.offsetX, event.offsetY);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(event.offsetX, event.offsetY);
 
-        function clearSignature(index) {
-            if (index === 1) {
-                signature1.ctx.clearRect(0, 0, signature1.canvas.width, signature1.canvas.height);
-            } else if (index === 2) {
-                signature2.ctx.clearRect(0, 0, signature2.canvas.width, signature2.canvas.height);
-            }
-        }
+    // Generate the link when the signature is drawn
+    generateLink();  // Dynamically update the link after signature drawing
+}
 
-       
+function clearSignature(index) {
+    if (index === 1) {
+        signature1.ctx.clearRect(0, 0, signature1.canvas.width, signature1.canvas.height);
+    }
+}
 
-        // Restore pre-filled data from URL
-        function generateLink() {
+// Restore pre-filled data from URL
+function generateLink() {
+    formLink="";
+    const signature1Data = signature1.canvas.toDataURL(); // Convert signature 1 to Base64
+    const formElements = document.querySelectorAll("input, textarea, select"); // Select all form fields (text, radio, textarea, select)
     
-            const signature1Data = signature1.canvas.toDataURL(); // Convert signature 1 to Base64
-            const name = document.getElementById("initiative-name").value;
-        
-            
-        
-            // Store data in URL
-            const params = new URLSearchParams();
-            
-            params.set("signature1", encodeURIComponent(signature1Data));
-            params.set("name", name);
-        
-            const link = window.location.href.split('?')[0] + "?" + params.toString();
-            document.getElementById("generatedLink").href = link;
-            document.getElementById("generatedLink").textContent = link;
+    const params = new URLSearchParams();
+    
+    // Loop through form elements to capture values
+    formElements.forEach(element => {
+        if (element.type === "radio" && element.checked) {
+            params.set(element.name, element.value); // Add checked radio button value
+        } else if (element.type !== "radio") {
+            params.set(element.name, encodeURIComponent(element.value)); // Add text input, textarea, or select values
         }
-        
-        function loadFromURL() {
-            const params = new URLSearchParams(window.location.search);
-           
-           
-            if (params.has("signature1")) {
-                const img1 = new Image();
-                img1.src = decodeURIComponent(params.get("signature1"));
-                img1.onload = function () {
-                    signature1.ctx.drawImage(img1, 0, 0);
-                };
+    });
+
+    // Append signature data to URL
+    params.set("signature1", encodeURIComponent(signature1Data));
+
+    // Generate the final link
+    const link = window.location.href.split('?')[0] + "?" + params.toString();
+   // document.getElementById("generatedLink").href = link;
+    //document.getElementById("generatedLink").textContent = link;
+    let reffElement = document.getElementById("reff");
+    if (reffElement) {
+        reffElement.textContent = link; // Update the displayed link - remove after testing
+    }
+    formLink = link
+
+    function downloadFile() {
+    let content = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Centered Button</title>
+<style>
+.container {
+    background-color: rgba(0,134,203,0.8);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #fff;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    width: 50%;
+    height: 20%;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    
+}
+.button {
+    margin: auto;
+    align-self: center;
+    background-color: rgba(0,134,203,0.8);;
+    color: white;
+    padding: 15px 30px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.button:hover {
+    background-color: lightgray;
+}
+p {
+    text-justify: auto;
+    margin: auto;
+    text-wrap: true;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div id="inner">
+        <p>Please click on the button to continue to your form</p>
+<a href="${link}" class='button'>continue</a>
+</div>
+</div>
+
+</body>
+</html>`;
+
+    // Create a Blob from the HTML content
+    const blob = new Blob([content], { type: "text/html" });
+    
+    // Create a link to download the Blob as a file
+    const downloadLink = document.createElement("a"); // Renamed to avoid conflict
+    downloadLink.href = URL.createObjectURL(blob);
+    downloadLink.download = "myForm.html";
+    
+    // Append the link to the body, click it to start download, then remove it
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+}
+
+document.getElementById("downloadButton").addEventListener("click", downloadFile);
+
+}
+
+function loadFromURL() {
+    const params = new URLSearchParams(window.location.search);
+
+    if (params.has("signature1")) {
+        const img1 = new Image();
+        img1.src = decodeURIComponent(params.get("signature1"));
+        img1.onload = function () {
+            signature1.ctx.drawImage(img1, 0, 0);
+        };
+    }
+    
+    const formElements = document.querySelectorAll("input, textarea, select");
+    formElements.forEach(element => {
+        if (params.has(element.name)) {
+            if (element.type === "radio") {
+                if (params.get(element.name) === element.value) {
+                    element.checked = true;
+                }
+            } else {
+                element.value = decodeURIComponent(params.get(element.name)); // Prefill form fields
             }
-            if (params.has("name")) {
-                document.getElementById("initiative-name").value = params.get("name");
-            }
-            
         }
-        
-        // Initialize canvases
-        const signature1 = setupSignatureCanvas("signatureCanvas1");
-        
-        
-        // Load pre-filled data on page load
-        window.onload = loadFromURL;
-        generateLink()
+    });
+}
+
+// Initialize canvases
+signature1 = setupSignatureCanvas("signatureCanvas1");
+
+// Load pre-filled data on page load
+window.onload = loadFromURL;
+document.addEventListener("change", (event) => {
+    if (event.target.matches("input[type='text'], input[type='radio'], input[type='date']")) {
+        generateLink();
+    }
+});
+
+document.addEventListener("input", (event) => {
+    if (event.target.matches("input[type='text'], input[type='radio'], input[type='date']")) {
+        generateLink();
+    }
+});
+
+
+generateLink();
 
 

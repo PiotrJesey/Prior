@@ -259,4 +259,9 @@ input[type="radio"] {
   margin:auto;
   border-radius: 0px 0px 5px 5px;
 }
+.signature-box {
+  background-color: RGBA(0,134,203,0.1);
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
 }
