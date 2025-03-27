@@ -5,19 +5,21 @@ const baseURL = window.location.href.split('?')[0]; // Get the base URL without 
 let link = ""; //global link
 
 
-
 function buildRadioObject() {
-    let formTexts = document.querySelectorAll("input[type='text']"); // Select all text inputs
-    let formRadios = document.querySelectorAll("input[type='radio']:checked"); // Select checked radios
+    let formTexts = document.querySelectorAll("input[type='text']");
+    let formRadios = document.querySelectorAll("input[type='radio']:checked");
     let formDate = document.querySelectorAll("input[type='date']");
     let formEmail = document.querySelectorAll("input[type='email']");
+    let signatureCanvases = document.querySelectorAll("canvas");
 
-    let formData = {}; // Temporary object to hold form data
-    
+    let formData = {}; 
+    let exportLink = {}; 
+
     // Loop through date inputs and add to formData
     formDate.forEach(element => {
         if (element.name) {
             formData[element.name] = element.value; 
+            exportLink[element.name] = element.value;
         }
     });
 
@@ -25,71 +27,58 @@ function buildRadioObject() {
     formTexts.forEach(element => {
         if (element.name) {
             formData[element.name] = element.value; 
+            exportLink[element.name] = element.value;
         }
     });
 
     formEmail.forEach(element => {
         if (element.name) {
             formData[element.name] = element.value; 
+            exportLink[element.name] = element.value;
         }
     });
 
     formRadios.forEach(element => {
         if (element.name) {
-            formData[element.name] = element.id; // Assuming you're using `id` for radio buttons
+            formData[element.name] = element.id; 
+            exportLink[element.name] = element.value;
         }
     });
-    let exportLink ={};
+    
 
-    formDate.forEach(element => {
-        if (element.name) {
-            exportLink[element.name] = element.value; 
-        }
-    });
-
-    // Loop through text inputs and add to formData
-    formTexts.forEach(element => {
-        if (element.name) {
-            exportLink[element.name] = element.value; 
+    // **Convert Signature Canvas to Base64 and Store**
+    signatureCanvases.forEach(canvas => {
+        if (canvas.id) {
+            let signatureBase64 = canvas.toDataURL(); // Convert canvas to Base64 PNG
+            formData[canvas.id] = signatureBase64; // Store in formData
+            exportLink[canvas.id] = signatureBase64; // Optionally, you can add to exportLink as well
         }
     });
 
-    formEmail.forEach(element => {
-        if (element.name) {
-            exportLink[element.name] = element.value; 
-        }
-    });
-    formRadios.forEach(element => {
-        if (element.name) {
-            exportLink[element.name] = element.value; // Assuming you're using `id` for radio buttons
-        }
+    // **Create Query Parameters for URL**
+    const queryParams = Object.keys(exportLink).map(key => {
+        return encodeURIComponent(key) + "=" + encodeURIComponent(exportLink[key]); // Added "=" to ensure proper query format
     });
    
-
-    // Update the global exportData object with the current form data
-    exportData = formData; 
-    exportLinkData = exportLink;
-    // Create query parameters from the formData object
-    const queryParams = Object.keys(exportLink).map(key => {
-        return encodeURIComponent(key) + '=' + encodeURIComponent(exportLink[key]);
-    });
-
-    // Join the key-value pairs with '&' and append them to the base URL
+            
+    // **Generate URL**
     const queryString = queryParams.join('&');
     const url = baseURL + '?' + queryString;
+    link = url;
 
-    link = url; // Store the generated URL in the global link variable
-
-    // Update the DOM with the generated link
+    // **Update the DOM with the Generated Link**
     let refiElement = document.getElementById("reff");
     if (refiElement) {
         refiElement.innerText = link;
+    }
+
+    // **Display Form Data in JSON Format**
     let objectDisplay = document.getElementById("radioDisplay");
     if (objectDisplay) {
         objectDisplay.innerText = JSON.stringify(formData, null, 2);
     }
-    }
 }
+
 
 // Function to download an HTML file with a button linking to the generated URL
 function downloadFile() {
@@ -222,23 +211,16 @@ async function sendToPowerAutomate(event) {
         alert("An unexpected error occurred.");
     }
 }
-
-let globalPrefilledLink = "";
-
-//Prefilled link
 document.addEventListener("DOMContentLoaded", function () {
-    // Function to generate the prefilled form link
     function generatePrefilledFormLink(baseURL, formData) {
         let params = new URLSearchParams(formData);
         return `${baseURL}?${params.toString()}`;
     }
 
-    // Get the base URL (without query params)
     const formURL = window.location.href.split('?')[0];
 
-    // Initialize form fields with empty values
     const formFields = {
-        "initiative-name": "", // For radio buttons
+        "initiative-name": "",
         "completed-by": "",
         "date": "",
         "email": "",
@@ -271,45 +253,39 @@ document.addEventListener("DOMContentLoaded", function () {
         "ratification-2": "",
         "sponsor": "",
         "project-name": "",
-        "score-one":"",
-        "scoreTwo":"",
-        "type-two":"",
+        "score-one": "",
+        "scoreTwo": "",
+        "type-two": "",
         "recommendedType": "",
-        "type-one": ""
-        
-
-
-
-
-
+        "type-one": "",
+        "signature1": "" // Add a placeholder for the signature
     };
 
-    // Function to update the prefilled link
     function updatePrefilledLink() {
-       
-        // Get the latest values from input fields
         Object.keys(formFields).forEach(fieldID => {
             let inputElement = document.querySelector(`[name="${fieldID}"]`);
             if (inputElement) {
                 if (inputElement.type === "radio") {
-                    // Check which radio button is selected
                     const selectedRadio = document.querySelector(`[name="${fieldID}"]:checked`);
-                    formFields[fieldID] = selectedRadio ? selectedRadio.value : ""; // Get the value of the selected radio
+                    formFields[fieldID] = selectedRadio ? selectedRadio.value : "";
+                } else if (inputElement.type === "file" || inputElement.tagName === "CANVAS") {
+                    // Handle signature or file inputs
+                    if (inputElement.tagName === "CANVAS") {
+                        formFields[fieldID] = inputElement.toDataURL(); // Serialize canvas to base64
+                    }
+                    // For file input, you would need special handling based on how you wish to display the file (link to the uploaded file, etc.)
                 } else {
                     formFields[fieldID] = inputElement.value;
                 }
             }
         });
 
-        // Generate and update the prefilled link
         let prefilledLink = generatePrefilledFormLink(formURL, formFields);
         const linkElement = document.getElementById("tag name");
         if (linkElement) {
             linkElement.textContent = prefilledLink;
             linkElement.href = prefilledLink;
-            
         }
-        
     }
 
     // Prefill the form fields based on URL query parameters
@@ -319,18 +295,16 @@ document.addEventListener("DOMContentLoaded", function () {
         let inputElement = document.querySelector(`[name="${fieldID}"]`);
         if (inputElement) {
             if (inputElement.type === "radio" && paramValue) {
-                // Select the prefilled radio button
                 const radioButton = document.querySelector(`[name="${fieldID}"][value="${paramValue}"]`);
                 if (radioButton) {
                     radioButton.checked = true;
                 }
             } else if (paramValue) {
-                // Prefill text and date fields
                 inputElement.value = paramValue;
             }
         }
     });
-   
+
     // Attach event listeners to form fields to update link when the form changes
     document.querySelectorAll("input, textarea, select").forEach(input => {
         input.addEventListener("input", updatePrefilledLink);
@@ -342,5 +316,3 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 console.log(link);
-//Document Save as HTML with prefilled link
-//let refi = document.getElementById("refi").textContent =JSON.stringify(exportData, null, 2);;

@@ -28,98 +28,121 @@
 
   
 
- function MyFunction() {
-    let button = document.getElementById("submButton");
-    let formRadios = document.querySelectorAll("input[type='radio']");
-    let formElements = document.querySelectorAll("input, textarea, select");
-    let BAUempty = false;
-    let isEmpty = false;
-    let arr = [];
-    let sumRadioValues = 0;
-    let sizingForm = document.getElementById("sizing");
-    let BAUform = document.getElementById("BAU");
-    let BAUarr = [];
-
-
-    
-        let inputs = BAUform.querySelectorAll("input, textarea, select");
-        let BAUradio = BAUform.querySelectorAll("input[type='radio']");
+        function MyFunction() {
+            let button = document.getElementById("submButton");
+            let formRadios = document.querySelectorAll("input[type='radio']");
+            let formElements = document.querySelectorAll("input, textarea, select");
+            let signatureCanvases = document.querySelectorAll("canvas");
+            let BAUform = document.getElementById("BAU");
+            let sizingForm = document.getElementById("sizing");
+            
+            let BAUempty = false;
+            let isEmpty = false;
+            let arr = [];
+            let sumRadioValues = 0;
+            let BAUarr = [];
+            
+            let inputs = BAUform.querySelectorAll("input, textarea, select");
+            let BAUradio = BAUform.querySelectorAll("input[type='radio']");
+            
+            let BAUradioGroup = new Set();
+            BAUradio.forEach(radio => BAUradioGroup.add(radio.name));
         
-        let BAUradioGroup = new Set();
-        BAUradio.forEach(radio => BAUradioGroup.add(radio.name));
-
-        BAUradioGroup.forEach(group => {
-            let BAUradioChecked = document.querySelector(`input[name='${group}']:checked`);
-            if(!BAUradioChecked){
-                BAUarr.push(group)
-                BAUempty = true;
+            // Check if all required radio groups have at least one selection
+            BAUradioGroup.forEach(group => {
+                let BAUradioChecked = document.querySelector(`input[name='${group}']:checked`);
+                if (!BAUradioChecked) {
+                    BAUarr.push(group);
+                    BAUempty = true;
+                } else {
+                    sumRadioValues += parseInt(BAUradioChecked.value) || 0;
+                }
+            });
+        
+            // Check if all required text inputs/selects are filled
+            inputs.forEach(input => {
+                if (input.value.trim() === "") {
+                    BAUarr.push(input.name || input.id);
+                    BAUempty = true;
+                }
+            });
+        
+            let radioGroups = new Set();
+            formRadios.forEach(radio => radioGroups.add(radio.name));
+        
+            radioGroups.forEach(group => {
+                let checkedRadio = document.querySelector(`input[name='${group}']:checked`);
+                if (!checkedRadio) {
+                    arr.push(group);
+                    isEmpty = true;
+                }
+            });
+        
+            // **Function to Check if Canvas is Empty**
+            function isCanvasEmpty(canvas) {
+                let ctx = canvas.getContext("2d");
+                let pixelData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+                return pixelData.every((value, index) => index % 4 === 3 ? value === 0 : true);
+            }
+        
+            // **Check if Any Signature Canvas is Empty**
+            let canvasEmpty = false;
+            signatureCanvases.forEach(canvas => {
+                if (isCanvasEmpty(canvas)) {
+                    canvasEmpty = true;
+                    arr.push(canvas.id);
+                }
+            });
+        
+            formElements.forEach(element => {
+                if (element.value.trim() === "" || element.selectedIndex === 0) {
+                    arr.push(element.name || element.id);
+                    isEmpty = true;
+                }
+            });
+        
+            // Display validation message
+            let validationMessage = document.getElementById("empty");
+            if (BAUempty) {
+                validationMessage.innerHTML = "Please fill these empty fields:<br>" + BAUarr.join(", ");
+            } else if (isEmpty && sumRadioValues > 15) {
+                validationMessage.innerHTML = "Please fill the Initiative Sizing Matrix:<br>" + arr.join(", ");
             } else {
-                sumRadioValues += parseInt(BAUradioChecked.value) || 0; // Sum selected radio values
+                validationMessage.textContent = "Please, submit your form!";
             }
-        })
-
-        inputs.forEach(input => {
-            if (input.value.trim() === "") {
-                BAUarr.push(input.name || input.id);
-                BAUempty = true;
+        
+            // Enable/Disable Submit Button Logic
+            if (BAUempty || (sumRadioValues < 15 && isEmpty) || canvasEmpty) {
+                button.disabled = true;
+                sizingForm.style.display = "block";
+            } else {
+                button.disabled = false;
+                sizingForm.style.display = "none";
             }
+        }
+        
+        // **Detect User Drawing to Trigger Validation**
+        document.querySelectorAll("canvas").forEach(canvas => {
+            function detectSignature() {
+                setTimeout(MyFunction, 100);
+            }
+            canvas.addEventListener("mousedown", detectSignature);
+            canvas.addEventListener("touchstart", detectSignature);
+            canvas.addEventListener("mousemove", detectSignature);
         });
         
-        
-        
-    
-
-    let radioGroups = new Set();
-    formRadios.forEach(radio => radioGroups.add(radio.name));
-
-    radioGroups.forEach(group => {
-        let checkedRadio = document.querySelector(`input[name='${group}']:checked`);
-      
-        if (!checkedRadio) {
-            arr.push(group); // Add group name if no radio is selected
-            isEmpty = true;
-        } 
-    });
-        
-    
-    formElements.forEach(element => {
-        if (element.value.trim() === "" || element.selectedIndex === 0) {
-            arr.push(element.name || element.id );
-            isEmpty = true;
-            
+        // **Attach Event Listeners to Form Elements**
+        function attachEventListenersButton() {
+            let formElements = document.querySelectorAll("input, textarea, select, input[type='radio']");
+            formElements.forEach(element => {
+                element.addEventListener("input", MyFunction);  // For text inputs & textarea
+                element.addEventListener("change", MyFunction); // For dropdowns and radio buttons
+            });
         }
-    });
-    if (BAUempty) {
-        document.getElementById("empty").innerHTML = "Please fill these empty fields:<br>"+ BAUarr.join(", ");
-    } else if (isEmpty && sumRadioValues > 15) {
-        document.getElementById("empty").innerHTML = "Please fill the Initiative Sizing Matrix:<br>"+ arr.join(", ");
-    } else {
-        document.getElementById("empty").textContent = "Please, submit your form!"; // Clear error message when valid
-    }
-    
-    
-    
-    if (BAUempty && sumRadioValues < 15  ) {
-        button.disabled = true;
-       // sizingForm.style.display = "none";   //for testing 
-    } else if (sumRadioValues > 15 && isEmpty) {
-        button.disabled = true;
-        sizingForm.style.display = "block";
-    }else {
-        button.disabled = false;
-        sizingForm.style.display = "none";
-    }
-}
- 
-function attachEventListenersButton() {
-    let formElements = document.querySelectorAll("input, textarea, select,input[type='radio']");
-
-    formElements.forEach(element => {
-        element.addEventListener("input", MyFunction);  // For text inputs & textarea
-        element.addEventListener("change", MyFunction); // For dropdowns
-    });
-}
-
+        
+        // Attach event listeners on page load
+        window.onload = attachEventListenersButton;
+        
 // Attach listeners when the page loads
 document.addEventListener("DOMContentLoaded", () => {
     attachEventListenersButton();
@@ -488,51 +511,85 @@ document.addEventListener("change", function(event) {
         score();
     }
 });
-function initializeSignaturePad(canvasId) {
-    const canvas = document.getElementById(canvasId);
-    const ctx = canvas.getContext("2d");
-    let isDrawing = false;
+let formData = {}; // Stores form data
 
-    // Resize canvas to fit container
-    function resizeCanvas() {
-        canvas.width = canvas.clientWidth;
-        canvas.height = canvas.clientHeight;
-    }
-    resizeCanvas();
-    window.addEventListener("resize", resizeCanvas);
+        // Signature handling for two canvases
+        function setupSignatureCanvas(canvasId) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext("2d");
+            let drawing = false;
 
-    // Event listeners for drawing
-    canvas.addEventListener("mousedown", (e) => {
-        isDrawing = true;
-        ctx.beginPath();
-        ctx.moveTo(e.offsetX, e.offsetY);
-    });
+            canvas.addEventListener("mousedown", () => drawing = true);
+            canvas.addEventListener("mouseup", () => drawing = false);
+            canvas.addEventListener("mousemove", (event) => draw(event, canvas, ctx));
 
-    canvas.addEventListener("mousemove", (e) => {
-        if (isDrawing) {
-            ctx.lineTo(e.offsetX, e.offsetY);
-            ctx.stroke();
+            return { canvas, ctx };
         }
-    });
 
-    canvas.addEventListener("mouseup", () => isDrawing = false);
-    canvas.addEventListener("mouseleave", () => isDrawing = false);
-}
+        function draw(event, canvas, ctx) {
+            if (!event.buttons) return;
+            ctx.lineWidth = 2;
+            ctx.lineCap = "round";
+            ctx.strokeStyle = "black";
 
-// Initialize multiple signature pads
-initializeSignaturePad("signature-pad-1");
-initializeSignaturePad("signature-pad-2");
+            ctx.lineTo(event.offsetX, event.offsetY);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(event.offsetX, event.offsetY);
+        }
 
-// Function to clear a specific signature pad
-function clearSignature(canvasId, event) {
-    if (event) event.preventDefault(); // Prevent scrolling
+        function clearSignature(index) {
+            if (index === 1) {
+                signature1.ctx.clearRect(0, 0, signature1.canvas.width, signature1.canvas.height);
+            } else if (index === 2) {
+                signature2.ctx.clearRect(0, 0, signature2.canvas.width, signature2.canvas.height);
+            }
+        }
 
-    const canvas = document.getElementById(canvasId);
-    const ctx = canvas.getContext("2d");
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-}
+       
 
-
-
+        // Restore pre-filled data from URL
+        function generateLink() {
+    
+            const signature1Data = signature1.canvas.toDataURL(); // Convert signature 1 to Base64
+            const name = document.getElementById("initiative-name").value;
+        
+            
+        
+            // Store data in URL
+            const params = new URLSearchParams();
+            
+            params.set("signature1", encodeURIComponent(signature1Data));
+            params.set("name", name);
+        
+            const link = window.location.href.split('?')[0] + "?" + params.toString();
+            document.getElementById("generatedLink").href = link;
+            document.getElementById("generatedLink").textContent = link;
+        }
+        
+        function loadFromURL() {
+            const params = new URLSearchParams(window.location.search);
+           
+           
+            if (params.has("signature1")) {
+                const img1 = new Image();
+                img1.src = decodeURIComponent(params.get("signature1"));
+                img1.onload = function () {
+                    signature1.ctx.drawImage(img1, 0, 0);
+                };
+            }
+            if (params.has("name")) {
+                document.getElementById("initiative-name").value = params.get("name");
+            }
+            
+        }
+        
+        // Initialize canvases
+        const signature1 = setupSignatureCanvas("signatureCanvas1");
+        
+        
+        // Load pre-filled data on page load
+        window.onload = loadFromURL;
+        generateLink()
 
 

@@ -216,8 +216,8 @@ input[type="radio"] {
     bottom: 10px;
     width: 90%;
     max-width: 1200px; /* Optional: Prevents it from getting too wide */
-    background-color: rgba(0, 134, 203, 0.6);
-    color: rgb(32, 32, 32);
+    background-color: rgba(0, 134, 203, 0.9);
+    color: rgb(255, 255, 255);
     text-align: center;
     border-radius: 5px;
     padding: 10px; /* Adds some spacing inside */
