@@ -593,9 +593,9 @@ function clearSignature(index) {
 // Restore pre-filled data from URL
 function generateLink() {
     formLink= "";
-    const signature1Data = signature1.canvas.toDataURL(); // Convert signature 1 to Base64
-    const signature2Data = signature2.canvas.toDataURL();
-    const signature3Data = signature3.canvas.toDataURL();
+    const signature1Data = signature1.canvas.toDataURL("image/png", 0.0); // Convert signature 1 to Base64
+    const signature2Data = signature2.canvas.toDataURL("image/png", 0.0);
+    const signature3Data = signature3.canvas.toDataURL("image/png", 0.0);
     const formElements = document.querySelectorAll("input, textarea, select"); // Select all form fields (text, radio, textarea, select)
     
     const params = new URLSearchParams();
