@@ -35,7 +35,7 @@
             let signatureCanvases = document.querySelectorAll("canvas");
             let BAUform = document.getElementById("BAU");
             let sizingForm = document.getElementById("sizing");
-            
+            let scoreElement = document.getElementById("score-one").value
             let BAUempty = false;
             let isEmpty = false;
             let arr = [];
@@ -104,7 +104,7 @@
             // Display validation message
             let validationMessage = document.getElementById("empty");
             if (BAUempty) {
-                validationMessage.innerHTML = "Please fill these empty fields:<br>" + BAUarr.join(", ");
+                validationMessage.innerHTML = "Please fill these empty fields:<br>" + BAUarr.join(", ") +sumRadioValues;
             } else if (isEmpty && sumRadioValues > 15) {
                 validationMessage.innerHTML = "Please fill the Initiative Sizing Matrix:<br>" + arr.join(", ");
             } else {
@@ -112,20 +112,15 @@
             }
         
             // Enable/Disable Submit Button Logic
-            if (sumRadioValues > 15 && isEmpty && canvasEmpty) {
-                button.disabled = true;
-                sizingForm.style.display = "block";
-            } else {
-                button.disabled = false;
-                sizingForm.style.display = "block";
-            }
-            if (BAUempty) {
-                button.disabled = true;
-                sizingForm.style.display = "none";
-            } else {
-                button.disabled = false;
-                sizingForm.style.display = "none";
-            }
+            if (sumRadioValues < 15){
+                if(BAUempty){
+                    button.disabled = true;
+                    sizingForm.style.display = "none"
+                }
+               }else if (isEmpty && canvasEmpty){
+                button.diabled = true;
+                    sizingForm.style.display = "block"
+               }
             
         }
         
@@ -154,7 +149,11 @@
 // Attach listeners when the page loads
 document.addEventListener("DOMContentLoaded", () => {
     attachEventListenersButton();
-    MyFunction(); // Run once on load to check initial state
+
+    // Delay MyFunction execution to allow prefilled values to be loaded
+    setTimeout(() => {
+        MyFunction();
+    }, 300); 
 });
     
 let newLocal = document.getElementById('test').innerText = "Complete the questionnaire below to indicate if your initiative is a Project, Programme or Business a usual (BAU).  For Projects & Programme, then continue to the Project Sizing tab. ";
