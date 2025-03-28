@@ -139,7 +139,20 @@
                     button.disabled = ListCheck; // Disable if any required field is empty
                 }
             }
-        
+            function onScoreChange(newScore) {
+                updateButtonState(newScore, BAUempty, isEmpty, canvasEmpty);
+            }
+            
+            // Example of manually updating the score (e.g., triggered by a form change or button click)
+            onScoreChange(sumRadioValues); 
+
+            document.querySelectorAll("input[type='radio']").forEach(radio => {
+                radio.addEventListener("change", function() {
+                    let newScore = calculateScore(); // Calculate score based on your logic
+                    onScoreChange(newScore);
+                });
+            });
+            
             updateButtonState(sumRadioValues, BAUempty, isEmpty, canvasEmpty);
         }
         
@@ -539,7 +552,9 @@ document.addEventListener("change", function(event) {
 });
 let formData = {}; // Stores form data
 let formLink = "";
-let signature1 = null;  // Store the signature canvas setup object
+let signature1 = null; 
+let signature2 = null; // Store the signature canvas setup object
+let signature3 = null;
 
 // Signature handling for two canvases
 function setupSignatureCanvas(canvasId) {
@@ -577,8 +592,10 @@ function clearSignature(index) {
 
 // Restore pre-filled data from URL
 function generateLink() {
-    formLink="";
+    formLink= "";
     const signature1Data = signature1.canvas.toDataURL(); // Convert signature 1 to Base64
+    const signature2Data = signature2.canvas.toDataURL();
+    const signature3Data = signature3.canvas.toDataURL();
     const formElements = document.querySelectorAll("input, textarea, select"); // Select all form fields (text, radio, textarea, select)
     
     const params = new URLSearchParams();
@@ -594,6 +611,8 @@ function generateLink() {
 
     // Append signature data to URL
     params.set("signature1", encodeURIComponent(signature1Data));
+    params.set("signature2", encodeURIComponent(signature2Data));
+    params.set("signature3", encodeURIComponent(signature3Data));
 
     // Generate the final link
     const link = window.location.href.split('?')[0] + "?" + params.toString();
@@ -698,6 +717,20 @@ function loadFromURL() {
             signature1.ctx.drawImage(img1, 0, 0);
         };
     }
+    if (params.has("signature2")) {
+        const img2 = new Image();
+        img2.src = decodeURIComponent(params.get("signature2"));
+        img2.onload = function () {
+            signature2.ctx.drawImage(img2, 0, 0);
+        };
+    }
+    if (params.has("signature3")) {
+        const img3 = new Image();
+        img3.src = decodeURIComponent(params.get("signature3"));
+        img3.onload = function () {
+            signature3.ctx.drawImage(img3, 0, 0);
+        };
+    }
     
     const formElements = document.querySelectorAll("input, textarea, select");
     formElements.forEach(element => {
@@ -715,6 +748,8 @@ function loadFromURL() {
 
 // Initialize canvases
 signature1 = setupSignatureCanvas("signatureCanvas1");
+signature2 = setupSignatureCanvas("signatureCanvas2");
+signature3 = setupSignatureCanvas("signatureCanvas3");
 
 // Load pre-filled data on page load
 window.onload = loadFromURL;
