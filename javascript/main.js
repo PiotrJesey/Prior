@@ -27,7 +27,6 @@
         });
 
   
-
         function MyFunction() {
             let button = document.getElementById("submButton");
             let formRadios = document.querySelectorAll("input[type='radio']");
@@ -35,13 +34,21 @@
             let signatureCanvases = document.querySelectorAll("canvas");
             let BAUform = document.getElementById("BAU");
             let sizingForm = document.getElementById("sizing");
-            let scoreElement = document.getElementById("score-one").value
+            let scoreElement = document.getElementById("score-one");
+            
             let BAUempty = false;
             let isEmpty = false;
             let arr = [];
             let sumRadioValues = 0;
             let BAUarr = [];
+        
+            if (!scoreElement) {
+                console.error("Score element not found!");
+                return;
+            }
             
+            let score = parseInt(scoreElement.value) || 0; // Ensure score is a number
+        
             let inputs = BAUform.querySelectorAll("input, textarea, select");
             let BAUradio = BAUform.querySelectorAll("input[type='radio']");
             
@@ -104,24 +111,36 @@
             // Display validation message
             let validationMessage = document.getElementById("empty");
             if (BAUempty) {
-                validationMessage.innerHTML = "Please fill these empty fields:<br>" + BAUarr.join(", ") +sumRadioValues;
+                validationMessage.innerHTML = "Please fill these empty fields:<br>" + BAUarr.join(", ") + canvasEmpty;
             } else if (isEmpty && sumRadioValues > 15) {
-                validationMessage.innerHTML = "Please fill the Initiative Sizing Matrix:<br>" + arr.join(", ");
+                validationMessage.innerHTML = "Please fill the Initiative Sizing Matrix:<br>" + arr.join(", ")+canvasEmpty;
             } else {
                 validationMessage.textContent = "Please, submit your form!";
             }
         
-            // Enable/Disable Submit Button Logic
-            if (sumRadioValues < 15){
-                if(BAUempty){
-                    button.disabled = true;
-                    sizingForm.style.display = "none"
+            // ✅ Enable/Disable Submit Button Logic
+            function updateButtonState(score, bauFilled, isempty, isSignature) {
+                const button = document.getElementById("submButton");
+                const sizingText = document.getElementById("sizing");
+                let ListCheck = true;
+                if(!isempty && !isSignature){
+                    ListCheck = false;
                 }
-               }else if (isEmpty && canvasEmpty){
-                button.diabled = true;
-                    sizingForm.style.display = "block"
-               }
-            
+                if (!button || !sizingText) {
+                    console.error("submitButton or sizing element not found.");
+                    return;
+                }
+        
+                if (score < 15) {
+                    button.disabled = bauFilled;
+                    sizingText.style.display = "none"; // Hide sizing text
+                } else {
+                    sizingText.style.display = "block"; // Show sizing text for scores >= 15
+                    button.disabled = ListCheck; // Disable if any required field is empty
+                }
+            }
+        
+            updateButtonState(sumRadioValues, BAUempty, isEmpty, canvasEmpty);
         }
         
         // **Detect User Drawing to Trigger Validation**
@@ -146,16 +165,16 @@
         // Attach event listeners on page load
         window.onload = attachEventListenersButton;
         
-// Attach listeners when the page loads
-document.addEventListener("DOMContentLoaded", () => {
-    attachEventListenersButton();
-
-    // Delay MyFunction execution to allow prefilled values to be loaded
-    setTimeout(() => {
-        MyFunction();
-    }, 300); 
-});
-    
+        // Attach listeners when the page loads
+        document.addEventListener("DOMContentLoaded", () => {
+            attachEventListenersButton();
+        
+            // Delay MyFunction execution to allow prefilled values to be loaded
+            setTimeout(() => {
+                MyFunction();
+            }, 300);
+        });
+        
 let newLocal = document.getElementById('test').innerText = "Complete the questionnaire below to indicate if your initiative is a Project, Programme or Business a usual (BAU).  For Projects & Programme, then continue to the Project Sizing tab. ";
 let logo = document.getElementById("logo").src = "./img/DH_logo_W.png";
 let today = new Date().toISOString().split('T')[0];
