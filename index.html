@@ -613,26 +613,36 @@
 
           </div>
           <div class="form-group">
+            <label for="rsign1">Include ratification for type selected if different to recommended type</label>
+              <input type="text" id="sign1" name="sign1" onChange="buildRadioObject()" required>
             <div class="signature-container">
               <label>Signature new:</label><br>
-            <canvas class="signature-box" id="signatureCanvas1" width="300" height="100" name="sign1"></canvas><br>
+            <canvas class="signature-box" id="signatureCanvas1" width="400" height="100" name="sign1"></canvas><br>
             <button onclick="clearSignature(1)">Clear</button>
               </div>
-            </div>  
+            </div>
             <div class="form-group">
+              <label for="rsign2">Include ratification for type selected if different to recommended type</label>
+              <input type="text" id="sign2" name="sign2" onChange="buildRadioObject()" required>
+              
               <div class="signature-container">
+               
                 <label>Signature new:</label><br>
-              <canvas class="signature-box" id="signatureCanvas2" width="300" height="100" name="sign1"></canvas><br>
+              <canvas class="signature-box" id="signatureCanvas2" width="400" height="100" name="sign1"></canvas><br>
               <button onclick="clearSignature(2)">Clear</button>
+              <button onclick="saveSignature(2)">Save</button>
+                </div>
                 </div>
                 <div class="form-group">
                   <div class="signature-container">
                     <label>Signature new:</label><br>
-                  <canvas class="signature-box" id="signatureCanvas3" width="300" height="100" name="sign1"></canvas><br>
+                  <canvas class="signature-box" id="signatureCanvas3" width="400" height="100" name="sign1"></canvas><br>
                   <button onclick="clearSignature(3)">Clear</button>
+                  <button onclick="saveSignature(3)">Save</button>
+                  <div id="message"></div>
                     </div>
-                  </div> 
-              </div> 
+                  </div>
+              
           </div>
           <div class="form-container">
           
@@ -661,7 +671,6 @@
       </div>
       
 </div>
-    <script type="module" src=".javascript/options.js"></script>
     <script type="text/javascript" src='./javascript/export.js'></script>
     <script type="text/javascript" src='./javascript/main.js'></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>

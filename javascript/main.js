@@ -552,50 +552,117 @@ document.addEventListener("change", function(event) {
 });
 let formData = {}; // Stores form data
 let formLink = "";
-let signature1 = null; 
-let signature2 = null; // Store the signature canvas setup object
+let signature1 = null;
+let signature2 = null;
 let signature3 = null;
 
-// Signature handling for two canvases
-function setupSignatureCanvas(canvasId) {
-    const canvas = document.getElementById(canvasId);
+// Setup the signature canvas
+function setupSignatureCanvas(id) {
+    const canvas = document.getElementById(id);
     const ctx = canvas.getContext("2d");
-    let drawing = false;
 
-    canvas.addEventListener("mousedown", () => drawing = true);
-    canvas.addEventListener("mouseup", () => drawing = false);
-    canvas.addEventListener("mousemove", (event) => draw(event, canvas, ctx));
-
-    return { canvas, ctx };
-}
-
-function draw(event, canvas, ctx) {
-    if (!event.buttons) return;
+    // Set initial drawing style
     ctx.lineWidth = 2;
     ctx.lineCap = "round";
     ctx.strokeStyle = "black";
 
-    ctx.lineTo(event.offsetX, event.offsetY);
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(event.offsetX, event.offsetY);
+    let isDrawing = false;
 
-    // Generate the link when the signature is drawn
-    generateLink();  // Dynamically update the link after signature drawing
+    // Start drawing on mousedown
+    canvas.addEventListener("mousedown", (e) => {
+        isDrawing = true;
+        ctx.beginPath();
+        ctx.moveTo(e.offsetX, e.offsetY);
+    });
+
+    // Draw while mouse moves
+    canvas.addEventListener("mousemove", (e) => {
+        if (isDrawing) {
+            ctx.lineTo(e.offsetX, e.offsetY);
+            ctx.stroke();
+        }
+    });
+
+    // Stop drawing on mouseup
+    canvas.addEventListener("mouseup", () => {
+        isDrawing = false;
+    });
+
+    // Prevent right-click context menu
+    canvas.addEventListener("contextmenu", (e) => e.preventDefault());
+
+    return { canvas, ctx };
 }
 
-function clearSignature(index) {
+// Initialize the signature canvases
+signature1 = setupSignatureCanvas("signatureCanvas1");
+signature2 = setupSignatureCanvas("signatureCanvas2");
+signature3 = setupSignatureCanvas("signatureCanvas3");
+
+// Function to save signature to localStorage
+function saveSignature(index) {
+    let signatureData = "";
     if (index === 1) {
-        signature1.ctx.clearRect(0, 0, signature1.canvas.width, signature1.canvas.height);
+        signatureData = signature1.canvas.toDataURL();
+    } else if (index === 2) {
+        signatureData = signature2.canvas.toDataURL();
+    } else if (index === 3) {
+        signatureData = signature3.canvas.toDataURL();
+    }
+
+    if (signatureData) {
+        localStorage.setItem(`savedSignature${index}`, signatureData);
+        showMessage(`Signature ${index} saved!`);
+    } else {
+        alert(`Please draw Signature ${index} before saving.`);
     }
 }
 
+// Function to clear signature from canvas and localStorage
+function clearSignature(index) {
+    if (index === 1) {
+        signature1.ctx.clearRect(0, 0, signature1.canvas.width, signature1.canvas.height);
+        localStorage.removeItem("savedSignature1");
+    } else if (index === 2) {
+        signature2.ctx.clearRect(0, 0, signature2.canvas.width, signature2.canvas.height);
+        localStorage.removeItem("savedSignature2");
+    } else if (index === 3) {
+        signature3.ctx.clearRect(0, 0, signature3.canvas.width, signature3.canvas.height);
+        localStorage.removeItem("savedSignature3");
+    }
+    showMessage(`Signature ${index} cleared!`);
+}
+
+// Function to load signature from localStorage
+function loadSignature(index) {
+    let savedSignature = localStorage.getItem(`savedSignature${index}`);
+    if (savedSignature) {
+        let img = new Image();
+        img.src = savedSignature;
+        img.onload = function () {
+            let canvas = document.getElementById(`signatureCanvas${index}`);
+            let ctx = canvas.getContext("2d");
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas before drawing
+            ctx.drawImage(img, 0, 0);
+        };
+    }
+}
+
+// Load saved signatures when the page loads
+
+
+// Show message for 2 seconds
+function showMessage(message) {
+    const msgElement = document.getElementById("message");
+    msgElement.textContent = message;
+    msgElement.style.display = "block";
+    setTimeout(() => msgElement.style.display = "none", 2000);
+}
+        
 // Restore pre-filled data from URL
 function generateLink() {
     formLink= "";
-    const signature1Data = signature1.canvas.toDataURL("image/png", 0.0); // Convert signature 1 to Base64
-    const signature2Data = signature2.canvas.toDataURL("image/png", 0.0);
-    const signature3Data = signature3.canvas.toDataURL("image/png", 0.0);
+    
     const formElements = document.querySelectorAll("input, textarea, select"); // Select all form fields (text, radio, textarea, select)
     
     const params = new URLSearchParams();
@@ -609,10 +676,6 @@ function generateLink() {
         }
     });
 
-    // Append signature data to URL
-    params.set("signature1", encodeURIComponent(signature1Data));
-    params.set("signature2", encodeURIComponent(signature2Data));
-    params.set("signature3", encodeURIComponent(signature3Data));
 
     // Generate the final link
     const link = window.location.href.split('?')[0] + "?" + params.toString();
@@ -710,27 +773,7 @@ document.getElementById("downloadButton").addEventListener("click", downloadFile
 function loadFromURL() {
     const params = new URLSearchParams(window.location.search);
 
-    if (params.has("signature1")) {
-        const img1 = new Image();
-        img1.src = decodeURIComponent(params.get("signature1"));
-        img1.onload = function () {
-            signature1.ctx.drawImage(img1, 0, 0);
-        };
-    }
-    if (params.has("signature2")) {
-        const img2 = new Image();
-        img2.src = decodeURIComponent(params.get("signature2"));
-        img2.onload = function () {
-            signature2.ctx.drawImage(img2, 0, 0);
-        };
-    }
-    if (params.has("signature3")) {
-        const img3 = new Image();
-        img3.src = decodeURIComponent(params.get("signature3"));
-        img3.onload = function () {
-            signature3.ctx.drawImage(img3, 0, 0);
-        };
-    }
+    
     
     const formElements = document.querySelectorAll("input, textarea, select");
     formElements.forEach(element => {
@@ -747,25 +790,32 @@ function loadFromURL() {
 }
 
 // Initialize canvases
-signature1 = setupSignatureCanvas("signatureCanvas1");
-signature2 = setupSignatureCanvas("signatureCanvas2");
-signature3 = setupSignatureCanvas("signatureCanvas3");
+
+
 
 // Load pre-filled data on page load
-window.onload = loadFromURL;
-document.addEventListener("change", (event) => {
-    if (event.target.matches("input[type='text'], input[type='radio'], input[type='date']")) {
-        generateLink();
-    }
-});
+window.onload = function () {
+    // Call the loadFromURL function to load form values and signatures
+    loadFromURL();
 
-document.addEventListener("input", (event) => {
-    if (event.target.matches("input[type='text'], input[type='radio'], input[type='date']")) {
-        generateLink();
-    }
-});
+    // Load signatures for signature1, signature2, and signature3
+    loadSignature(1);
+    loadSignature(2);
+    loadSignature(3);
+    
+    // Add event listeners to monitor changes or inputs in form fields
+    document.addEventListener("change", (event) => {
+        if (event.target.matches("input[type='text'], input[type='radio'], input[type='date']")) {
+            generateLink();
+        }
+    });
 
+    document.addEventListener("input", (event) => {
+        if (event.target.matches("input[type='text'], input[type='radio'], input[type='date']")) {
+            generateLink();
+        }
+    });
 
-generateLink();
-
-
+    // Generate the initial link (if needed when the page is loaded)
+    generateLink();
+};
